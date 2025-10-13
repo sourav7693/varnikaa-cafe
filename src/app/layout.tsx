@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Jost } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import ProgressBar from "@/components/global/ProgressBar";
 import { CartProvider } from "@/context/CartContext";
 
-const inter = Inter({
-  subsets: ["latin"],  
+const jost = Jost({ subsets: ["latin"], 
   display: "swap",
 });
 
@@ -22,14 +21,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.className} antialiased`}
-      >
-        {/* <ProgressBar /> */}
+      <body className={`${jost.className} antialiased`}>
+        <ProgressBar />
         <Toaster />
-        <CartProvider>
-          {children}
-        </CartProvider>
+        <CartProvider>{children}</CartProvider>
       </body>
     </html>
   );

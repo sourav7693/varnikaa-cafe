@@ -26,41 +26,49 @@ const toggleAppointmentModal = () =>
 
   return (
     <section className="flex flex-col md:flex-row w-full h-auto justify-between gap-8">
-      <div className="w-full md:w-[40%] h-full rounded-xl">
+      <div className="w-full md:w-[35%]" ref={leftSideRef}>
         <Image
           src="/images/about.png"
           alt="about-1"
           width={500}
           height={500}
-          className=" w-full h-full object-cover rounded-xl"
-          priority
-          style={{ height: isSmallScreen ? "auto" : `${rightSideHeight}px` }}
+          className=" w-full h-full object-cover"
         />
       </div>
 
       <div
         className="w-full md:w-[60%] h-full flex flex-col gap-4"
-        ref={leftSideRef}
+        style={{ height: isSmallScreen ? "auto" : `${rightSideHeight}px` }}
       >
-        <span>About Us</span>
-        <h1 className="text-2xl font-bold text-defined-purple">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. In, quos.
+        <span className="text-defined-darkbrown text-center md:text-left">
+          About Us
+        </span>
+        <h1 className="text-2xl font-bold text-center md:text-left text-defined-darkbrown">
+          Fresh Flavors,{" "}
+          <span className="text-defined-green">Friendly Moments</span>, Every
+          Day
         </h1>
 
         <p className="text-defined-brown text-justify">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit
-          laborum dolorem aut veritatis voluptatum numquam quam, voluptates
-          vitae? Ut iusto beatae nulla esse magnam amet hic eius, cumque at
-          voluptatibus provident ipsum minima similique, consectetur quia
-          quisquam magni distinctio, sit illum vitae assumenda? Fuga vitae natus
-          nostrum, necessitatibus similique delectus nam, dolores soluta in
-          tenetur voluptatum eligendi qui optio, ipsa quis a quo quod eos labore
-          unde iusto eveniet accusantium asperiores. Quo odio porro, quos
-          nesciunt, animi rem a velit architecto consectetur praesentium autem.
-          Quibusdam nihil facere nemo placeat nam iure magni, animi iste
-          suscipit assumenda et maiores illo eum.
+          At Varnikaa Cafe, we believe that every meal is more than just
+          food—it&apos;s an experience to savor, share, and remember. Located in
+          the heart of Siliguri, we bring together the perfect blend of taste,
+          freshness, and warmth in every dish we serve. From refreshing fruit
+          juices and creamy milkshakes to crispy burgers, flavorful noodles, and
+          indulgent pizzas, our menu caters to every craving and age. <br />
+          <br /> Our commitment to quality ensures that every ingredient is
+          fresh, hygienically prepared, and served with care, creating flavors
+          that delight the senses. Beyond food, Varnikaa Cafe is a space where
+          friends gather, families bond, and memories are made. Our cozy
+          ambiance, friendly service, and affordable offerings make every visit
+          a special one. Whether you&apos;re stopping by for a quick snack or a
+          leisurely meal, we promise a delightful culinary journey that keeps
+          you coming back for more.
         </p>
-        <button onClick={toggleAppointmentModal} className="w-full md:w-[25%] text-defined-green border border-defined-green py-2 px-5 rounded-3xl">
+        <button
+          onClick={toggleAppointmentModal}
+          className="w-full md:w-[25%] text-defined-green border border-defined-green py-2 px-5 rounded-3xl"
+        >
           Enquiry Now
         </button>
       </div>

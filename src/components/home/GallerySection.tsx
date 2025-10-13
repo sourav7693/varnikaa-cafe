@@ -20,10 +20,12 @@ const GallerySection = () => {
     };
   }, []);
   return (
-    <section className="flex flex-col gap-4">
+    <section className="flex flex-col gap-4 items-center justify-center md:px-8 xl:px-16 w-full">
+      <span>Food Gallery</span>
       <h1 className="text-3xl font-bold text-defined-darkbrown text-center">
         Our <span className="text-defined-green">Food Gallery</span>
       </h1>
+      <p className="text-center w-[50%]">Indulge your senses with a stunning display of mouthwatering culinary creations in our captivating food gallery. Feed your eyes and awaken your cravings!</p>
       <div className="flex flex-col md:flex-row gap-6 justify-between items-center">
         <div
           className="w-full md:w-1/2 flex flex-col gap-4"

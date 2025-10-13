@@ -2,14 +2,14 @@ import Image from "next/image";
 
 const AboutSection2 = () => {
   return (
-    <div className="relative w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px]">
+    <div className="relative w-full h-[350px] md:h-[500px]">
       {/* Background image */}
       <Image
-        src="/images/about2.png"
-        alt="about2"
-        fill
-        priority
-        className="object-cover"
+        src="/images/offerbg.jpg"
+        alt="offerbg"
+        width={500}
+        height={500}
+        className="object-cover h-full w-full"
       />
 
       {/* Overlay content */}
@@ -20,11 +20,11 @@ const AboutSection2 = () => {
         </h1>
 
         <p className="max-w-sm text-sm sm:text-base text-center sm:text-left">
-          Lorem ipsum dolor sit amet consectetur. Urna id porttitor tincidunt
-          quam. Hendrerit diam amet in dolor. Hendrerit eleifend elementum massa
-          in sagittis interdum viverra feugiat in. Eget arcu amet pellentesque
-          imperdiet ultricies lectus dui sapien velit. In sed penatibus pulvinar
-          consequat tempus auctor
+          Have a delicious meal with Varnikaa Cafe, where every bite is filled
+          with freshness and flavor. From mouthwatering pizzas and crispy
+          burgers to refreshing fruit juices and creamy milkshakes, we offer a
+          delightful culinary experience, perfect for friends, family, and food
+          lovers in Siliguri.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-2">

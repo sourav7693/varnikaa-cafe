@@ -2,24 +2,24 @@ import Image from "next/image";
 
 const HomeSlider = () => {
   return (
-    <div className="relative w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px]">
+    <div className="relative w-full h-[300px] md:h-[500px]">
       {/* Background image */}
       <Image
-        src="/images/slider.png"
+        src="/images/slider.jpg"
         alt="slider"
-        fill
-        priority
-        className="object-cover"
+        width={500}
+        height={500}
+        className="object-cover h-full w-full"
       />
 
       {/* Overlay content */}
-      <div className="absolute inset-0 flex flex-col justify-center items-center sm:items-start px-4 sm:px-8 md:px-16 gap-3 sm:gap-4">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center sm:text-left leading-snug">
+      <div className="absolute inset-0 flex flex-col justify-center  items-start sm:items-start px-4 sm:px-8 md:px-16 gap-3 sm:gap-4 text-wrap">
+        <h1 className=" md:text-4xl lg:text-5xl font-bold  text-left leading-snug text-defined-darkbrown w-[50%] md:w-full">
           Have a Delicious <br className="hidden sm:block" /> Meal With{" "}
           <br className="hidden sm:block" /> Varnikaa Cafe
         </h1>
 
-        <p className="max-w-sm text-sm sm:text-base text-center sm:text-left">
+        <p className="max-w-sm text-sm sm:text-base text-center text-left">
           A restaurant is a place where people go to eat, frequently with
           friends, family, or coworkers.
         </p>

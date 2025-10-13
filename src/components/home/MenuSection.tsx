@@ -145,88 +145,99 @@ const MenuSection = () => {
    const { cartItems, addItem, removeItem } = useCart();
 
   return (
-    <section className="flex flex-col items-center justify-center gap-4">
+    <section className="flex flex-col items-center justify-center gap-4 md:px-8 xl:px-16 w-full">
       <span>Our Menus</span>
       <h1 className="text-defined-darkbrown text-xl md:text-4xl font-bold">
         Our Most Popular{" "}
         <span className="text-defined-green">Delicious Foods</span>
       </h1>
-      <div
-  className="flex overflow-x-auto whitespace-nowrap gap-3 mt-6 px-4 py-2 scrollbar-hide sm:justify-center"
->
-  {categories.map((category) => (
-    <button
-      key={category.name}
-      onClick={() => setActiveCategory(category.name)}
-      className={`px-4 py-2 rounded-full text-sm sm:text-base font-medium transition-all duration-200 flex-shrink-0
+      <p className="text-center w-[50%]">
+        Introducing our tantalizing food menu, filled with exquisite flavors and
+        culinary delights to satisfy every plate.
+      </p>
+      <div className="flex overflow-x-auto whitespace-nowrap gap-3 px-4 py-2 scrollbar-hide sm:justify-center">
+        {categories.map((category) => (
+          <button
+            key={category.name}
+            onClick={() => setActiveCategory(category.name)}
+            className={`px-4 py-2 rounded-full text-sm sm:text-base font-medium transition-all duration-200 flex-shrink-0
       ${
         activeCategory === category.name
           ? "bg-defined-green text-white shadow-md"
           : "bg-green-100 text-defined-green hover:bg-green-200"
       }`}
-    >
-      {category.name}
-    </button>
-  ))}
-</div>
+          >
+            {category.name}
+          </button>
+        ))}
+      </div>
 
       {/* Menu Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-       {categories.find((c) => c.name === activeCategory)?.items.map((item) => {
-      const cartItem = cartItems.find((c) => c.id === item.id);
-      const quantity = cartItem ? cartItem.quantity : 0;
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 w-full">
+        {categories
+          .find((c) => c.name === activeCategory)
+          ?.items.map((item) => {
+            const cartItem = cartItems.find((c) => c.id === item.id);
+            const quantity = cartItem ? cartItem.quantity : 0;
 
-      return (
-        <div
-          key={item.id}
-          className="w-full p-4 flex flex-col justify-between gap-4 shadow-defined-light rounded-xl hover:scale-105 transition-all duration-300"
-        >          
-            <Image
-              src={item.image}
-              alt={item.name}
-              width={200}
-              height={200}
-              className="rounded-xl w-full h-40 object-cover"
-            />          
-          <h1 className="font-bold text-defined-darkbrown text-xl">
-            {item.name}
-          </h1>
-
-          <div className="flex justify-between items-center">
-            <span>
-              {item.price} | {item.discount}%Off
-            </span>
-
-            <div className="rounded-xl border border-[#ccc] flex justify-between items-center gap-4 px-4">
-              <button
-                onClick={() => removeItem(item.id)}
-                className="font-bold text-lg"
+            return (
+              <div
+                key={item.id}
+                className="w-full p-4 flex flex-col justify-between gap-4 shadow-defined-light rounded-xl hover:scale-105 transition-all duration-300"
               >
-                -
-              </button>
-              <span>{quantity}</span>
-              <button
-                onClick={() =>
-                  addItem({
-                    id: item.id,
-                    name: item.name,
-                    price: item.price,
-                    image: item.image,
-                    quantity: 1,
-                  })
-                }
-                className="font-bold text-defined-green text-lg"
-              >
-                +
-              </button>
-            </div>
-          </div>
-          <Link href="/checkout" className="flex items-center justify-center rounded-2xl px-4 py-2 bg-[#D9FFD3] hover:bg-defined-green text-defined-darkbrown hover:text-white transition-colors duration-200">
-            Order Now!
-          </Link>
-        </div>
-      );
-    })}     
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  width={200}
+                  height={200}
+                  className="rounded-xl w-full h-40 object-cover"
+                />
+                <h1 className="font-bold text-defined-darkbrown text-xl">
+                  {item.name}
+                </h1>
+
+                <div className="flex justify-between items-center">
+                  <span>
+                    <span className="font-bold text-defined-green">
+                      {" "}
+                      ₹{item.price}
+                    </span>{" "}
+                    | {item.discount}% Off
+                  </span>
+
+                  <div className="rounded-xl border border-[#ccc] flex justify-between items-center gap-4 px-4">
+                    <button
+                      onClick={() => removeItem(item.id)}
+                      className="font-bold text-lg"
+                    >
+                      -
+                    </button>
+                    <span>{quantity}</span>
+                    <button
+                      onClick={() =>
+                        addItem({
+                          id: item.id,
+                          name: item.name,
+                          price: item.price,
+                          image: item.image,
+                          quantity: 1,
+                        })
+                      }
+                      className="font-bold text-defined-green text-lg"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+                <Link
+                  href="/checkout"
+                  className="flex items-center justify-center rounded-2xl px-4 py-2 bg-[#D9FFD3] hover:bg-defined-green text-defined-darkbrown hover:text-white transition-colors duration-200"
+                >
+                  Order Now!
+                </Link>
+              </div>
+            );
+          })}
       </div>
     </section>
   );
