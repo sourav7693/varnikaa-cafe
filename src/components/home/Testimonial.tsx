@@ -90,7 +90,7 @@ const TestimonialSection = () => {
             <SwiperSlide key={index}>
               <div className=" p-4 md:p-8 flex flex-col items-center justify-center gap-4">
                 <p className="text-sm text-center md:text-base text-defined-darkbrown font-medium">
-                  "{item.detail}"
+                  &quot;{item.detail}&quot;
                 </p>     
                   <div className="ml-4">
                 <hr />           
