@@ -1,136 +1,128 @@
-"use client";
-import useElementHeight from "@/hooks/useElementHeight";
 import Image from "next/image";
-import { useState, useEffect } from "react";
 
 const BookingSection = () => {
-  const [rightSideHeight, leftSideRef] = useElementHeight<HTMLDivElement>();
-  const [isSmallScreen, setIsSmallScreen] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth < 768);
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  const menu = [
+    {
+      name: "Tea/Coffee/Toast",
+      items: [
+        { name: "Ginger Tea", price: "20" },
+        { name: "Masala Tea", price: "30" },
+        { name: "Black Coffee", price: "40" },
+        { name: "Milk Coffee", price: "40" },
+      ]
+    },
+    {
+      name: "Sandwiches",
+      items: [
+        { name: "Veg Grill Sandwich", price: "50" },
+        { name: "Veg Grill Cheese Sandwich", price: "60" },
+        { name: "Grill Paneer Sandwich", price: "80" },
+        { name: "Grill Paneer Cheese Sandwich", price: "90" },        
+      ]
+    },
+    {
+      name: "Chinese",
+      items: [
+        { name: "Veg Momo", price: "50" },
+        { name: "Chowmin", price: "50" },        
+      ]
+    },
+    {
+      name: "Noodles",
+      items: [
+        { name: "Plain Maggie", price: "45" },
+        { name: "Vegetable Masala Maggie", price: "70" },
+        { name: "Vegetable Cheese Maggie", price: "80" },        
+      ]
+    },
+    {
+      name: "Rolled Rolls",
+      items: [
+        { name: "Veg Roll", price: "50" },
+        { name: "Veg Cheese Roll", price: "60" },
+        { name: "Veg Paneer Roll", price: "80" },
+        { name: "Veg Paneer Cheese Roll", price: "90" },        
+      ]
+    },
+    {
+      name: "Must Try",
+      items: [
+        { name: "Pav Bhaji", price: "60" },
+        { name: "Aloo Crispy Chaat", price: "60" },
+        { name: "Chips Small", price: "60" },
+        { name: "Chips Medium", price: "70" },
+        { name: "Chips Large", price: "90" },        
+      ]
+    },
+    {
+      name: "Refreshmeners",
+      items: [
+        { name: "Nimbu Paani", price: "30" },
+        { name: "Aam Panna", price: "30" },
+        { name: "Masala Coke", price: "50" },        
+      ]
+    },
+    {
+      name: "Burgers",
+      items: [
+        { name: "Veg Burger", price: "60" },
+        { name: "Cheese Burger", price: "80" },       
+      ]
+    },
+  ]
   return (
-    <div className="md:px-16 px-0 flex flex-col md:flex-row justify-between items-center gap-6">
-      <div
-        className="w-full flex flex-col gap-6 bg-gray-200 px-4 py-8 md:p-12 shadow-defined-light rounded-xl"
-        ref={leftSideRef}
-      >
-        <div className="w-full flex justify-center flex-col items-center gap-2">
-          <Image
-            src="/images/leaf.png"
-            alt="leaf"
-            width={500}
-            height={500}
-            className="object-cover size-10"
-          />
-          <p className="text-defined-green font-medium text-center">
-            Table Booking
-          </p>
-        </div>
-        <h1 className="text-2xl md:text-4xl font-semibold text-defined-darkbrown text-center">
-          Book Your Table Now!
+    <div className="w-full flex flex-col justify-center items-center gap-6">
+      <div className="w-full flex  flex-col items-center justify-center gap-2">
+        <Image
+          src="/images/leaf.png"
+          alt="leaf"
+          width={500}
+          height={500}
+          className="object-cover size-10"
+        />
+        <h1 className="text-defined-green text-3xl font-medium text-center">
+          Varnikaa Cafe Menu
         </h1>
-        <form
-          onSubmit={(e) => e.preventDefault()}
-          className="flex flex-col gap-4 items-center justify-center"
-        >
-          <div className="flex flex-col gap-4 md:flex-row w-full">
-            <input
-              type="text"
-              name="person"
-              placeholder="Person"
-              className="w-full bg-white p-2 placeholder:text-defined-brown outline-none border  border-[#ccc] rounded-lg"
-            />
-            <input
-              type="number"
-              name="mobile"
-              placeholder="Mobile"
-              className="w-full bg-white p-2 placeholder:text-defined-brown outline-none border  border-[#ccc] rounded-lg"
-            />
-          </div>
-          <div className="flex flex-col gap-4 md:flex-row w-full">
-            <input
-              type="text"
-              name="person"
-              placeholder="Date"
-              className="w-full bg-white p-2 placeholder:text-defined-brown outline-none border  border-[#ccc] rounded-lg"
-            />
-            <input
-              type="number"
-              name="mobile"
-              placeholder="Time"
-              className="w-full bg-white p-2 placeholder:text-defined-brown outline-none border  border-[#ccc] rounded-lg"
-            />
-          </div>
-          <textarea
-            name="message"
-            id=""
-            cols={30}
-            rows={5}
-            placeholder="Message"
-            className="p-4 w-full bg-white placeholder:text-defined-brown outline-none border  border-[#ccc] rounded-lg"
-          ></textarea>
-          <button
-            type="submit"
-            className="bg-defined-green text-white px-6 py-2 rounded-lg"
-          >
-            Confirm Table
-          </button>
-        </form>
       </div>
-      <div
-        className="w-full flex flex-col gap-6 bg-gray-200 px-4 py-8 md:p-12 shadow-defined-light rounded-xl"
-        style={{ height: isSmallScreen ? "auto" : `${rightSideHeight}px` }}
-      >
-        <div className="w-full flex justify-center flex-col items-center gap-2">
-          <Image
-            src="/images/leaf.png"
-            alt="leaf"
-            width={500}
-            height={500}
-            className="object-cover size-10"
-          />
-          <p className="text-defined-green font-medium text-center">
-            Opening Time
-          </p>
-        </div>
-        <h1 className="text-2xl md:text-4xl font-semibold text-defined-darkbrown text-center">
-          Opening Time
-        </h1>
-        <div className="flex flex-col gap-4 justify-center items-center">
-          <div className="flex flex-col md:flex-row gap-4 justify-between w-full">
-            <div className="flex flex-col gap-2 bg-white justify-center items-center w-full border border-[#ccc] rounded-lg p-5">
-              <h2 className="font-bold text-defined-green text-lg">
-                Breakfast
+
+      <div className="w-full flex flex-col gap-8">
+        <div className="flex">
+          {menu.slice(0, 4).map((section, index) => (
+            <div key={index} className="w-full md:px-8 px-4">
+              <h2 className="text-xl font-semibold text-defined-darkbrown mb-4 text-center">
+                {section.name}
               </h2>
-              <p className="text-defined-brown text-center">
-                7 Days 7.30am to 11.30pm
-              </p>
+              <ul className="flex flex-col gap-2">
+                {section.items.map((item, index) => (
+                  <li key={index} className="flex justify-between">
+                    <span className="text-sm font-medium">{item.name}</span>
+                    <span className="font-semibold text-defined-green">
+                      ₹{item.price}/-
+                    </span>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <div className="flex flex-col gap-2 bg-white justify-center items-center w-full border border-[#ccc] rounded-lg p-5">
-              <h2 className="font-bold text-defined-green text-lg">Lunch</h2>
-              <p className="text-defined-brown text-center">
-                7 Days 7.30am to 11.30pm
-              </p>
+          ))}
+        </div>
+        <div className="flex">
+          {menu.slice(4, 8).map((section, index) => (
+            <div key={index} className="w-full md:px-8 px-4">
+              <h2 className="text-xl font-semibold text-defined-darkbrown mb-4 text-center">
+                {section.name}
+              </h2>
+              <ul className="flex flex-col gap-2">
+                {section.items.map((item, index) => (
+                  <li key={index} className="flex justify-between">
+                    <span className="text-sm font-medium">{item.name}</span>
+                    <span className="font-semibold text-defined-green">
+                      ₹{item.price}/-
+                    </span>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </div>
-          <div className="flex flex-col gap-4 bg-white justify-center items-center w-full border border-[#ccc] rounded-lg py-8">
-            <h2 className="font-bold text-defined-green text-lg">Dinner</h2>
-            <p className="text-defined-brown">7 Days 7.30am to 11.30pm</p>
-          </div>
-          <button className="bg-defined-green text-white px-6 py-2 rounded-lg">
-            Order Now
-          </button>
+          ))}
         </div>
       </div>
     </div>

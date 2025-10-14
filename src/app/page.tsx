@@ -5,6 +5,7 @@ import GallerySection from "@/components/home/GallerySection";
 import HomeSlider from "@/components/home/HomeSlider";
 import MenuSection from "@/components/home/MenuSection";
 import SpecialMenu from "@/components/home/SpecialMenu";
+import TestimonialSection from "@/components/home/Testimonial";
 import MainTemplate from "@/templates/MainTemplate";
 
 const page = () => {
@@ -20,6 +21,7 @@ const page = () => {
           <MenuSection />
           <GallerySection />
         </section>
+        <TestimonialSection />
         <section className="self-padding">
           <BookingSection />
         </section>
