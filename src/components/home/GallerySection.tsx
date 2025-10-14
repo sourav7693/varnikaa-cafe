@@ -1,92 +1,80 @@
 "use client";
-import useElementHeight from "@/hooks/useElementHeight";
 import Image from "next/image";
-import { useState, useEffect } from "react";
 
 const GallerySection = () => {
-  const [rightSideHeight, leftSideRef] = useElementHeight<HTMLDivElement>();
-  const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const images = [
+    "/images/m1.png",
+    "/images/m2.png",
+    "/images/m3.png",
+    "/images/m4.png",
+    "/images/m2.png",
+    "/images/m3.png",
+  ];
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth < 768);
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
   return (
-    <section className="flex flex-col gap-4 items-center justify-center md:px-8 xl:px-16 w-full">
-      <span>Food Gallery</span>
-      <h1 className="text-3xl font-bold text-defined-darkbrown text-center">
+    <section className="pb-12 flex flex-col gap-6 items-center justify-center w-full">
+      <span className="text-defined-brown">Food Gallery</span>
+      <h1 className="text-3xl md:text-4xl font-bold text-defined-darkbrown text-center">
         Our <span className="text-defined-green">Food Gallery</span>
       </h1>
-      <p className="text-center w-[50%]">Indulge your senses with a stunning display of mouthwatering culinary creations in our captivating food gallery. Feed your eyes and awaken your cravings!</p>
-      <div className="flex flex-col md:flex-row gap-6 justify-between items-center">
-        <div
-          className="w-full md:w-1/2 flex flex-col gap-4"
-          style={{ height: isSmallScreen ? "300px" : `${rightSideHeight}px` }}
-        >
-          <div className="flex flex-col gap-2 md:flex-row">
-            <div className="w-full md:w-1/2">
-              <Image
-                src="/images/m3.png"
-                alt="m3"
-                width={400}
-                height={400}
-                className="rounded-lg w-full h-full object-cover"
-              />
-            </div>
-            <div className="w-full md:w-1/2">
-              <Image
-                src="/images/m4.png"
-                alt="m4"
-                width={400}
-                height={400}
-                className="rounded-lg w-full h-full object-cover"
-              />
-            </div>
-          </div>
+      <p className="text-center max-w-2xl text-defined-brown">
+        Indulge your senses with a stunning display of mouthwatering culinary
+        creations in our captivating food gallery. Feed your eyes and awaken
+        your cravings!
+      </p>
+
+      {/* ✅ Compact grid layout */}
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 w-full mx-auto">
+        {/* Row 1 */}
+        <div className="col-span-1 h-[180px] sm:h-[220px] lg:h-[240px]">
           <Image
-            src="/images/m2.png"
-            alt="m2"
+            src={images[0]}
+            alt="gallery-1"
             width={400}
-            height={400}
-            className="rounded-lg w-full h-full object-cover"
+            height={300}
+            className="w-full h-full object-cover"
           />
         </div>
-        <div className="w-full md:w-1/2 flex flex-col gap-4" ref={leftSideRef}>
+
+        <div className="col-span-1 lg:col-span-2 h-[180px] sm:h-[220px] lg:h-[240px]">
           <Image
-            src="/images/m2.png"
-            alt="m2"
-            width={400}
-            height={400}
-            className="rounded-lg w-full h-full object-cover"
+            src={images[1]}
+            alt="gallery-2"
+            width={800}
+            height={300}
+            className="w-full h-full object-cover"
           />
-          <div className="flex flex-col gap-2 md:flex-row">
-            <div className="w-full md:w-1/2">
-              <Image
-                src="/images/m3.png"
-                alt="m3"
-                width={400}
-                height={400}
-                className="rounded-lg w-full h-full object-cover"
-              />
-            </div>
-            <div className="w-full md:w-1/2">
-              <Image
-                src="/images/m4.png"
-                alt="m4"
-                width={400}
-                height={400}
-                className="rounded-lg w-full h-full object-cover"
-              />
-            </div>
-          </div>
+        </div>
+
+        {/* Row 2 */}
+        <div className="col-span-1 h-[180px] sm:h-[220px] lg:h-[240px]">
+          <Image
+            src={images[2]}
+            alt="gallery-3"
+            width={400}
+            height={300}
+            className="w-full h-full object-cover"
+          />
+        </div>
+
+        <div className="col-span-1 h-[180px] sm:h-[220px] lg:h-[240px]">
+          <Image
+            src={images[3]}
+            alt="gallery-4"
+            width={400}
+            height={300}
+            className="w-full h-full object-cover"
+          />
+        </div>
+
+        <div className="col-span-2 lg:col-span-1 h-[180px] sm:h-[220px] lg:h-[240px]">
+          <Image
+            src={images[4]}
+            alt="gallery-5"
+            width={400}
+            height={300}
+            className="w-full h-full object-cover"
+          />
         </div>
       </div>
     </section>

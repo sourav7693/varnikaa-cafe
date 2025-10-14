@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const AboutSection2 = () => {
   return (
@@ -28,9 +29,9 @@ const AboutSection2 = () => {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-2">
-          <button className="bg-defined-green text-white py-2 px-5 rounded-md">
+          <Link href="/menu" className="hover:scale-105 transition-all duration-300 bg-defined-green text-white py-2 px-5 rounded-md">
             View Our Menu
-          </button>
+          </Link>
           <button className="text-defined-green border border-defined-green py-2 px-5 rounded-md">
             Get Offer
           </button>

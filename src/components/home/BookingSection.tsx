@@ -86,7 +86,7 @@ const BookingSection = () => {
       </div>
 
       <div className="w-full flex flex-col gap-8">
-        <div className="flex">
+        <div className="flex flex-col md:flex-row gap-4">
           {menu.slice(0, 4).map((section, index) => (
             <div key={index} className="w-full md:px-8 px-4">
               <h2 className="text-xl font-semibold text-defined-darkbrown mb-4 text-center">
@@ -105,7 +105,7 @@ const BookingSection = () => {
             </div>
           ))}
         </div>
-        <div className="flex">
+        <div className="flex flex-col md:flex-row gap-4">
           {menu.slice(4, 8).map((section, index) => (
             <div key={index} className="w-full md:px-8 px-4">
               <h2 className="text-xl font-semibold text-defined-darkbrown mb-4 text-center">

@@ -19,8 +19,8 @@ const page = () => {
         <AboutSection2 />
         <section className="self-padding">
           <MenuSection />
-          <GallerySection />
         </section>
+          <GallerySection />
         <TestimonialSection />
         <section className="self-padding">
           <BookingSection />

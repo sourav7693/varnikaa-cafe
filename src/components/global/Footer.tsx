@@ -71,6 +71,51 @@ const Footer = () => {
                 <p>Email: Varnikaacafe@gmail.com</p>
               </Link>
             </div>
+
+            <div className="flex gap-4 flex-row items-center">
+              <Link
+                href="/"
+                className="hover:scale-105 transition-all duration-300 bg-defined-green text-white py-2 px-5 rounded-md"
+              >
+                Get Directions
+              </Link>
+              <Link href="/">
+                <Image
+                  src="/images/facebook.png"
+                  alt="facebook"
+                  width={40}
+                  height={40}
+                  className="size-8"
+                />
+              </Link>
+              <Link href="https://www.instagram.com/varnikaacafe/" target="_blank">
+                <Image
+                  src="/images/instagram.png"
+                  alt="instagram"
+                  width={40}
+                  height={40}
+                  className="size-8"
+                />
+              </Link>
+              <Link href="/">
+                <Image
+                  src="/images/youtube.png"
+                  alt="youtube"
+                  width={40}
+                  height={40}
+                  className="size-8"
+                />
+              </Link>
+              <Link href="/">
+                <Image
+                  src="/images/x.png"
+                  alt="x"
+                  width={40}
+                  height={40}
+                  className="size-8"
+                />
+              </Link>
+            </div>
           </div>
         </div>
 

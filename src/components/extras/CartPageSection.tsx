@@ -39,7 +39,7 @@ const CartPageSection = () => {
           <h1 className="text-defined-darkbrown text-2xl font-semibold">
             Place Your Order
           </h1>
-          <form action="" className="flex flex-col gap-4">
+          <form onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-4">
             <input
               type="text"
               name="name"
