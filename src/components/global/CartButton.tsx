@@ -8,7 +8,7 @@ export default function WhatsAppButton() {
     const itemCount = getTotalItems();
 
   return (
-    <Link className="fixed bottom-14 right-8 z-[1100]" href="/checkout">
+    <Link className="md:hidden fixed bottom-14 right-8 z-[1100]" href="/checkout">
       <div className="relative flex items-center justify-center bg-defined-green text-white w-[3rem] h-[3rem] rounded-full shadow-lg">
         <FaCartArrowDown size={25} />
 
