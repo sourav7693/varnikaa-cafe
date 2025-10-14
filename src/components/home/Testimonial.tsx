@@ -70,8 +70,7 @@ const TestimonialSection = () => {
         <Image
           src="/images/testimonialbg.jpg"
           alt="testimonialbg"
-          width={500}
-          height={500}
+          fill
           className="w-full h-full object-cover"
         />
       </div>
