@@ -26,6 +26,7 @@ const Footer = () => {
         {/* Left Text Content */}
         <div className="flex flex-col gap-4 w-full md:w-1/2">
           <p className="lg:text-sm text-lg xlg:text-lg font-medium text-defined-darkbrown">
+          </p>
             <div className="w-full flex justify-center flex-col items-start gap-2">
               <Image
                 src="/images/leaf.png"
@@ -43,7 +44,6 @@ const Footer = () => {
             </h1>
             Varnikaa Cafe: Fresh flavors, cozy ambiance, and delightful meals.
             Visit us for a memorable dining experience every day.
-          </p>
 
           <div className="flex flex-col gap-4 w-full">
             <h1 className="lg:text-xl text-2xl xlg:text-2xl font-semibold text-defined-darkbrown">

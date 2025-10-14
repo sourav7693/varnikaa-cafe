@@ -111,7 +111,7 @@ const CafeSection = () => {
           .find((c) => c.name === activeCategory)
           ?.items.map((item) => {
             const cartItem = cartItems.find((c) => c.id === item.id);
-            const quantity = cartItem ? cartItem.quantity : 0;
+            const quantity = cartItem ? cartItem.quantity : 1;
 
             return (
               <div
@@ -172,50 +172,7 @@ const CafeSection = () => {
             );
           })}
       </div>
-    </section>
-    // <div className="w-full flex flex-col justify-center items-center gap-6">
-
-    //   <div className="w-full flex flex-col gap-8">
-    //     <div className="flex flex-col md:flex-row gap-4">
-    //       {menu.slice(0, 4).map((section, index) => (
-    //         <div key={index} className="w-full md:px-8 px-4">
-    //           <h2 className="text-xl font-semibold text-defined-darkbrown mb-4 text-center">
-    //             {section.name}
-    //           </h2>
-    //           <ul className="flex flex-col gap-2">
-    //             {section.items.map((item, index) => (
-    //               <li key={index} className="flex justify-between">
-    //                 <span className="text-sm font-medium">{item.name}</span>
-    //                 <span className="font-semibold text-defined-green">
-    //                   ₹{item.price}/-
-    //                 </span>
-    //               </li>
-    //             ))}
-    //           </ul>
-    //         </div>
-    //       ))}
-    //     </div>
-    //     <div className="flex flex-col md:flex-row gap-4">
-    //       {menu.slice(4, 8).map((section, index) => (
-    //         <div key={index} className="w-full md:px-8 px-4">
-    //           <h2 className="text-xl font-semibold text-defined-darkbrown mb-4 text-center">
-    //             {section.name}
-    //           </h2>
-    //           <ul className="flex flex-col gap-2">
-    //             {section.items.map((item, index) => (
-    //               <li key={index} className="flex justify-between">
-    //                 <span className="text-sm font-medium">{item.name}</span>
-    //                 <span className="font-semibold text-defined-green">
-    //                   ₹{item.price}/-
-    //                 </span>
-    //               </li>
-    //             ))}
-    //           </ul>
-    //         </div>
-    //       ))}
-    //     </div>
-    //   </div>
-    // </div>
+    </section>    
   );
 };
 

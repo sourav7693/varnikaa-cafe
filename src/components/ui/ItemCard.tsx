@@ -2,6 +2,8 @@
 import Image from "next/image";
 import { MdDelete } from "react-icons/md";
 import { useCart } from "@/context/CartContext";
+import { FaPlusCircle } from "react-icons/fa";
+import { FaMinusCircle } from "react-icons/fa";
 
 interface ItemCardProps {
   id: number;
@@ -12,11 +14,11 @@ interface ItemCardProps {
 }
 
 const ItemCard = ({ id, name, price, quantity, image }: ItemCardProps) => {
-  const { removeItem } = useCart();
+  const { deleteItem, removeItem, cartItems, addItem } = useCart();
 
   const handleDelete = () => {
     // remove completely from cart (no matter what qty)
-    removeItem(id);
+    deleteItem(id);
   };
 
   return (
@@ -43,13 +45,29 @@ const ItemCard = ({ id, name, price, quantity, image }: ItemCardProps) => {
         </div>
 
         <div className="flex flex-col md:flex-row justify-between md:items-center text-sm md:text-base gap-1">
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 items-center">
             <span className="text-defined-brown font-semibold">
               Price: ₹{price}
             </span>
             <span className="text-defined-brown font-semibold">
               Quantity: {quantity}
             </span>
+            <FaPlusCircle
+              className="text-defined-green"
+              onClick={() =>
+                addItem({
+                  id,
+                  name,
+                  price,
+                  image,
+                  quantity: 1,
+                })
+              }
+            />
+            <FaMinusCircle
+              onClick={() => removeItem(id)}
+              className="text-defined-green"
+            />
           </div>
           <span className="text-defined-brown font-semibold">
             Total: ₹{price} × {quantity} = ₹{price * quantity}

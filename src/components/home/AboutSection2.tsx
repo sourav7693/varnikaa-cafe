@@ -23,7 +23,7 @@ const AboutSection2 = () => {
       </div>
 
       {/* Overlay content */}
-      <div className="absolute inset-0 md:left-20 xlg:left-40 flex flex-col justify-center items-center sm:items-start px-4 sm:px-8 md:px-16 gap-3 sm:gap-4">
+      <div className="absolute inset-0 md:left-5 xlg:left-40 flex flex-col justify-center items-center sm:items-start px-4 sm:px-8 md:px-16 gap-3 sm:gap-4">
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xlg:text-6xl  font-bold text-center sm:text-left leading-snug">
           Have a Delicious <br className="hidden sm:block" /> Meal With{" "}
           <br className="hidden sm:block" /> Varnikaa Cafe

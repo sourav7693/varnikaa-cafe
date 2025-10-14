@@ -179,7 +179,7 @@ const MenuSection = () => {
           .find((c) => c.name === activeCategory)
           ?.items.map((item) => {
             const cartItem = cartItems.find((c) => c.id === item.id);
-            const quantity = cartItem ? cartItem.quantity : 0;
+            const quantity = cartItem ? cartItem.quantity : 1;
 
             return (
               <div

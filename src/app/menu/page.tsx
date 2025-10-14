@@ -1,5 +1,5 @@
 import SubBanner from "@/components/global/SubBanner"
-import GallerySection from "@/components/home/GallerySection";
+import CafeSection from "@/components/home/CafeSection";
 import MenuSection from "@/components/home/MenuSection";
 import MainTemplate from "@/templates/MainTemplate"
 
@@ -10,8 +10,9 @@ const page = () => {
       <SubBanner heading="Our Menu" />
       <section className="self-padding">
         <MenuSection />
+        <CafeSection />
       </section>      
-      <GallerySection />
+      
     </MainTemplate>
   );
 }

@@ -26,10 +26,9 @@ const CartPageSection = () => {
             Order Summary
           </h1>
           <p className="text-defined-brown font-semibold">
-            Delivery Charge:{" "}
+            SubTotal:{" "}
             <span className="text-defined-darkbrown font-semibold">₹200</span>{" "}
-          </p>
-          <p className="text-defined-brown font-semibold">Tax: </p>
+          </p>          
           <p className="text-defined-brown font-semibold">
             Gross Total:{" "}
             <span className="text-defined-darkbrown font-semibold">₹{total}</span>{" "}

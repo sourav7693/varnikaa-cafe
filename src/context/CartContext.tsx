@@ -1,5 +1,12 @@
 "use client";
-import { createContext, useContext, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+  useCallback,
+} from "react";
 
 interface CartItem {
   id: number;
@@ -13,16 +20,42 @@ interface CartContextType {
   cartItems: CartItem[];
   addItem: (item: CartItem) => void;
   removeItem: (id: number) => void;
+  deleteItem: (id: number) => void;
   updateQuantity: (id: number, quantity: number) => void;
   getTotalItems: () => number;
+  clearCart: () => void;
 }
+
+const STORAGE_KEY = "cartItems_v1";
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  //  Initialize from sessionStorage if available
+  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const stored = sessionStorage.getItem(STORAGE_KEY);
+        return stored ? JSON.parse(stored) : [];
+      } catch {
+        return [];
+      }
+    }
+    return [];
+  });
 
-  const addItem = (item: CartItem) => {
+  //  Sync changes to sessionStorage
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      try {
+        sessionStorage.setItem(STORAGE_KEY, JSON.stringify(cartItems));
+      } catch (err) {
+        console.warn("Failed to save cart:", err);
+      }
+    }
+  }, [cartItems]);
+
+  const addItem = useCallback((item: CartItem) => {
     setCartItems((prev) => {
       const existing = prev.find((i) => i.id === item.id);
       if (existing) {
@@ -32,28 +65,46 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       }
       return [...prev, { ...item, quantity: 1 }];
     });
-  };
+  }, []);
 
-  const removeItem = (id: number) => {
+  const removeItem = useCallback((id: number) => {
     setCartItems((prev) =>
       prev
-        .map((i) => (i.id === id ? { ...i, quantity: i.quantity - 1 } : i))
+        .map((i) =>
+          i.id === id && i.quantity > 1 ? { ...i, quantity: i.quantity - 1 } : i
+        )
         .filter((i) => i.quantity > 0)
     );
-  };
+  }, []);
 
-  const updateQuantity = (id: number, quantity: number) => {
+  const deleteItem = useCallback((id: number) => {
+    setCartItems((prev) => prev.filter((i) => i.id !== id));
+  }, []);
+
+  const updateQuantity = useCallback((id: number, quantity: number) => {
     setCartItems((prev) =>
       prev.map((i) => (i.id === id ? { ...i, quantity } : i))
     );
-  };
+  }, []);
 
-  const getTotalItems = () =>
-    cartItems.reduce((total, item) => total + item.quantity, 0);
+  const getTotalItems = useCallback(
+    () => cartItems.reduce((total, item) => total + item.quantity, 0),
+    [cartItems]
+  );
+
+  const clearCart = useCallback(() => setCartItems([]), []);
 
   return (
     <CartContext.Provider
-      value={{ cartItems, addItem, removeItem, updateQuantity, getTotalItems }}
+      value={{
+        cartItems,
+        addItem,
+        removeItem,
+        deleteItem,
+        updateQuantity,
+        getTotalItems,
+        clearCart,
+      }}
     >
       {children}
     </CartContext.Provider>
