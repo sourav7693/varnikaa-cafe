@@ -8,8 +8,8 @@ const SubBanner = ({ heading }: { heading: string }) => {
         <Image
           src="/images/subbanner.jpg"
           alt="Sub Banner"
-          width={1440}
-          height={250}
+          fill
+          priority
           className="object-cover h-full w-full"
         />
       </div>

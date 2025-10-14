@@ -1,15 +1,22 @@
+"use client";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import AppointmentModal from "../global/AppointmentModal";
 
 const HomeSlider = () => {
+  const [isAppointmentModalOpen, setIsAppointmentModalOpen] = useState(false);
+
+  const toggleAppointmentModal = () =>
+    setIsAppointmentModalOpen(!isAppointmentModalOpen);
   return (
     <div className="relative w-full h-[300px] md:h-[500px]">
       {/* Background image */}
       <Image
         src="/images/slider.jpg"
         alt="slider"
-        width={500}
-        height={500}
+        fill
+        priority
         className="object-cover h-full w-full"
       />
 
@@ -20,11 +27,6 @@ const HomeSlider = () => {
           <br className="hidden sm:block" /> Varnikaa Cafe
         </h1>
 
-        <p className="max-w-sm text-sm sm:text-base text-left">
-          A restaurant is a place where people go to eat, frequently with
-          friends, family, or coworkers.
-        </p>
-
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-2">
           <Link
             href="/menu"
@@ -32,11 +34,15 @@ const HomeSlider = () => {
           >
             View Our Menu
           </Link>
-          <button className="text-defined-green border border-defined-green py-2 px-5 rounded-md">
-            Enquiry Now
+          <button onClick={toggleAppointmentModal} className="text-defined-green border border-defined-green py-2 px-5 rounded-md">
+            Send Feedback
           </button>
         </div>
       </div>
+      <AppointmentModal
+        isOpen={isAppointmentModalOpen}
+        onClose={toggleAppointmentModal}
+      />
     </div>
   );
 };

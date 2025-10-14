@@ -15,7 +15,6 @@ const AppointmentModal = ({
     name: "",
     mobile: "",
     location: "",
-    class: "",
     message: "",
   });
   const handleSubmit = (e: React.FormEvent) => {
@@ -23,9 +22,7 @@ const AppointmentModal = ({
 
     if (
       !form.name ||
-      !form.mobile ||
-      !form.location ||
-      !form.class ||
+      !form.mobile ||        
       !form.message
     ) {
       toast.error("Please fill all the fields");
@@ -40,9 +37,8 @@ const AppointmentModal = ({
     const dest = "+919832480087";
     let message = `*Name:* ${form.name}
    *Phone:* ${form.mobile}
-   *Location: * ${form.location}
-   *Class: * ${form.class}   
-   *Message:* ${form.message}
+   *Location: * ${form.location}   
+   *Feedback Shared:* ${form.message}
      `;
     message = encodeURIComponent(message);
     // Check if user is on mobile
@@ -99,7 +95,7 @@ const AppointmentModal = ({
       >
         <div className="relative ">
           <button
-            className="absolute cursor-pointer top-2 right-3 bg-gray-200 text-gray-700 p-2 rounded-md hover:bg-gray-300 transition-all"
+            className="absolute cursor-pointer top-2 right-3 bg-gray-200 text-gray-700 p-2 rounded-3xl hover:bg-gray-300 transition-all"
             onClick={onClose}
           >
             <IoClose size={22} />
@@ -107,8 +103,8 @@ const AppointmentModal = ({
 
           <div className=" flex flex-col gap-4 justify-center items-center w-full bg-gradient-to-b from-[#f3f6ff] to-white p-8 rounded-2xl shadow-md">
             <h1 className="pt-6 w-full lg:w-[70%] text-center text-3xl font-semibold">
-              Get Your Free Moving{" "}
-              <span className="text-defined-purple">Quote Today!</span>
+              Share Your{" "}
+              <span className="text-defined-green">Feedback With Us!</span>
             </h1>
             <form
               className="flex flex-col items-center gap-6 w-full"
@@ -119,46 +115,34 @@ const AppointmentModal = ({
                 name="name"
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 placeholder="Name"
-                className="w-full px-4 py-2 placeholder:text-defined-purple border bg-white border-gray-300 rounded-md outline-none"
+                className="w-full px-4 py-2 placeholder:text-defined-green border bg-white border-gray-300 rounded-3xl outline-none"
               />
               <input
                 type="number"
                 name="mobile"
                 onChange={(e) => setForm({ ...form, mobile: e.target.value })}
-                placeholder="Number"
-                className="w-full px-4 py-2 placeholder:text-defined-purple border bg-white border-gray-300 rounded-md outline-none"
+                placeholder="Mobile Number"
+                className="w-full px-4 py-2 placeholder:text-defined-green border bg-white border-gray-300 rounded-3xl outline-none"
               />
               <input
                 type="text"
                 name="location"
                 onChange={(e) => setForm({ ...form, location: e.target.value })}
-                placeholder="Location"
-                className="w-full px-4 py-2 placeholder:text-defined-purple border bg-white border-gray-300 rounded-md outline-none"
-              />
-              <select
-                name="class"
-                onChange={(e) => setForm({ ...form, class: e.target.value })}
-                className="w-full px-4 py-2 placeholder:text-defined-purple border bg-white border-gray-300 rounded-md outline-none"
-              >
-                <option value="">Choose Class</option>
-                <option value="Traditonal Karate">Traditonal Karate</option>
-                <option value="Sports Karate">Sports Karate</option>
-                <option value="Self Defence for Women">
-                  Self Defence for Women
-                </option>
-              </select>
+                placeholder="Your Location"
+                className="w-full px-4 py-2 placeholder:text-defined-green border bg-white border-gray-300 rounded-3xl outline-none"
+              />              
               <input
                 type="text"
                 name="message"
                 onChange={(e) => setForm({ ...form, message: e.target.value })}
-                placeholder="Message"
-                className="w-full px-4 py-2 placeholder:text-defined-purple border bg-white border-gray-300 rounded-md outline-none"
+                placeholder="Your Feedback"
+                className="w-full px-4 py-2 placeholder:text-defined-green border bg-white border-gray-300 rounded-3xl outline-none"
               />
               <button
                 type="submit"
-                className="w-full px-4 py-2 text-white pink-purple rounded-md bg-defined-purple outline-none"
+                className="w-full px-4 py-2 text-white rounded-3xl bg-defined-green outline-none"
               >
-                Submit
+                Submit Feedback
               </button>
             </form>
           </div>

@@ -2,12 +2,9 @@
 import useElementHeight from "@/hooks/useElementHeight";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import AppointmentModal from "../global/AppointmentModal";
+import Link from "next/link";
 const AboutSection1 = () => {  
-const [isAppointmentModalOpen, setIsAppointmentModalOpen] = useState(false);
 
-const toggleAppointmentModal = () =>
-  setIsAppointmentModalOpen(!isAppointmentModalOpen);
      const [rightSideHeight, leftSideRef] = useElementHeight<HTMLDivElement>();
      const [isSmallScreen, setIsSmallScreen] = useState(false);
 
@@ -65,17 +62,13 @@ const toggleAppointmentModal = () =>
           leisurely meal, we promise a delightful culinary journey that keeps
           you coming back for more.
         </p>
-        <button
-          onClick={toggleAppointmentModal}
-          className="w-full md:w-[25%] text-defined-green border border-defined-green py-2 px-5 rounded-3xl"
+        <Link
+          href="/menu"
+          className="flex items-center justify-center hover:scale-105 transition-all duration-300 w-full md:w-[25%] text-defined-green border border-defined-green py-2 px-5 rounded-3xl"
         >
-          Enquiry Now
-        </button>
+          Visit Our Menu
+        </Link>
       </div>
-      <AppointmentModal
-        isOpen={isAppointmentModalOpen}
-        onClose={toggleAppointmentModal}
-      />
     </section>
   );
 }

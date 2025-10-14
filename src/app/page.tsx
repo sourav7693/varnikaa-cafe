@@ -1,6 +1,6 @@
 import AboutSection1 from "@/components/home/AboutSection1";
 import AboutSection2 from "@/components/home/AboutSection2";
-import BookingSection from "@/components/home/BookingSection";
+import CafeSection from "@/components/home/CafeSection";
 import GallerySection from "@/components/home/GallerySection";
 import HomeSlider from "@/components/home/HomeSlider";
 import MenuSection from "@/components/home/MenuSection";
@@ -16,15 +16,15 @@ const page = () => {
         <AboutSection1 />
         <SpecialMenu />
       </section>
-        <AboutSection2 />
-        <section className="self-padding">
-          <MenuSection />
-        </section>
-          <GallerySection />
-        <TestimonialSection />
-        <section className="self-padding">
-          <BookingSection />
-        </section>
+      <AboutSection2 />
+      <section className="self-padding">
+        <MenuSection />
+      </section>
+      <GallerySection />
+      <TestimonialSection />
+      <section className="self-padding">
+        <CafeSection />
+      </section>
     </MainTemplate>
   );
 };

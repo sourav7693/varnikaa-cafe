@@ -1,7 +1,7 @@
 import Footer from "@/components/global/Footer";
 import Header from "@/components/global/Header";
 import TopHeader from "@/components/global/TopHeader";
-import OnlyMobile from "./OnlyMobile";
+import CartButton from "@/components/global/CartButton";
 export default function MainTemplate({
   children,
 }: {
@@ -16,7 +16,7 @@ export default function MainTemplate({
 
       {/* Main Content */}
       <div className=" lg:mt-[5rem] md:mt-[5rem] mt-[2rem]">{children}</div>
-      <OnlyMobile />
+      <CartButton />
       <Footer />
     </div>
   );

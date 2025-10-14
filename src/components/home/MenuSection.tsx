@@ -3,6 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { useCart } from "@/context/CartContext";
 import Link from "next/link";
+import DefinedHeader from "../ui/DefinedHeader";
 
 const MenuSection = () => {
   const categories = [
@@ -146,7 +147,7 @@ const MenuSection = () => {
 
   return (
     <section className="flex flex-col items-center justify-center gap-4 md:px-8 xl:px-16 w-full">
-      <span>Our Menus</span>
+      <DefinedHeader title="Our Menu" />
       <h1 className="text-defined-darkbrown text-xl md:text-4xl font-bold">
         Our Most Popular{" "}
         <span className="text-defined-green">Delicious Foods</span>
