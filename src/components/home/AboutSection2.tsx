@@ -13,20 +13,23 @@ const AboutSection2 = () => {
     <div className="relative w-full h-[350px] md:h-[500px] xlg:h-[600px]">
       {/* Background image */}
       <div className="absolute inset-0">
-      <Image
-        src="/images/offerbg.jpg"
-        alt="offerbg"
-        fill
-        priority
-        className="object-cover h-full w-full"
-      />
+        <Image
+          src="/images/offerbg.jpg"
+          alt="offerbg"
+          fill
+          priority
+          className="object-cover h-full w-full"
+        />
       </div>
 
       {/* Overlay content */}
       <div className="absolute inset-0 md:left-5 xlg:left-40 flex flex-col justify-center items-center sm:items-start px-4 sm:px-8 md:px-16 gap-3 sm:gap-4">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xlg:text-6xl  font-bold text-center sm:text-left leading-snug">
-          Have a Delicious <br className="hidden sm:block" /> Meal With{" "}
-          <br className="hidden sm:block" /> Varnikaa Cafe
+        <h1 className=" md:text-4xl lg:text-5xl font-bold  text-left leading-snug text-defined-darkbrown w-[50%] md:w-full">
+          Have a <span className="text-[#E5B338]">Delicious</span>{" "}
+          <br className="hidden sm:block" />{" "}
+          <span className="text-[#DD1919]">Meal</span> With{" "}
+          <br className="hidden sm:block" />{" "}
+          <span className="text-defined-green">Varnikaa Cafe</span>
         </h1>
 
         <p className="max-w-sm text-sm sm:text-base text-center sm:text-left">
@@ -44,7 +47,10 @@ const AboutSection2 = () => {
           >
             View Our Menu
           </Link>
-          <button onClick={toggleAppointmentModal} className="text-defined-green border border-defined-green py-2 px-5 rounded-md">
+          <button
+            onClick={toggleAppointmentModal}
+            className="text-defined-green border border-defined-green py-2 px-5 rounded-md"
+          >
             Send Feedback
           </button>
         </div>

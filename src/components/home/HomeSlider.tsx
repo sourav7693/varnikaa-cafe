@@ -23,8 +23,11 @@ const HomeSlider = () => {
       {/* Overlay content */}
       <div className="absolute inset-0 flex flex-col justify-center  items-start sm:items-start px-4 sm:px-8 md:px-16 gap-3 sm:gap-4 text-wrap">
         <h1 className=" md:text-4xl lg:text-5xl font-bold  text-left leading-snug text-defined-darkbrown w-[50%] md:w-full">
-          Have a Delicious <br className="hidden sm:block" /> Meal With{" "}
-          <br className="hidden sm:block" /> Varnikaa Cafe
+          Have a <span className="text-[#E5B338]">Delicious</span>{" "}
+          <br className="hidden sm:block" />{" "}
+          <span className="text-[#DD1919]">Meal</span> With{" "}
+          <br className="hidden sm:block" />{" "}
+          <span className="text-defined-green">Varnikaa Cafe</span>
         </h1>
 
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-2">
@@ -34,7 +37,10 @@ const HomeSlider = () => {
           >
             View Our Menu
           </Link>
-          <button onClick={toggleAppointmentModal} className="text-defined-green border border-defined-green py-2 px-5 rounded-md">
+          <button
+            onClick={toggleAppointmentModal}
+            className="text-defined-green border border-defined-green py-2 px-5 rounded-md"
+          >
             Send Feedback
           </button>
         </div>
