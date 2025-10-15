@@ -88,7 +88,7 @@ const CafeSection = () => {
         Introducing our tantalizing food menu, filled with exquisite flavors and
         culinary delights to satisfy every plate.
       </p>
-      <div className="w-full overflow-x-auto">
+      <div className="w-full overflow-x-auto flex items-center justify-center">
         <div className="flex whitespace-nowrap gap-3 px-4 py-2">
           {categories.map((category) => (
             <button
