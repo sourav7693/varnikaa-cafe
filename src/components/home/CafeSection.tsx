@@ -80,7 +80,7 @@ const CafeSection = () => {
      const { cartItems, addItem, removeItem } = useCart();
   return (
     <section className="flex flex-col items-center justify-center gap-4 md:px-8 xl:px-16 w-full">
-     <DefinedHeader title="Cafe Menu" />
+      <DefinedHeader title="Cafe Menu" />
       <h1 className="text-defined-darkbrown text-xl md:text-4xl font-bold">
         Varnikaa <span className="text-defined-green">Cafe Menu</span>
       </h1>
@@ -88,21 +88,23 @@ const CafeSection = () => {
         Introducing our tantalizing food menu, filled with exquisite flavors and
         culinary delights to satisfy every plate.
       </p>
-      <div className="flex overflow-x-auto whitespace-nowrap gap-3 px-4 py-2 scrollbar-hide sm:justify-center">
-        {categories.map((category) => (
-          <button
-            key={category.name}
-            onClick={() => setActiveCategory(category.name)}
-            className={`px-4 py-2 rounded-full text-sm sm:text-base font-medium transition-all duration-200 flex-shrink-0
-          ${
-            activeCategory === category.name
-              ? "bg-defined-green text-white shadow-md"
-              : "bg-green-100 text-defined-green hover:bg-green-200"
-          }`}
-          >
-            {category.name}
-          </button>
-        ))}
+      <div className="w-full overflow-x-auto">
+        <div className="flex whitespace-nowrap gap-3 px-4 py-2">
+          {categories.map((category) => (
+            <button
+              key={category.name}
+              onClick={() => setActiveCategory(category.name)}
+              className={`px-4 py-2 rounded-full text-sm sm:text-base font-medium transition-all duration-200 flex-shrink-0
+        ${
+          activeCategory === category.name
+            ? "bg-defined-green text-white shadow-md"
+            : "bg-green-100 text-defined-green hover:bg-green-200"
+        }`}
+            >
+              {category.name}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Menu Cards */}
@@ -172,7 +174,7 @@ const CafeSection = () => {
             );
           })}
       </div>
-    </section>    
+    </section>
   );
 };
 
