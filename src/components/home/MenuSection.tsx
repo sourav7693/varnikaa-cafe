@@ -149,11 +149,11 @@ const MenuSection = () => {
   return (
     <section className="flex flex-col items-center justify-center gap-4 md:px-8 xl:px-16 w-full">
       <DefinedHeader title="Our Menu" />
-      <h1 className="text-defined-darkbrown text-xl md:text-4xl font-bold">
+      <h1 className="text-defined-darkbrown text-center text-xl md:text-4xl font-bold">
         Our Most Popular{" "}
         <span className="text-defined-green">Delicious Cloud Kitchen</span>
       </h1>
-      <p className="text-center w-[50%]">
+      <p className="text-center md:w-[50%]">
         Introducing our tantalizing food menu, filled with exquisite flavors and
         culinary delights to satisfy every plate.
       </p>

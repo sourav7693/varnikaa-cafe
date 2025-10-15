@@ -23,11 +23,13 @@ const HomeSlider = () => {
       {/* Overlay content */}
       <div className="absolute inset-0 flex flex-col justify-center  items-start sm:items-start px-4 sm:px-8 md:px-16 gap-3 sm:gap-4 text-wrap">
         <h1 className=" md:text-4xl lg:text-5xl font-bold  text-left leading-snug text-defined-darkbrown w-[50%] md:w-full">
-          <span className="text-blue-600">Have a Delicious</span>{" "}
-          <br className="hidden sm:block" />{" "}
-          <span className="text-blue-600">Meal</span> With{" "}
-          <br className="hidden sm:block" />{" "}
-          <span className="text-defined-green">Varnikaa Cafe</span>
+          <span className="text-blue-600 hidden sm:block">
+            Have a Delicious
+          </span>{" "}
+          <span className="text-blue-600 hidden sm:block">Meal With</span>{" "}
+          <span className="text-defined-green text-2xl md:text-5xl">
+            Varnikaa Cafe
+          </span>
         </h1>
 
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-2">
