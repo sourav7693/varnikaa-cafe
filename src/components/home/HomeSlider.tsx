@@ -23,9 +23,9 @@ const HomeSlider = () => {
       {/* Overlay content */}
       <div className="absolute inset-0 flex flex-col justify-center  items-start sm:items-start px-4 sm:px-8 md:px-16 gap-3 sm:gap-4 text-wrap">
         <h1 className=" md:text-4xl lg:text-5xl font-bold  text-left leading-snug text-defined-darkbrown w-[50%] md:w-full">
-          Have a <span className="text-[#E5B338]">Delicious</span>{" "}
+          <span className="text-blue-600">Have a Delicious</span>{" "}
           <br className="hidden sm:block" />{" "}
-          <span className="text-[#DD1919]">Meal</span> With{" "}
+          <span className="text-blue-600">Meal</span> With{" "}
           <br className="hidden sm:block" />{" "}
           <span className="text-defined-green">Varnikaa Cafe</span>
         </h1>
