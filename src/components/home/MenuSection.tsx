@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useCart } from "@/context/CartContext";
 import Link from "next/link";
 import DefinedHeader from "../ui/DefinedHeader";
+import { FaMinusCircle, FaPlusCircle } from "react-icons/fa";
 
 const MenuSection = () => {
   const categories = [
@@ -181,7 +182,7 @@ const MenuSection = () => {
           .find((c) => c.name === activeCategory)
           ?.items.map((item) => {
             const cartItem = cartItems.find((c) => c.id === item.id);
-            const quantity = cartItem ? cartItem.quantity : 1;
+            const quantity : number | string = cartItem ? cartItem.quantity : "ADD";
 
             return (
               <div
@@ -209,14 +210,14 @@ const MenuSection = () => {
                   </span>
 
                   <div className="rounded-xl border border-[#ccc] flex justify-between items-center gap-4 px-4">
-                    <button
+                    <FaMinusCircle
+                    size={13}
                       onClick={() => removeItem(item.id)}
-                      className="font-bold text-lg"
-                    >
-                      -
-                    </button>
+                      className="font-bold text-lg text-defined-green cursor-pointer"
+                    />                                          
                     <span>{quantity}</span>
-                    <button
+                    <FaPlusCircle
+                    size={13}
                       onClick={() =>
                         addItem({
                           id: item.id,
@@ -226,10 +227,8 @@ const MenuSection = () => {
                           quantity: 1,
                         })
                       }
-                      className="font-bold text-defined-green text-lg"
-                    >
-                      +
-                    </button>
+                      className="font-bold text-defined-green text-lg cursor-pointer"
+                    />
                   </div>
                 </div>
                 <Link

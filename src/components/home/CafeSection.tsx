@@ -4,80 +4,121 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import DefinedHeader from "../ui/DefinedHeader";
+import { FaMinusCircle, FaPlusCircle } from "react-icons/fa";
 
 const CafeSection = () => {
   const categories = [
     {
       name: "Tea/Coffee/Toast",
       items: [
-        { name: "Ginger Tea", image : "/images/m1.png", id: 1,  price: 20 },
-        { name: "Masala Tea",  image : "/images/m1.png", id: 2, price: 30 },
-        { name: "Black Coffee", image : "/images/m1.png", id: 3,  price: 40 },
-        { name: "Milk Coffee", image : "/images/m1.png", id: 4,  price: 40 },
+        { name: "Ginger Tea", image: "/images/m1.png", id: 1, price: 20 },
+        { name: "Masala Tea", image: "/images/m1.png", id: 2, price: 30 },
+        { name: "Black Coffee", image: "/images/m1.png", id: 3, price: 40 },
+        { name: "Milk Coffee", image: "/images/m1.png", id: 4, price: 40 },
       ],
     },
     {
       name: "Sandwiches",
       items: [
-        { name: "Veg Grill Sandwich", image : "/images/m1.png", id: 5,  price: 50 },
-        { name: "Veg Grill Cheese Sandwich", image : "/images/m1.png", id: 6,  price: 60 },
-        { name: "Grill Paneer Sandwich", image : "/images/m1.png", id: 7,  price: 80 },
-        { name: "Grill Paneer Cheese Sandwich", image : "/images/m1.png", id: 8,  price: 90 },
+        {
+          name: "Veg Grill Sandwich",
+          image: "/images/m1.png",
+          id: 5,
+          price: 50,
+        },
+        {
+          name: "Veg Grill Cheese Sandwich",
+          image: "/images/m1.png",
+          id: 6,
+          price: 60,
+        },
+        {
+          name: "Grill Paneer Sandwich",
+          image: "/images/m1.png",
+          id: 7,
+          price: 80,
+        },
+        {
+          name: "Grill Paneer Cheese Sandwich",
+          image: "/images/m1.png",
+          id: 8,
+          price: 90,
+        },
       ],
     },
     {
       name: "Chinese",
       items: [
-        { name: "Veg Momo", image : "/images/m1.png", id: 9,  price: 50 },
-        { name: "Chowmin", image : "/images/m1.png", id: 10,  price: 50 },
+        { name: "Veg Momo", image: "/images/m1.png", id: 9, price: 50 },
+        { name: "Chowmin", image: "/images/m1.png", id: 10, price: 50 },
       ],
     },
     {
       name: "Noodles",
       items: [
-        { name: "Plain Maggie", image : "/images/m1.png", id: 11,  price: 45 },
-        { name: "Vegetable Masala Maggie", image : "/images/m1.png", id: 12,  price: 70 },
-        { name: "Vegetable Cheese Maggie", image : "/images/m1.png", id: 13,  price: 80 },
+        { name: "Plain Maggie", image: "/images/m1.png", id: 11, price: 45 },
+        {
+          name: "Vegetable Masala Maggie",
+          image: "/images/m1.png",
+          id: 12,
+          price: 70,
+        },
+        {
+          name: "Vegetable Cheese Maggie",
+          image: "/images/m1.png",
+          id: 13,
+          price: 80,
+        },
       ],
     },
     {
       name: "Rolled Rolls",
       items: [
-        { name: "Veg Roll", image : "/images/m1.png", id: 14,  price: 50 },
-        { name: "Veg Cheese Roll", image : "/images/m1.png", id: 15,  price: 60},
-        { name: "Veg Paneer Roll", image : "/images/m1.png", id: 16,  price: 80 },
-        { name: "Veg Paneer Cheese Roll", image : "/images/m1.png", id: 17,  price: 90 },
+        { name: "Veg Roll", image: "/images/m1.png", id: 14, price: 50 },
+        { name: "Veg Cheese Roll", image: "/images/m1.png", id: 15, price: 60 },
+        { name: "Veg Paneer Roll", image: "/images/m1.png", id: 16, price: 80 },
+        {
+          name: "Veg Paneer Cheese Roll",
+          image: "/images/m1.png",
+          id: 17,
+          price: 90,
+        },
       ],
     },
     {
       name: "Must Try",
       items: [
-        { name: "Pav Bhaji", image : "/images/m1.png", id: 18,  price: 60 },
-        { name: "Aloo Crispy Chaat", image : "/images/m1.png", id: 19,  price: 60 },
-        { name: "Chips Small", image : "/images/m1.png", id: 20,  price: 60 },
-        { name: "Chips Medium",  image : "/images/m1.png", id: 21, price: 70 },
-        { name: "Chips Large", image : "/images/m1.png", id: 22,  price: 90 },
+        { name: "Pav Bhaji", image: "/images/m1.png", id: 18, price: 60 },
+        {
+          name: "Aloo Crispy Chaat",
+          image: "/images/m1.png",
+          id: 19,
+          price: 60,
+        },
+        { name: "Chips Small", image: "/images/m1.png", id: 20, price: 60 },
+        { name: "Chips Medium", image: "/images/m1.png", id: 21, price: 70 },
+        { name: "Chips Large", image: "/images/m1.png", id: 22, price: 90 },
       ],
     },
     {
       name: "Refreshmeners",
       items: [
-        { name: "Nimbu Paani", image : "/images/m1.png", id: 23,  price: 30 },
-        { name: "Aam Panna", image : "/images/m1.png", id: 24,  price: 30 },
-        { name: "Masala Coke", image : "/images/m1.png", id: 25,  price: 50 },
+        { name: "Nimbu Paani", image: "/images/m1.png", id: 23, price: 30 },
+        { name: "Aam Panna", image: "/images/m1.png", id: 24, price: 30 },
+        { name: "Masala Coke", image: "/images/m1.png", id: 25, price: 50 },
       ],
     },
     {
       name: "Burgers",
       items: [
-        { name: "Veg Burger", image : "/images/m1.png", id: 26,  price: 60 },
-        { name: "Cheese Burger", image : "/images/m1.png", id: 27,  price: 80 },
+        { name: "Veg Burger", image: "/images/m1.png", id: 26, price: 60 },
+        { name: "Cheese Burger", image: "/images/m1.png", id: 27, price: 80 },
       ],
     },
   ];
-   const [activeCategory, setActiveCategory] = useState("Tea/Coffee/Toast");
-  
-     const { cartItems, addItem, removeItem } = useCart();
+  const [activeCategory, setActiveCategory] = useState("Tea/Coffee/Toast");
+
+  const { cartItems, addItem, removeItem } = useCart();
   return (
     <section className="flex flex-col items-center justify-center gap-4 md:px-8 xl:px-16 w-full">
       <DefinedHeader title="Cafe Menu" />
@@ -113,7 +154,9 @@ const CafeSection = () => {
           .find((c) => c.name === activeCategory)
           ?.items.map((item) => {
             const cartItem = cartItems.find((c) => c.id === item.id);
-            const quantity = cartItem ? cartItem.quantity : 1;
+            const quantity: number | string = cartItem
+              ? cartItem.quantity
+              : "ADD";
 
             return (
               <div
@@ -141,14 +184,14 @@ const CafeSection = () => {
                   </span>
 
                   <div className="rounded-xl border border-[#ccc] flex justify-between items-center gap-4 px-4">
-                    <button
+                    <FaMinusCircle
+                      size={13}
                       onClick={() => removeItem(item.id)}
-                      className="font-bold text-lg"
-                    >
-                      -
-                    </button>
+                      className="font-bold text-lg text-defined-green cursor-pointer"
+                    />
                     <span>{quantity}</span>
-                    <button
+                    <FaPlusCircle
+                      size={13}
                       onClick={() =>
                         addItem({
                           id: item.id,
@@ -158,10 +201,8 @@ const CafeSection = () => {
                           quantity: 1,
                         })
                       }
-                      className="font-bold text-defined-green text-lg"
-                    >
-                      +
-                    </button>
+                      className="font-bold text-defined-green text-lg cursor-pointer"
+                    />
                   </div>
                 </div>
                 <Link

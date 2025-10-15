@@ -5,14 +5,15 @@ const TopHeader = () => {
   return (
     <section className="md:px-18 px-4 z-[60] w-full flex ">
       <div className="w-full h-[3rem] hidden text-defined-darkbrown bg-white md:flex justify-between sm:gap-2 md:gap-0 items-center">
-        <div className=" flex items-center gap-2 font-medium">          
+        <div className=" flex items-center gap-2 font-medium">
           <Link
             className="hover:scale-105 transition-all duration-300"
-            href={"/"}
+            href={"https://www.instagram.com/varnikaacafe/"}
             target="_blank"
           >
             Instagram
-          </Link>{" | "}
+          </Link>
+          {" | "}
           <Link
             className="hover:scale-105 transition-all duration-300"
             href={"/"}
