@@ -150,7 +150,7 @@ const MenuSection = () => {
       <DefinedHeader title="Our Menu" />
       <h1 className="text-defined-darkbrown text-xl md:text-4xl font-bold">
         Our Most Popular{" "}
-        <span className="text-defined-green">Delicious Foods</span>
+        <span className="text-defined-green">Delicious Cloud Kitchen</span>
       </h1>
       <p className="text-center w-[50%]">
         Introducing our tantalizing food menu, filled with exquisite flavors and
