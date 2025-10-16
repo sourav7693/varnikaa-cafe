@@ -25,26 +25,23 @@ const Footer = () => {
       <div className="relative flex flex-col md:flex-row justify-between items-start w-full gap-8 mb-4 self-padding">
         {/* Left Text Content */}
         <div className="flex flex-col gap-4 w-full md:w-1/2">
-          <p className="lg:text-sm text-lg xlg:text-lg font-medium text-defined-darkbrown">
-          </p>
-            <div className="w-full flex justify-center flex-col items-start gap-2">
-              <Image
-                src="/images/leaf.png"
-                alt="leaf"
-                width={500}
-                height={500}
-                className="object-cover size-10"
-              />
-              <p className="text-defined-green font-medium text-center">
-                Our Location
-              </p>
-            </div>
-            <h1 className="text-3xl text-defined-darkbrown">
-              Visit Our Restaurant
-            </h1>
-            Varnikaa Cafe: Fresh flavors, cozy ambiance, and delightful meals.
-            Visit us for a memorable dining experience every day.
-
+          <div className="w-full flex justify-center flex-col items-start gap-2">
+            <Image
+              src="/images/leaf.png"
+              alt="leaf"
+              width={500}
+              height={500}
+              className="object-cover size-10"
+            />
+            <p className="text-defined-green font-medium text-center">
+              Our Location
+            </p>
+          </div>
+          <h1 className="text-3xl text-defined-darkbrown">
+            Visit Our Restaurant
+          </h1>
+          Varnikaa Cafe: Fresh flavors, cozy ambiance, and delightful meals.
+          Visit us for a memorable dining experience every day.
           <div className="flex flex-col gap-4 w-full">
             <h1 className="lg:text-xl text-2xl xlg:text-2xl font-semibold text-defined-darkbrown">
               Contact Information
@@ -56,7 +53,7 @@ const Footer = () => {
                 target="_blank"
                 className="flex items-center gap-2 hover:underline"
               >
-                Address: Ward No 9, Khalpara, Burdwan Road, Siliguri WB 734001
+                Address: Premendra Mitra Street, Ward No 27, Siliguri WB 734005
               </Link>
               <Link
                 href="tel:+919434320315"
@@ -78,17 +75,11 @@ const Footer = () => {
                 className="hover:scale-105 transition-all duration-300 bg-defined-green text-white py-2 px-5 rounded-md"
               >
                 Get Directions
-              </Link>
-              <Link href="/">
-                <Image
-                  src="/images/facebook.png"
-                  alt="facebook"
-                  width={40}
-                  height={40}
-                  className="size-8"
-                />
-              </Link>
-              <Link href="https://www.instagram.com/varnikaacafe/" target="_blank">
+              </Link>              
+              <Link
+                href="https://www.instagram.com/varnikaacafe/"
+                target="_blank"
+              >
                 <Image
                   src="/images/instagram.png"
                   alt="instagram"
@@ -105,16 +96,7 @@ const Footer = () => {
                   height={40}
                   className="size-8"
                 />
-              </Link>
-              <Link href="/">
-                <Image
-                  src="/images/x.png"
-                  alt="x"
-                  width={40}
-                  height={40}
-                  className="size-8"
-                />
-              </Link>
+              </Link>              
             </div>
           </div>
         </div>
@@ -122,7 +104,7 @@ const Footer = () => {
         {/* Right Image Section */}
         <div className="relative flex justify-center items-center w-full md:w-1/2 h-[280px]">
           {/* Left image (behind) */}
-          <div className="absolute md:left-1/2 md:-translate-x-[80%] -translate-x-[40%] md:translate-y-[20%] translate-y-[30%] w-40 sm:w-56 md:w-64 h-40 sm:h-56 md:h-64 rounded-xl overflow-hidden z-10 shadow-md">
+          <div className="absolute md:left-1/2 md:-translate-x-[100%] -translate-x-[40%] md:translate-y-[30%] translate-y-[30%] w-40 sm:w-56 md:w-64 h-40 sm:h-56 md:h-74 rounded-xl overflow-hidden z-10 shadow-md">
             <Image
               src="/images/footerimg1.jpg"
               alt="left dish"
@@ -132,7 +114,7 @@ const Footer = () => {
           </div>
 
           {/* Right image (behind) */}
-          <div className="absolute left-1/2 md:translate-x-[10%] -translate-x-[30%] w-50 sm:w-56 md:w-64 h-64 sm:h-56 md:h-84 rounded-xl overflow-hidden z-0 shadow-md">
+          <div className="absolute left-1/2 md:translate-y-[5%] -translate-x-[30%]  w-50 sm:w-56 md:w-84 h-64 sm:h-56 md:h-94 rounded-xl overflow-hidden z-0 shadow-md">
             <Image
               src="/images/footerimg2.jpg"
               alt="right dish"

@@ -21,8 +21,8 @@ const SpecialMenu = () => {
   }, []);
   return (
     <section className="flex flex-col gap-4">
-      <h1 className="text-3xl font-bold text-defined-darkbrown text-center md:text-left">
-        Our Special Menu
+      <h1 className="text-3xl font-bold text-defined-green text-center">
+        Gallery
       </h1>
       <div className="flex flex-col md:flex-row gap-6 justify-between items-center">
         <div
@@ -30,7 +30,7 @@ const SpecialMenu = () => {
           style={{ height: isSmallScreen ? "450px" : `${rightSideHeight}px` }}
         >
           <Image
-            src="/images/m1.png"
+            src="/images/g1.jpg"
             alt="m1"
             width={400}
             height={400}
@@ -39,7 +39,7 @@ const SpecialMenu = () => {
         </div>
         <div className="w-full md:w-1/2 flex flex-col gap-4" ref={leftSideRef}>
           <Image
-            src="/images/m2.png"
+            src="/images/g2.jpg"
             alt="m2"
             width={400}
             height={400}
@@ -48,7 +48,7 @@ const SpecialMenu = () => {
           <div className="flex flex-col gap-4 md:flex-row">
             <div className="w-full md:w-1/2">
               <Image
-                src="/images/m3.png"
+                src="/images/g3.jpg"
                 alt="m3"
                 width={400}
                 height={400}
@@ -57,7 +57,7 @@ const SpecialMenu = () => {
             </div>
             <div className="w-full md:w-1/2">
               <Image
-                src="/images/m4.png"
+                src="/images/g4.jpg"
                 alt="m4"
                 width={400}
                 height={400}

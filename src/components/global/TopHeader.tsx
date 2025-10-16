@@ -25,7 +25,7 @@ const TopHeader = () => {
         <div className="xlg:text-base text-sm flex items-center gap-2 font-medium">
           <span>Order On</span>
           <FaWhatsapp className="text-defined-green size-5" />{" "}
-          <Link href={"tel:+919832480087"}>+91 98324 80087</Link>
+          <Link href={"tel:+919434320315"}>+91 94343 20315</Link>
         </div>
       </div>
     </section>

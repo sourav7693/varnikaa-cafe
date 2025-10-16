@@ -10,7 +10,7 @@ const HomeSlider = () => {
   const toggleAppointmentModal = () =>
     setIsAppointmentModalOpen(!isAppointmentModalOpen);
   return (
-    <div className="relative w-full h-[300px] md:h-[500px]">
+    <div className="relative w-full h-[250px] md:h-[500px]">
       {/* Background image */}
       <Image
         src="/images/slider.jpg"
@@ -26,9 +26,9 @@ const HomeSlider = () => {
           <span className="text-blue-600 hidden sm:block">
             Have a Delicious
           </span>{" "}
-          <span className="text-blue-600 hidden sm:block">Meal With</span>{" "}
+          <span className="text-blue-600 hidden sm:block">Meal From</span>{" "}
           <span className="text-defined-green text-2xl md:text-5xl">
-            Varnikaa Cafe
+            Kitchen to Heart
           </span>
         </h1>
 

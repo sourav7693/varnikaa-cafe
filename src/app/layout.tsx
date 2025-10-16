@@ -25,7 +25,7 @@ export default function RootLayout({
         <ProgressBar />
         <Toaster />
         <CartProvider>
-          <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+          <Suspense fallback={<div></div>}>{children}</Suspense>
         </CartProvider>
       </body>
     </html>

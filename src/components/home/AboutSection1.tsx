@@ -25,7 +25,7 @@ const AboutSection1 = () => {
     <section className="flex flex-col md:flex-row w-full h-auto justify-between gap-8">
       <div className="w-full md:w-[35%]" ref={leftSideRef}>
         <Image
-          src="/images/about.png"
+          src="/images/about.jpg"
           alt="about-1"
           width={500}
           height={500}

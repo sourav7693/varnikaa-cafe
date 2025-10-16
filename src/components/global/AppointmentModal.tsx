@@ -34,7 +34,7 @@ const AppointmentModal = ({
       return;
     }
 
-    const dest = "+919832480087";
+    const dest = "+919434320315";
     let message = `*Name:* ${form.name}
    *Phone:* ${form.mobile}
    *Location: * ${form.location}   
