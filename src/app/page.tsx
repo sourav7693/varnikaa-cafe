@@ -1,7 +1,6 @@
 import AboutSection1 from "@/components/home/AboutSection1";
 import AboutSection2 from "@/components/home/AboutSection2";
 import CafeSection from "@/components/home/CafeSection";
-import GallerySection from "@/components/home/GallerySection";
 import HomeSlider from "@/components/home/HomeSlider";
 import MenuSection from "@/components/home/MenuSection";
 import SpecialMenu from "@/components/home/SpecialMenu";
@@ -19,8 +18,7 @@ const page = () => {
       <AboutSection2 />
       <section className="self-padding">
         <MenuSection />
-      </section>
-      <GallerySection />
+      </section>      
       <TestimonialSection />
       <section className="self-padding">
         <CafeSection />

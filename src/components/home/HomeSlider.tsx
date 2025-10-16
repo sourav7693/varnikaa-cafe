@@ -24,11 +24,10 @@ const HomeSlider = () => {
       <div className="absolute inset-0 flex flex-col justify-center  items-start sm:items-start px-4 sm:px-8 md:px-16 gap-3 sm:gap-4 text-wrap">
         <h1 className=" md:text-4xl lg:text-5xl font-bold  text-left leading-snug text-defined-darkbrown w-[50%] md:w-full">
           <span className="text-blue-600 hidden sm:block">
-            Have a Delicious
-          </span>{" "}
-          <span className="text-blue-600 hidden sm:block">Meal From</span>{" "}
+            Have a Delicious Meal
+          </span>{" "}          
           <span className="text-defined-green text-2xl md:text-5xl">
-            Kitchen to Heart
+            From Kitchen to Heart
           </span>
         </h1>
 
