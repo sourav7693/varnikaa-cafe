@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { IoCloseSharp } from "react-icons/io5";
@@ -14,22 +14,32 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState<number | null>(null);  
+  const [openDropdown, setOpenDropdown] = useState<number | null>(null);
   const router = useRouter();
-    const searchParams = useSearchParams();
-    const [searchTerm, setSearchTerm] = useState(
-      searchParams.get("search") || ""
-    );
-    
-    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const term = e.target.value;
-      setSearchTerm(term);
+  const searchParams = useSearchParams();
+  const [searchTerm, setSearchTerm] = useState(
+    searchParams.get("search") || ""
+  );
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
       const params = new URLSearchParams(searchParams);
-      if (term) params.set("search", term);
+      if (searchTerm) params.set("search", searchTerm);
       else params.delete("search");
+
       router.replace(`${pathname}?${params.toString()}`);
-    };
-  
+    }, 1000);
+
+    return () => clearTimeout(handler);
+  }, [searchTerm, pathname, router, searchParams]);
+
+  const handleSearchChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchTerm(e.target.value);
+    },
+    []
+  );
+
   const NavLinksData = [
     {
       text: "Home",
@@ -37,21 +47,21 @@ const Header = () => {
     },
     {
       text: "About Us",
-      href: "/about",      
+      href: "/about",
     },
     {
       text: "Our Menu",
       href: "/menu",
-    },    
+    },
     {
       text: "Contact Us",
       href: "/contact",
     },
   ];
 
-   const isActive = (path: string | undefined) => {
-     return pathname === path;
-   };
+  const isActive = (path: string | undefined) => {
+    return pathname === path;
+  };
 
   useEffect(() => {
     let ticking = false;
@@ -84,7 +94,7 @@ const Header = () => {
             width={1224}
             height={181}
             priority
-            className="w-[12rem] md:w-[13rem]"
+            className="w-[10rem] md:w-[13rem]"
           />
         </Link>
 
@@ -104,15 +114,13 @@ const Header = () => {
                     } text-white transition-all duration-300 px-3 py-1 rounded-3xl `}
                   >
                     {item.text}
-                  </Link>                  
+                  </Link>
                 </div>
               ) : (
                 <div className="relative">
                   <span
                     className={`${
-                      isActive(item.href)
-                        ? ""
-                        : "text-defined-blue"
+                      isActive(item.href) ? "" : "text-defined-blue"
                     } font-semibold capitalize cursor-pointer`}
                   >
                     {item.text}
@@ -123,26 +131,35 @@ const Header = () => {
           ))}
         </ul>
         {/* Desktop button */}
-           <div className="hidden lg:flex items-center gap-4">
-        <input
-          type="text"
-          placeholder="Search items..."
-          value={searchTerm}
-          onChange={handleSearchChange}
-          className="rounded-full px-4 py-2 text-sm text-white placeholder:text-white outline-none border border-gray-300 w-48 focus:ring-2 focus:ring-defined-green"
-        />
-        <Link
-          href="/checkout"
-          className="hover:scale-105 transition-all duration-500 flex items-center justify-center gap-2 bg-white border rounded-4xl text-defined-green h-[2.5rem] px-4 font-semibold"
-        >
-          Checkout{" "}
-          <span className="font-bold bg-defined-green rounded-full size-6 text-white flex items-center justify-center">
-            {itemCount}
-          </span>
-        </Link>
-      </div>
+        <div className="hidden lg:flex items-center gap-4">
+          <input
+            type="text"
+            placeholder="Search items..."
+            value={searchTerm}
+            onChange={handleSearchChange}
+            className="rounded-full px-4 py-2 text-sm text-white placeholder:text-white outline-none border border-gray-300 w-40 focus:ring-2 focus:ring-defined-green"
+          />
+          <Link
+            href="/checkout"
+            className="hover:scale-105 transition-all duration-500 flex items-center justify-center gap-2 bg-white border rounded-4xl text-defined-green h-[2.5rem] px-4 font-semibold"
+          >
+            Checkout{" "}
+            <span className="font-bold bg-defined-green rounded-full size-6 text-white flex items-center justify-center">
+              {itemCount}
+            </span>
+          </Link>
+        </div>
 
         {/* Mobile Menu Icon */}
+         <div className="lg:hidden flex items-center gap-4">
+        <input
+          type="text"
+          placeholder="Search..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+          className="rounded-full px-4 py-2 text-sm text-white placeholder:text-white outline-none border border-gray-300 w-20 focus:ring-2 focus:ring-defined-green"
+        />
+
         <button
           type="button"
           className="inline-flex lg:hidden text-3xl"
@@ -175,6 +192,7 @@ const Header = () => {
             )}
           </span>
         </button>
+         </div>
         {/* Mobile Menu */}
         {isMenuOpen && (
           <div className=" absolute bg-defined-green/70 top-full w-full left-0 text-white font-bold /70 backdrop-blur-2xl lg:hidden p-6 pb-12 h-fit overflow-y-scroll">
@@ -185,10 +203,10 @@ const Header = () => {
                     <div>
                       <Link
                         href={item.href}
-                        className="flex justify-between items-center cursor-pointer lg:text-base text-base md:text-xl xl:text-lg"                       
+                        className="flex justify-between items-center cursor-pointer lg:text-base text-base md:text-xl xl:text-lg"
                       >
-                        {item.text}                        
-                      </Link>                     
+                        {item.text}
+                      </Link>
                     </div>
                   ) : (
                     <div>
@@ -198,17 +216,16 @@ const Header = () => {
                           setOpenDropdown(openDropdown === index ? null : index)
                         }
                       >
-                        <span className="capitalize">{item.text}</span>                        
-                      </div>                      
+                        <span className="capitalize">{item.text}</span>
+                      </div>
                     </div>
                   )}
                 </li>
-              ))}              
+              ))}
             </ul>
           </div>
         )}
       </div>
-      
     </>
   );
 };

@@ -10,8 +10,8 @@ export default function MainTemplate({
   return (
     <div className="flex w-full h-full flex-col overflow-x-hidden">
       <div className="z-[1000] w-full">
-        <TopHeader />
-        <Header />
+        <TopHeader />        
+          <Header />        
       </div>
 
       {/* Main Content */}

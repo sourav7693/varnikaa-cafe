@@ -4,10 +4,9 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import ProgressBar from "@/components/global/ProgressBar";
 import { CartProvider } from "@/context/CartContext";
+import { Suspense } from "react";
 
-const jost = Jost({ subsets: ["latin"], 
-  display: "swap",
-});
+const jost = Jost({ subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
   title: "Veg Restaurant in Siliguri |Veg Restaurant in SF Road",
@@ -25,7 +24,9 @@ export default function RootLayout({
       <body className={`${jost.className} antialiased`}>
         <ProgressBar />
         <Toaster />
-        <CartProvider>{children}</CartProvider>
+        <CartProvider>
+          <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+        </CartProvider>
       </body>
     </html>
   );
