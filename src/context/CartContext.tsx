@@ -24,6 +24,8 @@ interface CartContextType {
   updateQuantity: (id: number, quantity: number) => void;
   getTotalItems: () => number;
   clearCart: () => void;
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
 }
 
 const STORAGE_KEY = "cartItems_v1";
@@ -31,6 +33,7 @@ const STORAGE_KEY = "cartItems_v1";
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
+  const [searchQuery, setSearchQuery] = useState(""); 
   //  Initialize from sessionStorage if available
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
     if (typeof window !== "undefined") {
@@ -104,6 +107,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         updateQuantity,
         getTotalItems,
         clearCart,
+        searchQuery,
+        setSearchQuery,
       }}
     >
       {children}

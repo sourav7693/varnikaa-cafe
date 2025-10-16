@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { IoCloseSharp } from "react-icons/io5";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { AiOutlineMenuFold } from "react-icons/ai";
 import { useCart } from "@/context/CartContext";
 
@@ -14,11 +14,22 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState<number | null>(null);
-  const [isAppointmentModalOpen, setIsAppointmentModalOpen] = useState(false);
-
-  const toggleAppointmentModal = () =>
-    setIsAppointmentModalOpen(!isAppointmentModalOpen);
+  const [openDropdown, setOpenDropdown] = useState<number | null>(null);  
+  const router = useRouter();
+    const searchParams = useSearchParams();
+    const [searchTerm, setSearchTerm] = useState(
+      searchParams.get("search") || ""
+    );
+    
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const term = e.target.value;
+      setSearchTerm(term);
+      const params = new URLSearchParams(searchParams);
+      if (term) params.set("search", term);
+      else params.delete("search");
+      router.replace(`${pathname}?${params.toString()}`);
+    };
+  
   const NavLinksData = [
     {
       text: "Home",
@@ -112,13 +123,24 @@ const Header = () => {
           ))}
         </ul>
         {/* Desktop button */}
+           <div className="hidden lg:flex items-center gap-4">
+        <input
+          type="text"
+          placeholder="Search items..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+          className="rounded-full px-4 py-2 text-sm text-white placeholder:text-white outline-none border border-gray-300 w-48 focus:ring-2 focus:ring-defined-green"
+        />
         <Link
           href="/checkout"
-          onClick={toggleAppointmentModal}
-          className="hidden hover:scale-105 transition-all duration-500 lg:flex items-center justify-center gap-2 bg-defined-green border rounded-4xl text-white  h-[2.5rem] px-4"
+          className="hover:scale-105 transition-all duration-500 flex items-center justify-center gap-2 bg-white border rounded-4xl text-defined-green h-[2.5rem] px-4 font-semibold"
         >
-          CheckOut <span className="font-bold bg-white rounded-full size-6 text-defined-green flex items-center justify-center">{itemCount}</span>
+          Checkout{" "}
+          <span className="font-bold bg-defined-green rounded-full size-6 text-white flex items-center justify-center">
+            {itemCount}
+          </span>
         </Link>
+      </div>
 
         {/* Mobile Menu Icon */}
         <button

@@ -63,6 +63,7 @@ const CartPageSection = () => {
     name: "",
     mobile: "",
     address: "",
+    landmark: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,7 +73,12 @@ const CartPageSection = () => {
   const handlePayment = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.name || !formData.mobile || !formData.address) {
+    if (
+      !formData.name ||
+      !formData.mobile ||
+      !formData.address ||
+      !formData.landmark
+    ) {
       toast.error("Please fill all details");
       return;
     }
@@ -188,6 +194,14 @@ const CartPageSection = () => {
               value={formData.address}
               onChange={handleChange}
               placeholder="Your Address"
+              className="w-full p-2 placeholder:text-defined-brown outline-none border border-[#ccc] rounded-lg"
+            />
+            <input
+              type="text"
+              name="landmark"
+              value={formData.landmark}
+              onChange={handleChange}
+              placeholder="Your Landmark"
               className="w-full p-2 placeholder:text-defined-brown outline-none border border-[#ccc] rounded-lg"
             />
 

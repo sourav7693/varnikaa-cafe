@@ -2,9 +2,10 @@
 import { useCart } from "@/context/CartContext";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import DefinedHeader from "../ui/DefinedHeader";
 import { FaMinusCircle, FaPlusCircle } from "react-icons/fa";
+import { useSearchParams } from "next/navigation";
 
 const CafeSection = () => {
   const categories = [
@@ -119,6 +120,24 @@ const CafeSection = () => {
   const [activeCategory, setActiveCategory] = useState("Tea/Coffee/Toast");
 
   const { cartItems, addItem, removeItem } = useCart();
+    const searchParams = useSearchParams();
+       const searchTerm = searchParams.get("search")?.toLowerCase() || "";
+  
+       // Filtered items across all categories if searchTerm exists
+       const filteredItems = useMemo(() => {
+         if (!searchTerm) return null;
+         return categories.flatMap((cat) =>
+           cat.items.filter((item) =>
+             item.name.toLowerCase().includes(searchTerm)
+           )
+         );
+       }, [searchTerm, categories]);
+  
+       const displayedItems =
+         searchTerm && filteredItems?.length
+           ? filteredItems
+           : categories.find((c) => c.name === activeCategory)?.items || [];
+
   return (
     <section className="flex flex-col items-center justify-center gap-4 md:px-8 xl:px-16 w-full">
       <DefinedHeader title="Cafe Menu" />
@@ -129,30 +148,31 @@ const CafeSection = () => {
         Introducing our tantalizing food menu, filled with exquisite flavors and
         culinary delights to satisfy every plate.
       </p>
-      <div className="w-full overflow-x-auto flex items-center justify-center">
-        <div className="flex whitespace-nowrap gap-3 px-4 py-2">
-          {categories.map((category) => (
-            <button
-              key={category.name}
-              onClick={() => setActiveCategory(category.name)}
-              className={`px-4 py-2 rounded-full text-sm sm:text-base font-medium transition-all duration-200 flex-shrink-0
-        ${
-          activeCategory === category.name
-            ? "bg-defined-green text-white shadow-md"
-            : "bg-green-100 text-defined-green hover:bg-green-200"
-        }`}
-            >
-              {category.name}
-            </button>
-          ))}
+      {!searchTerm && (
+        <div className="w-full overflow-x-auto flex items-center justify-center">
+          <div className="flex whitespace-nowrap gap-3 px-4 py-2">
+            {categories.map((category) => (
+              <button
+                key={category.name}
+                onClick={() => setActiveCategory(category.name)}
+                className={`px-4 py-2 rounded-full text-sm sm:text-base font-medium transition-all duration-200 flex-shrink-0
+                  ${
+                    activeCategory === category.name
+                      ? "bg-defined-green text-white shadow-md"
+                      : "bg-green-100 text-defined-green hover:bg-green-200"
+                  }`}
+              >
+                {category.name}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Menu Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 w-full">
-        {categories
-          .find((c) => c.name === activeCategory)
-          ?.items.map((item) => {
+        {displayedItems.length > 0 ? (
+          displayedItems.map((item) => {
             const cartItem = cartItems.find((c) => c.id === item.id);
             const quantity: number | string = cartItem
               ? cartItem.quantity
@@ -177,18 +197,19 @@ const CafeSection = () => {
                 <div className="flex justify-between items-center">
                   <span>
                     <span className="font-bold text-defined-green">
-                      {" "}
                       ₹{item.price}
                     </span>{" "}
-                    {/* | {item.discount}% Off */}
+                   | {/* | {item.discount}% Off */} 20% Off
                   </span>
 
                   <div className="rounded-xl border border-[#ccc] flex justify-between items-center gap-4 px-4">
-                    <FaMinusCircle
-                      size={13}
-                      onClick={() => removeItem(item.id)}
-                      className="font-bold text-lg text-defined-green cursor-pointer"
-                    />
+                    {(quantity as number) > 0 && (
+                      <FaMinusCircle
+                        size={13}
+                        onClick={() => removeItem(item.id)}
+                        className="text-defined-green cursor-pointer"
+                      />
+                    )}
                     <span>{quantity}</span>
                     <FaPlusCircle
                       size={13}
@@ -201,7 +222,7 @@ const CafeSection = () => {
                           quantity: 1,
                         })
                       }
-                      className="font-bold text-defined-green text-lg cursor-pointer"
+                      className="text-defined-green cursor-pointer"
                     />
                   </div>
                 </div>
@@ -213,7 +234,12 @@ const CafeSection = () => {
                 </Link>
               </div>
             );
-          })}
+          })
+        ) : (
+          <p className="text-gray-500 text-center w-full col-span-full py-8">
+            No items found.
+          </p>
+        )}
       </div>
     </section>
   );
