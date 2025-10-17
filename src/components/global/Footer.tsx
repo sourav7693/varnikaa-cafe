@@ -87,16 +87,7 @@ const Footer = () => {
                   height={40}
                   className="size-8"
                 />
-              </Link>
-              <Link href="/">
-                <Image
-                  src="/images/youtube.png"
-                  alt="youtube"
-                  width={40}
-                  height={40}
-                  className="size-8"
-                />
-              </Link>              
+              </Link>                      
             </div>
           </div>
         </div>
