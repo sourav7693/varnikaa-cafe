@@ -47,12 +47,13 @@ const AboutSection1 = () => {
         </h1>
 
         <p className="text-defined-brown text-justify">
-          At Varnikaa Cafe, we believe that every meal is more than just
-          food—it&apos;s an experience to savor, share, and remember. Located in
-          the heart of Siliguri, we bring together the perfect blend of taste,
-          freshness, and warmth in every dish we serve. From refreshing fruit
-          juices and creamy milkshakes to crispy burgers, flavorful noodles, and
-          indulgent pizzas, our menu caters to every craving and age. <br />
+          At Varnikaa Cafe (Shri Vinayak Kitchen), we believe that every meal is
+          more than just food—it&apos;s an experience to savor, share, and
+          remember. Located in the heart of Siliguri, we bring together the
+          perfect blend of taste, freshness, and warmth in every dish we serve.
+          From refreshing fruit juices and creamy milkshakes to crispy burgers,
+          flavorful noodles, and indulgent pizzas, our menu caters to every
+          craving and age. <br />
           <br /> Our commitment to quality ensures that every ingredient is
           fresh, hygienically prepared, and served with care, creating flavors
           that delight the senses. Beyond food, Varnikaa Cafe is a space where

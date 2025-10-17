@@ -39,7 +39,7 @@ const page = () => {
   ];
   return (
     <MainTemplate>
-      <SubBanner heading="Shipping Policy" />
+      <SubBanner heading="Shipping & Delivery" />
       <div className="self-padding">
         <h1 className="text-xl text-defined-darkbrown font-semibold mb-4">
           At Varnikaa Cafe, we are dedicated to providing efficient and timely

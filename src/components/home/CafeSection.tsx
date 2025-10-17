@@ -101,7 +101,7 @@ const CafeSection = () => {
       ],
     },
     {
-      name: "Refreshmeners",
+      name: "Refreshments",
       items: [
         { name: "Nimbu Paani", image: "/images/m1.png", id: 23, price: 30 },
         { name: "Aam Panna", image: "/images/m1.png", id: 24, price: 30 },
