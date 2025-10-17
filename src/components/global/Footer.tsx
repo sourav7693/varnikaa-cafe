@@ -6,7 +6,7 @@ const Footer = () => {
         { name: "Home", link: "/" },
         { name: "Our Menu", link: "/menu" },
         { name: "Terms & Conditions", link: "/terms-and-conditions" },
-        { name: "Shipping Policy", link: "/shipping-policy" },        
+        { name: "Shipping & Delivery", link: "/shipping-and-delivery" },        
         { name: "Refund Policy", link: "/refund-policy" },
         { name: "Privacy Policy", link: "/privacy-policy" },
               ];

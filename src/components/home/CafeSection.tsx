@@ -3,7 +3,6 @@ import { useCart } from "@/context/CartContext";
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import DefinedHeader from "../ui/DefinedHeader";
 import { FaMinusCircle, FaPlusCircle } from "react-icons/fa";
 import { useSearchParams } from "next/navigation";
 
@@ -139,15 +138,10 @@ const CafeSection = () => {
            : categories.find((c) => c.name === activeCategory)?.items || [];
 
   return (
-    <section className="flex flex-col items-center justify-center gap-4 md:px-8 xl:px-16 w-full">
-      <DefinedHeader title="Cafe Menu" />
+    <section className="flex flex-col items-center justify-center gap-4 md:px-8 xl:px-16 w-full py-6">      
       <h1 className="text-defined-darkbrown text-xl md:text-4xl font-bold">
-        Varnikaa <span className="text-defined-green">Cafe Menu</span>
-      </h1>
-      <p className="text-center w-full md:w-[50%]">
-        Introducing our tantalizing food menu, filled with exquisite flavors and
-        culinary delights to satisfy every plate.
-      </p>
+        <span className="text-defined-green">Cafe Menu</span>
+      </h1>     
       {!searchTerm && (
         <div className="w-full overflow-x-auto flex items-center justify-center">
           <div className="flex whitespace-nowrap gap-3 px-4 py-2">

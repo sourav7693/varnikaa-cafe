@@ -3,6 +3,8 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import AppointmentModal from "../global/AppointmentModal";
+import { Berkshire_Swash } from "next/font/google";
+const bekhireSwash = Berkshire_Swash({ weight: "400", subsets: ["latin"], display: "swap" });
 
 const HomeSlider = () => {
   const [isAppointmentModalOpen, setIsAppointmentModalOpen] = useState(false);
@@ -26,7 +28,7 @@ const HomeSlider = () => {
           <span className="text-blue-600 hidden sm:block">
             Have a Delicious Meal
           </span>{" "}          
-          <span className="text-defined-green text-2xl md:text-5xl">
+          <span className={`${bekhireSwash.className} text-defined-green text-2xl md:text-5xl`}>
             From Kitchen to Heart
           </span>
         </h1>
