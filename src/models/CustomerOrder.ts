@@ -11,9 +11,19 @@ export enum OrderStatus {
   CONFIRMED = "Confirmed",
 }
 
+// Define the structure of individual items in the order
+export interface OrderItem {
+  id: number;
+  name: string;
+  price: number;
+  discount?: number;
+  image?: string;
+  quantity?: number;
+}
+
 export interface CustomerOrderDocument extends Document {
   orderId: string;
-  customerName: string;  
+  customerName: string;
   customerPhone: string;
   orderValue: number;
   customerAddress: string;
@@ -24,79 +34,62 @@ export interface CustomerOrderDocument extends Document {
   razorPaySignature: string;
   paymentMethod: string;
   createdAt: Date;
-  paymentStatus: PaymentStatus; // razorpay_payment_status
+  paymentStatus: PaymentStatus;
   status: OrderStatus;
+  items: OrderItem[];
 }
 
-const customerOrderSchema = new Schema<CustomerOrderDocument>({
-  orderId: {
-    type: String,
-    required: true,
-    unique: true,
+// Schema for items inside the order
+const orderItemSchema = new Schema<OrderItem>(
+  {
+    id: { type: Number, required: true },
+    name: { type: String, required: true },
+    price: { type: Number, required: true },
+    discount: { type: Number, default: 0 },
+    image: { type: String },
+    quantity: { type: Number, default: 1 },
   },
-  customerName: {
-    type: String,
-    required: true,
-  },  
-  customerPhone: {
-    type: String,
-    required: true,
-  },
-  orderValue: {
-    type: Number,
-    required: true,
-  },
-  customerAddress: {
-    type: String,
-    required: true,
-  },
-  customerLandMark: {
-    type: String,
-    required: true,
-  },
-  customerPinCode: {
-    type: String,
-    required: true,
-  },
-  razorPayPaymentId: {
-    type: String,
-    required: true,
-  },
-  razorPayOrderId: {
-    type: String,
-    required: true,
-  },
-  razorPaySignature: {
-    type: String,
-    required: true,
-  },
-  paymentMethod: {
-    type: String,
-    required: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  paymentStatus: {
-    type: String,
-    required: true,
-    enum: {
-      values: ["Paid", "Unpaid"],
-      message: "Invalid payment status value",
+  { _id: false } // no separate _id for subdocs
+);
+
+// Main CustomerOrder schema
+const customerOrderSchema = new Schema<CustomerOrderDocument>(
+  {
+    orderId: { type: String, required: true, unique: true },
+    customerName: { type: String, required: true },
+    customerPhone: { type: String, required: true },
+    orderValue: { type: Number, required: true },
+    customerAddress: { type: String, required: true },
+    customerLandMark: { type: String, required: true },
+    customerPinCode: { type: String, required: true },
+    razorPayPaymentId: { type: String, required: true },
+    razorPayOrderId: { type: String, required: true },
+    razorPaySignature: { type: String, required: true },
+    paymentMethod: { type: String, required: true },
+    createdAt: { type: Date, default: Date.now },
+    paymentStatus: {
+      type: String,
+      required: true,
+      enum: {
+        values: Object.values(PaymentStatus),
+        message: "Invalid payment status value",
+      },
+    },
+    status: {
+      type: String,
+      required: true,
+      enum: {
+        values: Object.values(OrderStatus),
+        message: "Invalid order status value",
+      },
+    },
+    items: {
+      type: [orderItemSchema],
+      default: [],
     },
   },
-  status: {
-    type: String,
-    required: true,
-    enum: {
-      values: ["Pending", "Delivered", "Confirmed"],
-      message: "Invalid order status value",
-    },
-  },
-}, {
-  timestamps: true
-});
+  { timestamps: true }
+);
 
 const CustomerOrder: Model<CustomerOrderDocument> =
   mongoose.models.CustomerOrder ||

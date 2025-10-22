@@ -428,44 +428,44 @@ export default function CustomerOrderList({
                 )}
               </div>
 
+              {/* Order Details */}
+              <div>
+                <label className="font-medium">Order Details:</label>
+                <table>
+                  <thead>
+                    <tr>
+                      <th className="px-4 py-2 border">Item Name</th>
+                      <th className="px-4 py-2 border">Quantity</th>
+                      <th className="px-4 py-2 border">Price (₹)</th>
+                      <th className="px-4 py-2 border">Total (₹)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {modalFormData.items?.map((detail) => {
+                      const qty = detail.quantity ?? 0;
+                      const price = detail.price ?? 0;
+                      return (
+                        <tr key={detail.id}>
+                          <td className="px-4 py-2 border">{detail.name}</td>
+                          <td className="px-4 py-2 border">{qty}</td>
+                          <td className="px-4 py-2 border">₹{price}</td>
+                          <td className="px-4 py-2 border">₹{price * qty}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+
               {/* Order Value */}
               <div>
                 <label className="font-medium">Order Value:</label>
-                {isEditMode ? (
-                  <input
-                    type="number"
-                    className="w-full border p-2 rounded"
-                    value={modalFormData.orderValue}
-                    onChange={(e) =>
-                      setModalFormData({
-                        ...modalFormData,
-                        orderValue: Number(e.target.value),
-                      })
-                    }
-                  />
-                ) : (
-                  <p>{modalFormData.orderValue}</p>
-                )}
+                <p>₹{modalFormData.orderValue}</p>
               </div>
-
               {/* Payment Method */}
               <div>
                 <label className="font-medium">Payment Method:</label>
-                {isEditMode ? (
-                  <input
-                    type="text"
-                    className="w-full border p-2 rounded"
-                    value={modalFormData.paymentMethod}
-                    onChange={(e) =>
-                      setModalFormData({
-                        ...modalFormData,
-                        paymentMethod: e.target.value,
-                      })
-                    }
-                  />
-                ) : (
-                  <p>{modalFormData.paymentMethod}</p>
-                )}
+                <p>{modalFormData.paymentMethod}</p>
               </div>
 
               {/* Payment Status */}

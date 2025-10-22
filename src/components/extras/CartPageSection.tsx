@@ -110,7 +110,16 @@ const CartPageSection = () => {
           formDataToSend.append("customerAddress", formData.address);
           formDataToSend.append("customerLandMark", formData.landmark);
           formDataToSend.append("customerPinCode", formData.pincode);
-          formDataToSend.append("orderValue", String(total));         
+          formDataToSend.append("orderValue", String(total));
+           const itemsToSend = cartItems.map((item) => ({
+             id: item.id,
+             name: item.name,
+             price: item.price,
+             discount: item.discount || 0,
+             image: item.image,
+             quantity: item.quantity, 
+           }));
+           formDataToSend.append("items", JSON.stringify(itemsToSend));                   
 
           const verifyRes = await verifyPayment({ formData: formDataToSend, params: response });
 
@@ -168,7 +177,10 @@ const CartPageSection = () => {
           </h1>
           <p className="text-defined-brown font-semibold">
             SubTotal:{" "}
-            <span className="text-defined-darkbrown font-semibold">₹200</span>
+            <span className="text-defined-darkbrown font-semibold">
+              {" "}
+              ₹{total}
+            </span>
           </p>
           <p className="text-defined-brown font-semibold">
             Gross Total:{" "}

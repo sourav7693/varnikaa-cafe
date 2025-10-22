@@ -12,6 +12,7 @@ interface CartItem {
   id: number;
   name: string;
   price: number;
+  discount: number;
   quantity: number;
   image: string;
 }

@@ -1,7 +1,7 @@
 "use server";
 import Razorpay from "razorpay";
 import crypto from "crypto";
-import CustomerOrder, { CustomerOrderDocument, OrderStatus } from "@/models/CustomerOrder";
+import CustomerOrder, { CustomerOrderDocument, OrderStatus, PaymentStatus } from "@/models/CustomerOrder";
 import { generateCustomId } from "@/helper/generateCustomId"; 
 import { revalidatePath } from "next/cache";
 import { connectDb } from "@/lib/connection";
@@ -72,37 +72,55 @@ export async function createOrder(amount: number, currency = "INR") : Promise<Cr
 export async function verifyPayment({
   formData,
   params,
-}: {  
+}: {
   formData: FormData;
   params: VerifyPaymentParams;
-}) : Promise<VerifyPaymentResponse> {
+}): Promise<VerifyPaymentResponse> {
   const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = params;
+
   try {
+    //  Verify signature
     const expectedSignature = crypto
       .createHmac("sha256", process.env.RAZORPAY_SECRET_KEY!)
       .update(`${razorpay_order_id}|${razorpay_payment_id}`)
       .digest("hex");
 
     if (expectedSignature !== razorpay_signature) {
-      return { success: false, orderId : null, message: "Invalid payment signature" };
+      return {
+        success: false,
+        orderId: null,
+        message: "Invalid payment signature",
+      };
     }
 
-       const payment = (await razor.payments.fetch(
+    // Fetch payment info from Razorpay
+    const payment = (await razor.payments.fetch(
       razorpay_payment_id
     )) as unknown as RazorpayPayment;
 
-   
-    const paymentMethod = payment.method || "unknown";// fallback if missing
+    const paymentMethod = payment.method || "unknown"; // fallback if missing
 
-      const customerData = {
-        customerName: formData.get("customerName") as string,
-        customerPhone: formData.get("customerPhone") as string,
-        customerAddress: formData.get("customerAddress") as string,
-        customerLandMark: formData.get("customerLandMark") as string,
-        customerPinCode: formData.get("customerPinCode") as string,
-        orderValue: Number(formData.get("orderValue")),
-      };
-    
+    // Extract customer data
+    const customerData = {
+      customerName: formData.get("customerName") as string,
+      customerPhone: formData.get("customerPhone") as string,
+      customerAddress: formData.get("customerAddress") as string,
+      customerLandMark: formData.get("customerLandMark") as string,
+      customerPinCode: formData.get("customerPinCode") as string,
+      orderValue: Number(formData.get("orderValue")),
+    };
+
+    // ✅ Parse items array (stringified JSON in formData)
+    let items = [];
+    const rawItems = formData.get("items");
+    if (rawItems) {
+      try {
+        items = JSON.parse(rawItems as string);
+      } catch {
+        console.warn("Failed to parse items JSON, skipping items field");
+      }
+    }
+
     await connectDb();
 
     const orderId = await generateCustomId(CustomerOrder, "orderId", "#VC-");
@@ -110,17 +128,22 @@ export async function verifyPayment({
     await CustomerOrder.create({
       orderId,
       ...customerData,
+      items,
       razorPayOrderId: razorpay_order_id,
       razorPayPaymentId: razorpay_payment_id,
       razorPaySignature: razorpay_signature,
       paymentMethod,
-      paymentStatus: "Paid",
-      status: "Pending",
+      paymentStatus: PaymentStatus.PAID,
+      status: OrderStatus.PENDING,
     });
 
     revalidatePath("/admin-customer-order-management");
 
-    return { success: true, orderId, message: "Payment verified and order saved" };
+    return {
+      success: true,
+      orderId,
+      message: "Payment verified and order saved",
+    };
   } catch (err: unknown) {
     console.error("verifyPayment error:", err);
     return {
@@ -133,6 +156,7 @@ export async function verifyPayment({
     };
   }
 }
+
 
 export async function getAllCustomerOrder(
   page: number | string = 1,

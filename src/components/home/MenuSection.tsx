@@ -28,7 +28,7 @@ const MenuSection = () => {
         {
           id: 3,
           name: "2 Paratha with Sabji Combo",
-          price: 10,
+          price: 70,
           discount: 10,
           image: "/items/2 Paratha with Sabji Combo.jpg",
         },
@@ -51,7 +51,7 @@ const MenuSection = () => {
           name: "Upma",
           price: 60,
           discount: 5,
-          image: "/items/upma.jpg",
+          image: "/items/Upma.jpg",
         },
         {
           id: 8,
@@ -274,6 +274,7 @@ const MenuSection = () => {
                           id: item.id,
                           name: item.name,
                           price: item.price,
+                          discount: item.discount,
                           image: item.image,
                           quantity: 1,
                         })
@@ -283,7 +284,7 @@ const MenuSection = () => {
                   </div>
                 </div>
                 <Link
-                  href="/checkout"
+                  href={`${quantity as number >= 1 ? "/checkout" : "/"}`}
                   className="flex items-center justify-center rounded-2xl px-4 py-2 bg-[#D9FFD3] hover:bg-defined-green text-defined-darkbrown hover:text-white transition-colors duration-200"
                 >
                   Order Now!
