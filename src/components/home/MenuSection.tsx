@@ -37,7 +37,7 @@ const MenuSection = () => {
           name: "Onion Uttapam",
           price: 40,
           discount: 5,
-          image: "/items/onion Uttapam.jpg",
+          image: "/items/Onion Uttapam.jpg",
         },
         {
           id: 6,
