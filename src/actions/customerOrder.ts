@@ -143,7 +143,7 @@ export async function getAllCustomerOrder(
   search?: string
 ) {
   try {
-    const filter: any = {};
+    const filter : Record<string, unknown> = {};
 
     if (status !== undefined) filter.status = status;
 
