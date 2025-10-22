@@ -13,7 +13,7 @@ const AboutSection2 = () => {
       {/* Background image */}
       <div className="absolute inset-0">
         <Image
-          src="/images/offerbg.avif"
+          src="/images/offerbg.jpg"
           alt="offerbg"
           fill
           priority
@@ -26,7 +26,7 @@ const AboutSection2 = () => {
         <h1 className=" md:text-4xl lg:text-5xl text-xl font-bold w-full text-left leading-snug text-defined-darkbrown md:w-full">
           <span className="text-[#E5B338]">Delicious</span>{" "}
           <br className="hidden sm:block" />{" "}
-          <span className="text-[#DD1919]">Meal</span> With{" "}
+          <span className="text-defined-green">Meal</span> With{" "}
           <br className="hidden sm:block" />{" "}
           <span className="text-defined-green">Varnikaa Cafe</span>
         </h1>

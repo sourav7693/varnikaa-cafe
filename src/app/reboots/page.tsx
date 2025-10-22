@@ -1,9 +1,13 @@
-import React from 'react'
+import LoginForm from "@/components/admin/LoginForm";
+// import SignupForm from "@/components/admin/SignupForm"
 
 const page = () => {
   return (
-    <div>page</div>
-  )
-}
+    <div className="flex flex-col items-center justify-center h-screen bg-amber-500/10">
+      <LoginForm />
+      {/* <SignupForm /> */}
+    </div>
+  );
+};
 
-export default page
+export default page;

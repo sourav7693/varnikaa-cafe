@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import ItemCard from "@/components/ui/ItemCard";
 import { useCart } from "@/context/CartContext";
-import { createOrder, verifyPayment } from "@/actions/razorpay";
+import { createOrder, verifyPayment } from "@/actions/customerOrder";
 import toast from "react-hot-toast";
 
 // --- Razorpay Type Definitions ---
@@ -64,6 +64,7 @@ const CartPageSection = () => {
     mobile: "",
     address: "",
     landmark: "",
+    pincode: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,7 +78,8 @@ const CartPageSection = () => {
       !formData.name ||
       !formData.mobile ||
       !formData.address ||
-      !formData.landmark
+      !formData.landmark ||
+      !formData.pincode
     ) {
       toast.error("Please fill all details");
       return;
@@ -102,12 +104,21 @@ const CartPageSection = () => {
         description: "Order Payment",
         order_id: order.id,
         handler: async (response: RazorpayResponse) => {
-          const verifyRes = await verifyPayment(response);
+          const formDataToSend = new FormData();
+          formDataToSend.append("customerName", formData.name);
+          formDataToSend.append("customerPhone", formData.mobile);
+          formDataToSend.append("customerAddress", formData.address);
+          formDataToSend.append("customerLandMark", formData.landmark);
+          formDataToSend.append("customerPinCode", formData.pincode);
+          formDataToSend.append("orderValue", String(total));         
+
+          const verifyRes = await verifyPayment({ formData: formDataToSend, params: response });
 
           if (verifyRes.success) {
+            
             toast.success("Payment successful & verified!");
             router.push(
-              `/payment-success?payment_id=${response.razorpay_payment_id}&order_id=${response.razorpay_order_id}`
+              `/payment-success?payment_id=${response.razorpay_payment_id}&order_id=${verifyRes.orderId}`
             );
           } else {
             toast.error(verifyRes.message || "Payment verification failed!");
@@ -204,7 +215,14 @@ const CartPageSection = () => {
               placeholder="Your Landmark"
               className="w-full p-2 placeholder:text-defined-brown outline-none border border-[#ccc] rounded-lg"
             />
-
+            <input
+              type="number"
+              name="pincode"
+              value={formData.pincode}
+              onChange={handleChange}
+              placeholder="Your Pincode"
+              className="w-full p-2 placeholder:text-defined-brown outline-none border border-[#ccc] rounded-lg"
+            />
             <button
               type="submit"
               className="bg-defined-green text-white px-6 py-2 rounded-lg"

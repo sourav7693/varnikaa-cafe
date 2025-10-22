@@ -61,7 +61,9 @@ const AboutSection1 = () => {
           ambiance, friendly service, and affordable offerings make every visit
           a special one. Whether you&apos;re stopping by for a quick snack or a
           leisurely meal, we promise a delightful culinary journey that keeps
-          you coming back for more.
+          you coming back for more. <br />
+          <br />
+          We also accept Party Orders.
         </p>
         <Link
           href="/menu"

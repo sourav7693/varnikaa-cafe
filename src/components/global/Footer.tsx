@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import { FaLocationArrow } from "react-icons/fa";
+import { FaLocationDot } from "react-icons/fa6";
 
 const Footer = () => {
   const links = [
@@ -26,13 +28,7 @@ const Footer = () => {
         {/* Left Text Content */}
         <div className="flex flex-col gap-4 w-full md:w-1/2">
           <div className="w-full flex justify-center flex-col items-start gap-2">
-            <Image
-              src="/images/leaf.png"
-              alt="leaf"
-              width={500}
-              height={500}
-              className="object-cover size-10"
-            />
+            <FaLocationDot className="text-defined-green text-3xl" />
             <p className="text-defined-green font-medium text-center">
               Our Location
             </p>
@@ -62,10 +58,10 @@ const Footer = () => {
                 Phone/ WhatsApp: +91 94343 20315
               </Link>
               <Link
-                href="mailto:Varnikaacafe@gmail.com"
+                href="mailto:varnikaacafe@gmail.com"
                 className="flex items-center gap-2 hover:underline"
               >
-                <p>Email: Varnikaacafe@gmail.com</p>
+                <p>Email: varnikaacafe@gmail.com</p>
               </Link>
             </div>
 
