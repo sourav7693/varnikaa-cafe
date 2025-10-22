@@ -32,6 +32,11 @@ export default function CustomerOrderList({
   const [orders, setOrders] = useState<CustomerOrderDocument[]>([]);
   const [tableLoading, setTableLoading] = useState(false);
   const [confirmModalId, setConfirmModalId] = useState<string | null>(null);
+  const [viewModalId, setViewModalId] = useState<string | null>(null);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [modalFormData, setModalFormData] = useState<
+    Partial<CustomerOrderDocument>
+  >({});
   
   const router = useRouter();
 
@@ -91,11 +96,7 @@ export default function CustomerOrderList({
     );
   }
 
-  const [viewModalId, setViewModalId] = useState<string | null>(null);
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [modalFormData, setModalFormData] = useState<
-    Partial<CustomerOrderDocument>
-  >({});
+  
 
   const handleView = (order: CustomerOrderDocument, edit = false) => {
     setViewModalId(order.orderId);

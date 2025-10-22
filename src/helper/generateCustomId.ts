@@ -19,7 +19,7 @@ export async function generateCustomId<T extends Document>(
     // Extract numeric parts from IDs, removing prefix
     const ids = records
       .map((record) => {
-        const rawId = (record as any)[idField];
+        const rawId = (record[idField as keyof T] as string);
         return rawId ? parseInt(rawId.replace(prefix, ""), 10) : null;
       })
       .filter((id): id is number => id !== null && !isNaN(id));

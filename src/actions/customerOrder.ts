@@ -22,7 +22,7 @@ export interface RazorpayOrder {
 
 interface RazorpayPayment {
   method: string;
-  [key: string]: any; // allow any extra fields Razorpay returns
+  [key: string]: unknown; // allow any extra fields Razorpay returns
 }
 
 export interface CreateOrderResponse {
@@ -90,7 +90,7 @@ export async function verifyPayment({
 
        const payment = (await razor.payments.fetch(
       razorpay_payment_id
-    )) as RazorpayPayment;
+    )) as unknown as RazorpayPayment;
 
    
     const paymentMethod = payment.method || "unknown";// fallback if missing
@@ -212,8 +212,8 @@ export async function updateCustomerOrder(
     revalidatePath("/admin-customer-order-management");
 
     return { success: true, order: JSON.parse(JSON.stringify(order)) };
-  } catch (err: any) {
-    console.error("updateCustomerOrder error:", err);
+  } catch (err: unknown) {
+    console.error("updateCustomerOrder error:", err instanceof Error ? err.message : err);
     return { success: false, message: "Failed to update order" };
   }
 }
@@ -230,8 +230,8 @@ export async function deleteExistingCustomerOrder(orderId: string) {
     revalidatePath("/admin-customer-order-management");
 
     return { success: true, message: "Order deleted successfully" };
-  } catch (err: any) {
-    console.error("deleteExistingCustomerOrder error:", err);
+  } catch (err: unknown) {
+    console.error("deleteExistingCustomerOrder error:", err instanceof Error ? err.message : err);
     return { success: false, message: "Failed to delete order" };
   }
 }
