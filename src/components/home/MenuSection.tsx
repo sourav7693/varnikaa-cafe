@@ -28,7 +28,7 @@ const MenuSection = () => {
         {
           id: 3,
           name: "2 Paratha with Sabji Combo",
-          price: 70,
+          price: 10,
           discount: 10,
           image: "/items/2 Paratha with Sabji Combo.jpg",
         },
