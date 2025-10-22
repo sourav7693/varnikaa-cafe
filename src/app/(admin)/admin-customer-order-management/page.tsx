@@ -1,7 +1,6 @@
 import { getAllCustomerOrder } from "@/actions/customerOrder";
 import CustomerOrderList from "@/components/admin/CustomerOrderList";
 import { CustomerOrderResponse } from "@/models/CustomerOrder";
-import { FaSearch } from "react-icons/fa";
 
 const page = async({
   searchParams,
@@ -24,15 +23,7 @@ const page = async({
             By Status
           </button>
         </div>
-      </div>
-      <div className="relative">
-        <FaSearch className="absolute left-5 top-3 text-lg text-defined-brown" />
-        <input
-          type="text"
-          placeholder="Search by vendor name or mobile number"
-          className="w-full text-lg text-defined-brown placeholder:text-defined-brown p-2 pl-12 border border-[#ccc]  rounded-md outline-none"
-        />
-      </div>
+      </div>      
       <CustomerOrderList CustomerOrders={pageData.data} pagination={pageData.pagination}/>
     </section>
   );

@@ -16,6 +16,7 @@ import { FiTrash2 } from "react-icons/fi";
 import { useInView } from "react-intersection-observer";
 import { IoMdEye } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
+import { FaSearch } from "react-icons/fa";
 
 export default function CustomerOrderList({
   CustomerOrders,
@@ -29,6 +30,10 @@ export default function CustomerOrderList({
     totalPages: number;
   };
 }) {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout | null>(
+    null
+  );
   const [orders, setOrders] = useState<CustomerOrderDocument[]>([]);
   const [tableLoading, setTableLoading] = useState(false);
   const [confirmModalId, setConfirmModalId] = useState<string | null>(null);
@@ -39,6 +44,37 @@ export default function CustomerOrderList({
   >({});
   
   const router = useRouter();
+
+  const handleSearch = (value: string) => {
+    setSearchQuery(value);
+
+    if (searchTimeout) clearTimeout(searchTimeout);
+
+    const timeout = setTimeout(async () => {
+      if (value.trim() === "") {
+        setOrders(CustomerOrders); // reset to initial list
+        return;
+      }
+
+      setTableLoading(true);
+      const res = await getAllCustomerOrder(
+        1,
+        10,
+        "createdAt",
+        "desc",
+        undefined,
+        value
+      );
+      if (res.success) {
+        setOrders(res.data);
+      } else {
+        toast.error("Search failed");
+      }
+      setTableLoading(false);
+    }, 800); // debounce 0.5s
+
+    setSearchTimeout(timeout);
+  };
 
   useEffect(() => {
     setOrders(CustomerOrders);
@@ -96,129 +132,145 @@ export default function CustomerOrderList({
     );
   }
 
-  
-
   const handleView = (order: CustomerOrderDocument, edit = false) => {
     setViewModalId(order.orderId);
     setIsEditMode(edit);
     setModalFormData(order);
   };
 
-
   return (
     <>
+      <div className="relative">
+        <FaSearch className="absolute left-5 top-3 text-lg text-defined-brown" />
+        <input
+          type="text"
+          placeholder="Search by name or phone number"
+          className="w-full text-lg text-defined-brown placeholder:text-defined-brown p-2 pl-12 border border-[#ccc] rounded-md outline-none"
+          value={searchQuery}
+          onChange={(e) => handleSearch(e.target.value)}
+        />
+      </div>
+
       <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse">
-          <thead className="font-bold text-white bg-defined-green">
-            <tr>
-              {thead.map((item, index) => (
-                <th key={index} scope="col" className="px-6 py-3 text-nowrap">
-                  {item}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {orders.map((order) => (
-              <tr
-                key={order.orderId}
-                className="bg-white border-b border-gray-200 last:border-transparent"
-              >
-                {/* Order ID */}
-                <td className="px-6 py-4 font-semibold text-sm">
-                  {order.orderId}
-                </td>
-
-                {/* Customer Name */}
-                <td className="px-6 py-4">{order.customerName}</td>
-
-                {/* Phone */}
-                <td className="px-6 py-4">{order.customerPhone}</td>
-
-                {/* Order Value */}
-                <td className="px-6 py-4">₹{order.orderValue}</td>
-
-                {/* DateTime */}
-                <td className="px-6 py-4 text-sm">
-                  {order.createdAt
-                    ? (() => {
-                        const date = new Date(order.createdAt);
-                        const formattedDate = date.toLocaleDateString("en-US", {
-                          day: "2-digit",
-                          month: "short",
-                          year: "2-digit",
-                        }); // e.g., 12 Oct 25
-                        const formattedTime = date.toLocaleTimeString("en-US", {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                          hour12: true,
-                        }); // e.g., 03:00 PM
-                        return `${formattedDate} | ${formattedTime}`;
-                      })()
-                    : ""}
-                </td>
-
-                {/* Address */}
-                <td className="px-6 py-4 max-w-[150px] overflow-hidden text-ellipsis whitespace-nowrap">
-                  {order.customerAddress}
-                </td>
-
-                {/* Payment Status */}
-                <td
-                  className={`px-6 py-4 font-semibold ${
-                    order.paymentStatus === "Paid"
-                      ? "text-green-600"
-                      : "text-red-500"
-                  }`}
+        <div className="max-h-[60vh] overflow-y-auto w-full">
+          <table className="w-full text-left border-collapse">
+            <thead className="font-bold text-white bg-defined-green">
+              <tr>
+                {thead.map((item, index) => (
+                  <th key={index} scope="col" className="px-6 py-3 text-nowrap">
+                    {item}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {orders.map((order) => (
+                <tr
+                  key={order.orderId}
+                  className="bg-white border-b border-gray-200 last:border-transparent"
                 >
-                  {order.paymentStatus}
-                </td>
+                  {/* Order ID */}
+                  <td className="px-6 py-4 font-semibold text-sm">
+                    {order.orderId}
+                  </td>
 
-                {/* Order Status */}
-                <td className="px-6 py-4">
-                  <span
-                    className={`px-3 py-1 rounded-full text-sm font-medium ${
-                      order.status === "Pending"
-                        ? "bg-yellow-100 text-yellow-700"
-                        : order.status === "Confirmed"
-                        ? "bg-blue-100 text-blue-700"
-                        : "bg-green-100 text-green-700"
+                  {/* Customer Name */}
+                  <td className="px-6 py-4">{order.customerName}</td>
+
+                  {/* Phone */}
+                  <td className="px-6 py-4">{order.customerPhone}</td>
+
+                  {/* Order Value */}
+                  <td className="px-6 py-4">₹{order.orderValue}</td>
+
+                  {/* DateTime */}
+                  <td className="px-6 py-4 text-sm">
+                    {order.createdAt
+                      ? (() => {
+                          const date = new Date(order.createdAt);
+                          const formattedDate = date.toLocaleDateString(
+                            "en-US",
+                            {
+                              day: "2-digit",
+                              month: "short",
+                              year: "2-digit",
+                            }
+                          ); // e.g., 12 Oct 25
+                          const formattedTime = date.toLocaleTimeString(
+                            "en-US",
+                            {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                              hour12: true,
+                            }
+                          ); // e.g., 03:00 PM
+                          return `${formattedDate} | ${formattedTime}`;
+                        })()
+                      : ""}
+                  </td>
+
+                  {/* Address */}
+                  <td className="px-6 py-4 max-w-[150px] overflow-hidden text-ellipsis whitespace-nowrap">
+                    {order.customerAddress}
+                  </td>
+
+                  {/* Payment Status */}
+                  <td
+                    className={`px-6 py-4 font-semibold ${
+                      order.paymentStatus === "Paid"
+                        ? "text-green-600"
+                        : "text-red-500"
                     }`}
                   >
-                    {order.status}
-                  </span>
-                </td>
+                    {order.paymentStatus}
+                  </td>
 
-                {/* Actions */}
-                <td className="px-6 py-4 flex items-center justify-center gap-2">
-                  {/* View */}
-                  <button
-                    onClick={() => handleView(order, false)}
-                    className="flex items-center justify-center p-1 bg-blue-500 text-white rounded hover:bg-blue-600"
-                  >
-                    <IoMdEye />
-                  </button>
+                  {/* Order Status */}
+                  <td className="px-6 py-4">
+                    <span
+                      className={`px-3 py-1 rounded-full text-sm font-medium ${
+                        order.status === "Pending"
+                          ? "bg-yellow-100 text-yellow-700"
+                          : order.status === "Confirmed"
+                          ? "bg-blue-100 text-blue-700"
+                          : "bg-green-100 text-green-700"
+                      }`}
+                    >
+                      {order.status}
+                    </span>
+                  </td>
 
-                  {/* Edit */}
-                  <button
-                    onClick={() => handleView(order, true)}
-                    className="flex items-center justify-center p-1 bg-purple-500 text-white rounded hover:bg-purple-600"
-                  >
-                    <MdEditDocument />
-                  </button>
+                  {/* Actions */}
+                  <td className="px-6 py-4 flex items-center justify-center gap-2">
+                    {/* View */}
+                    <button
+                      onClick={() => handleView(order, false)}
+                      className="flex items-center justify-center p-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                    >
+                      <IoMdEye />
+                    </button>
 
-                  {/* Delete */}
-                  <button
-                    onClick={() => setConfirmModalId(order.orderId)}
-                    className="flex items-center justify-center p-1 bg-red-600 text-white rounded hover:bg-red-700"
-                  >
-                    <FiTrash2 />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                    {/* Edit */}
+                    <button
+                      onClick={() => handleView(order, true)}
+                      className="flex items-center justify-center p-1 bg-purple-500 text-white rounded hover:bg-purple-600"
+                    >
+                      <MdEditDocument />
+                    </button>
+
+                    {/* Delete */}
+                    <button
+                      onClick={() => setConfirmModalId(order.orderId)}
+                      className="flex items-center justify-center p-1 bg-red-600 text-white rounded hover:bg-red-700"
+                    >
+                      <FiTrash2 />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* Confirmation Modal */}
@@ -255,102 +307,227 @@ export default function CustomerOrderList({
 
       {viewModalId && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
-          <div className="bg-white rounded-md shadow-md p-6 w-full max-w-xl space-y-4">
-            <h2 className="text-xl font-semibold flex justify-between">
-              {isEditMode ? "Edit Order" : "View Order"}
+          <div className="bg-white rounded-md shadow-md w-full max-w-xl max-h-[90vh] flex flex-col">
+            {/* Header */}
+            <div className="flex justify-between items-center p-6 border-b">
+              <h2 className="text-xl font-semibold">
+                {isEditMode ? "Edit Order" : "View Order"}
+              </h2>
               <button
                 className="size-8 flex items-center justify-center rounded-full bg-red-500"
                 onClick={() => setViewModalId(null)}
               >
-                <IoClose className="text-white"/>
+                <IoClose className="text-white" />
               </button>
-            </h2>
-
-            {/* Customer Name */}
-            <div>
-              <label className="font-medium">Customer Name:</label>
-              {isEditMode ? (
-                <input
-                  type="text"
-                  className="w-full border p-2 rounded"
-                  value={modalFormData.customerName}
-                  onChange={(e) =>
-                    setModalFormData({
-                      ...modalFormData,
-                      customerName: e.target.value,
-                    })
-                  }
-                />
-              ) : (
-                <p>{modalFormData.customerName}</p>
-              )}
             </div>
 
-            {/* Customer Phone */}
-            <div>
-              <label className="font-medium">Phone:</label>
-              {isEditMode ? (
-                <input
-                  type="text"
-                  className="w-full border p-2 rounded"
-                  value={modalFormData.customerPhone}
-                  onChange={(e) =>
-                    setModalFormData({
-                      ...modalFormData,
-                      customerPhone: e.target.value,
-                    })
-                  }
-                />
-              ) : (
-                <p>{modalFormData.customerPhone}</p>
-              )}
+            {/* Scrollable Content */}
+            <div className="overflow-y-auto p-6 space-y-4">
+              {/* Order ID */}
+              <div>
+                <label className="font-medium">Order ID:</label>
+                <p>{modalFormData.orderId}</p>
+              </div>
+
+              {/* Customer Name */}
+              <div>
+                <label className="font-medium">Customer Name:</label>
+                {isEditMode ? (
+                  <input
+                    type="text"
+                    className="w-full border p-2 rounded"
+                    value={modalFormData.customerName}
+                    onChange={(e) =>
+                      setModalFormData({
+                        ...modalFormData,
+                        customerName: e.target.value,
+                      })
+                    }
+                  />
+                ) : (
+                  <p>{modalFormData.customerName}</p>
+                )}
+              </div>
+
+              {/* Phone */}
+              <div>
+                <label className="font-medium">Phone:</label>
+                {isEditMode ? (
+                  <input
+                    type="text"
+                    className="w-full border p-2 rounded"
+                    value={modalFormData.customerPhone}
+                    onChange={(e) =>
+                      setModalFormData({
+                        ...modalFormData,
+                        customerPhone: e.target.value,
+                      })
+                    }
+                  />
+                ) : (
+                  <p>{modalFormData.customerPhone}</p>
+                )}
+              </div>
+
+              {/* Address */}
+              <div>
+                <label className="font-medium">Address:</label>
+                {isEditMode ? (
+                  <textarea
+                    className="w-full border p-2 rounded"
+                    value={modalFormData.customerAddress}
+                    onChange={(e) =>
+                      setModalFormData({
+                        ...modalFormData,
+                        customerAddress: e.target.value,
+                      })
+                    }
+                  />
+                ) : (
+                  <p>{modalFormData.customerAddress}</p>
+                )}
+              </div>
+
+              {/* Landmark */}
+              <div>
+                <label className="font-medium">Landmark:</label>
+                {isEditMode ? (
+                  <input
+                    type="text"
+                    className="w-full border p-2 rounded"
+                    value={modalFormData.customerLandMark}
+                    onChange={(e) =>
+                      setModalFormData({
+                        ...modalFormData,
+                        customerLandMark: e.target.value,
+                      })
+                    }
+                  />
+                ) : (
+                  <p>{modalFormData.customerLandMark}</p>
+                )}
+              </div>
+
+              {/* Pincode */}
+              <div>
+                <label className="font-medium">Pin Code:</label>
+                {isEditMode ? (
+                  <input
+                    type="text"
+                    className="w-full border p-2 rounded"
+                    value={modalFormData.customerPinCode}
+                    onChange={(e) =>
+                      setModalFormData({
+                        ...modalFormData,
+                        customerPinCode: e.target.value,
+                      })
+                    }
+                  />
+                ) : (
+                  <p>{modalFormData.customerPinCode}</p>
+                )}
+              </div>
+
+              {/* Order Value */}
+              <div>
+                <label className="font-medium">Order Value:</label>
+                {isEditMode ? (
+                  <input
+                    type="number"
+                    className="w-full border p-2 rounded"
+                    value={modalFormData.orderValue}
+                    onChange={(e) =>
+                      setModalFormData({
+                        ...modalFormData,
+                        orderValue: Number(e.target.value),
+                      })
+                    }
+                  />
+                ) : (
+                  <p>{modalFormData.orderValue}</p>
+                )}
+              </div>
+
+              {/* Payment Method */}
+              <div>
+                <label className="font-medium">Payment Method:</label>
+                {isEditMode ? (
+                  <input
+                    type="text"
+                    className="w-full border p-2 rounded"
+                    value={modalFormData.paymentMethod}
+                    onChange={(e) =>
+                      setModalFormData({
+                        ...modalFormData,
+                        paymentMethod: e.target.value,
+                      })
+                    }
+                  />
+                ) : (
+                  <p>{modalFormData.paymentMethod}</p>
+                )}
+              </div>
+
+              {/* Payment Status */}
+              <div>
+                <label className="font-medium">Payment Status:</label>
+                <p>{modalFormData.paymentStatus}</p>
+              </div>
+
+              {/* Order Status */}
+              <div>
+                <label className="font-medium">Order Status:</label>
+                {isEditMode ? (
+                  <select
+                    className="w-full border p-2 rounded"
+                    value={modalFormData.status}
+                    onChange={(e) =>
+                      setModalFormData({
+                        ...modalFormData,
+                        status: e.target.value as OrderStatus,
+                      })
+                    }
+                  >
+                    <option value="Pending">Pending</option>
+                    <option value="Confirmed">Confirmed</option>
+                    <option value="Delivered">Delivered</option>
+                  </select>
+                ) : (
+                  <p>{modalFormData.status}</p>
+                )}
+              </div>
+
+              {/* Razorpay Info */}
+              <div>
+                <label className="font-medium">Razorpay Order ID:</label>
+                <p>{modalFormData.razorPayOrderId || "—"}</p>
+              </div>
+              <div>
+                <label className="font-medium">Razorpay Payment ID:</label>
+                <p>{modalFormData.razorPayPaymentId || "—"}</p>
+              </div>
+              <div>
+                <label className="font-medium">Razorpay Signature:</label>
+                <p>{modalFormData.razorPaySignature || "—"}</p>
+              </div>
+
+              {/* Created / Updated */}
+              {/* <div className="text-sm text-gray-600">
+                <p>
+                  Created At:{" "}
+                  {}
+                  {new Date(modalFormData.createdAt).toLocaleString()}
+                </p>
+                <p>
+                  Updated At:{" "}
+                  {new Date(modalFormData.updatedAt).toLocaleString()}
+                </p>
+              </div> */}
             </div>
 
-            {/* Address */}
-            <div>
-              <label className="font-medium">Address:</label>
-              {isEditMode ? (
-                <textarea
-                  className="w-full border p-2 rounded"
-                  value={modalFormData.customerAddress}
-                  onChange={(e) =>
-                    setModalFormData({
-                      ...modalFormData,
-                      customerAddress: e.target.value,
-                    })
-                  }
-                />
-              ) : (
-                <p>{modalFormData.customerAddress}</p>
-              )}
-            </div>
-
-            {/* Order Status */}
-            <div>
-              <label className="font-medium">Order Status:</label>
-              {isEditMode ? (
-                <select
-                  className="w-full border p-2 rounded"
-                  value={modalFormData.status}
-                  onChange={(e) =>
-                    setModalFormData({
-                      ...modalFormData,
-                      status: e.target.value as OrderStatus,
-                    })
-                  }
-                >
-                  <option value="Pending">Pending</option>
-                  <option value="Confirmed">Confirmed</option>
-                  <option value="Delivered">Delivered</option>
-                </select>
-              ) : (
-                <p>{modalFormData.status}</p>
-              )}
-            </div>
-
-            {/* Modal Actions */}
-            <div className="flex justify-end gap-4 mt-4">
-              {isEditMode && (
+            {/* Footer */}
+            {isEditMode && (
+              <div className="p-4 border-t flex justify-end">
                 <button
                   className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
                   onClick={async () => {
@@ -369,6 +546,7 @@ export default function CustomerOrderList({
                     if (res.success)
                       toast.success("Order updated successfully");
                     else toast.error("Failed to update order");
+
                     setTableLoading(false);
                     setViewModalId(null);
                     router.refresh();
@@ -376,8 +554,8 @@ export default function CustomerOrderList({
                 >
                   {tableLoading ? <Spinner /> : "Save"}
                 </button>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
       )}

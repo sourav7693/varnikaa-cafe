@@ -1,5 +1,4 @@
 "use server";
-
 import Razorpay from "razorpay";
 import crypto from "crypto";
 import CustomerOrder, { CustomerOrderDocument, OrderStatus } from "@/models/CustomerOrder";
@@ -135,38 +134,41 @@ export async function verifyPayment({
   }
 }
 
-// ----------- GET ALL CUSTOMER ORDERS -----------
 export async function getAllCustomerOrder(
   page: number | string = 1,
-  limit: number | string = 5,
+  limit: number | string = 10,
   sort: string = "createdAt",
   order: "asc" | "desc" = "desc",
-  status?: boolean
+  status?: boolean,
+  search?: string
 ) {
   try {
-    const filter: { status?: boolean } = {};
+    const filter: any = {};
 
     if (status !== undefined) filter.status = status;
 
-    // Pagination
+    if (search) {
+      filter.$or = [
+        { customerName: { $regex: search, $options: "i" } },
+        { customerPhone: { $regex: search, $options: "i" } },
+      ];
+    }
+
     const pageNumber = parseInt(page as string, 10);
     const pageSize = parseInt(limit as string, 10);
     const skip = (pageNumber - 1) * pageSize;
 
-    // Sorting
     const sortOrder = order === "asc" ? 1 : -1;
     const sortQuery: Record<string, 1 | -1> = { [sort]: sortOrder };
 
     await connectDb();
 
-    // Fetch components with filters, pagination, and sorting
     const allCustomerOrder = await CustomerOrder.find(filter)
       .sort(sortQuery)
       .skip(skip)
       .limit(pageSize)
       .lean<CustomerOrderDocument[]>();
 
-    // Get total count for pagination metadata
     const totalCustomerOrder = await CustomerOrder.countDocuments(filter);
 
     return {
@@ -180,7 +182,7 @@ export async function getAllCustomerOrder(
       },
     };
   } catch (error) {
-    console.log(error);
+    console.error("getAllCustomerOrder error:", error);
     return {
       success: false,
       data: [],
@@ -189,7 +191,6 @@ export async function getAllCustomerOrder(
   }
 }
 
-// ----------- UPDATE CUSTOMER ORDER -----------
 export async function updateCustomerOrder(
   orderId: string,
   updateData: Partial<
@@ -218,8 +219,6 @@ export async function updateCustomerOrder(
   }
 }
 
-
-// ----------- DELETE CUSTOMER ORDER -----------
 export async function deleteExistingCustomerOrder(orderId: string) {
   try {
     await connectDb();

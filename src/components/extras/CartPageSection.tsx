@@ -114,11 +114,12 @@ const CartPageSection = () => {
 
           const verifyRes = await verifyPayment({ formData: formDataToSend, params: response });
 
-          if (verifyRes.success) {
-            
+          if (verifyRes.success) {            
             toast.success("Payment successful & verified!");
             router.push(
-              `/payment-success?payment_id=${response.razorpay_payment_id}&order_id=${verifyRes.orderId}`
+              `/payment-success?payment_id=${
+                response.razorpay_payment_id
+              }&order_id=${verifyRes.orderId?.split("#")[1]}`
             );
           } else {
             toast.error(verifyRes.message || "Payment verification failed!");

@@ -20,7 +20,7 @@ export default async function PaymentSuccessPage({
 
       <p className="text-gray-700 mb-2">Thank you for your payment.</p>
 
-      <div className="mt-4 bg-gray-100 p-4 rounded-lg shadow">
+      <div className="mt-4 bg-gray-100 p-4 rounded-lg shadow text-left">
         <p>
           <strong>Payment ID:</strong> {payment_id}
         </p>
