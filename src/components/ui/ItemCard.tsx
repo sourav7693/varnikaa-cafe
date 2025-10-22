@@ -59,6 +59,7 @@ const ItemCard = ({ id, name, price, quantity, image }: ItemCardProps) => {
                   id,
                   name,
                   price,
+                  discount: 0,
                   image,
                   quantity: 1,
                 })
