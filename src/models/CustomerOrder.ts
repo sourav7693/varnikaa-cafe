@@ -13,12 +13,13 @@ export enum OrderStatus {
 
 // Define the structure of individual items in the order
 export interface OrderItem {
-  id: number;
+  id: string;
   name: string;
   price: number;
   discount?: number;
   image?: string;
   quantity?: number;
+  category?: string;
 }
 
 export interface CustomerOrderDocument extends Document {
@@ -42,12 +43,13 @@ export interface CustomerOrderDocument extends Document {
 // Schema for items inside the order
 const orderItemSchema = new Schema<OrderItem>(
   {
-    id: { type: Number, required: true },
+    id: { type: String, required: true },
     name: { type: String, required: true },
     price: { type: Number, required: true },
     discount: { type: Number, default: 0 },
-    image: { type: String },
-    quantity: { type: Number, default: 1 },
+    image: { type: String, required: true },
+    quantity: { type: Number, required: true, default: 1 },
+    category: { type: String, required: true },
   },
   { _id: false } // no separate _id for subdocs
 );

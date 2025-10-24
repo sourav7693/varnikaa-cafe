@@ -110,7 +110,7 @@ export async function verifyPayment({
       orderValue: Number(formData.get("orderValue")),
     };
 
-    // ✅ Parse items array (stringified JSON in formData)
+    // Parse items array (stringified JSON in formData)
     let items = [];
     const rawItems = formData.get("items");
     if (rawItems) {
@@ -119,8 +119,7 @@ export async function verifyPayment({
       } catch {
         console.warn("Failed to parse items JSON, skipping items field");
       }
-    }
-
+    }    
     await connectDb();
 
     const orderId = await generateCustomId(CustomerOrder, "orderId", "#VC-");

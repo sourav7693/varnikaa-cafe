@@ -8,21 +8,22 @@ import {
   useCallback,
 } from "react";
 
-interface CartItem {
-  id: number;
+export interface CartItem {
+  id: string;
   name: string;
   price: number;
   discount: number;
   quantity: number;
   image: string;
+  category: string;
 }
 
 interface CartContextType {
   cartItems: CartItem[];
   addItem: (item: CartItem) => void;
-  removeItem: (id: number) => void;
-  deleteItem: (id: number) => void;
-  updateQuantity: (id: number, quantity: number) => void;
+  removeItem: (id: string) => void;
+  deleteItem: (id: string) => void;
+  updateQuantity: (id: string, quantity: number) => void;
   getTotalItems: () => number;
   clearCart: () => void;
   searchQuery: string;
@@ -71,7 +72,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     });
   }, []);
 
-  const removeItem = useCallback((id: number) => {
+  const removeItem = useCallback((id: string) => {
     setCartItems((prev) =>
       prev
         .map((i) =>
@@ -81,11 +82,11 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     );
   }, []);
 
-  const deleteItem = useCallback((id: number) => {
+  const deleteItem = useCallback((id: string) => {
     setCartItems((prev) => prev.filter((i) => i.id !== id));
   }, []);
 
-  const updateQuantity = useCallback((id: number, quantity: number) => {
+  const updateQuantity = useCallback((id: string, quantity: number) => {
     setCartItems((prev) =>
       prev.map((i) => (i.id === id ? { ...i, quantity } : i))
     );

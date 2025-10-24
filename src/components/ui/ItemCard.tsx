@@ -6,11 +6,12 @@ import { FaPlusCircle } from "react-icons/fa";
 import { FaMinusCircle } from "react-icons/fa";
 
 interface ItemCardProps {
-  id: number;
+  id: string;
   name: string;
   price: number;
   quantity: number;
   image: string;
+  category: string;
 }
 
 const ItemCard = ({ id, name, price, quantity, image }: ItemCardProps) => {
@@ -62,6 +63,7 @@ const ItemCard = ({ id, name, price, quantity, image }: ItemCardProps) => {
                   discount: 0,
                   image,
                   quantity: 1,
+                  category: "",
                 })
               }
             />

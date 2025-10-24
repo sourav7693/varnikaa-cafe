@@ -117,7 +117,8 @@ const CartPageSection = () => {
              price: item.price,
              discount: item.discount || 0,
              image: item.image,
-             quantity: item.quantity, 
+             quantity: item.quantity,     
+             category: item.category         
            }));
            formDataToSend.append("items", JSON.stringify(itemsToSend));                   
 

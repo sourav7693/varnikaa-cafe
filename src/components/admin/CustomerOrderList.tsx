@@ -229,9 +229,9 @@ export default function CustomerOrderList({
                   <td className="px-6 py-4">
                     <span
                       className={`px-3 py-1 rounded-full text-sm font-medium ${
-                        order.status === "Pending"
+                        order.status === OrderStatus.PENDING
                           ? "bg-yellow-100 text-yellow-700"
-                          : order.status === "Confirmed"
+                          : order.status === OrderStatus.CONFIRMED
                           ? "bg-blue-100 text-blue-700"
                           : "bg-green-100 text-green-700"
                       }`}
@@ -438,6 +438,7 @@ export default function CustomerOrderList({
                       <th className="px-4 py-2 border">Quantity</th>
                       <th className="px-4 py-2 border">Price (₹)</th>
                       <th className="px-4 py-2 border">Total (₹)</th>
+                      <th className="px-4 py-2 border">Category</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -450,6 +451,9 @@ export default function CustomerOrderList({
                           <td className="px-4 py-2 border">{qty}</td>
                           <td className="px-4 py-2 border">₹{price}</td>
                           <td className="px-4 py-2 border">₹{price * qty}</td>
+                          <td className="px-4 py-2 border">
+                            {detail.category}
+                          </td>
                         </tr>
                       );
                     })}
@@ -497,6 +501,11 @@ export default function CustomerOrderList({
                 )}
               </div>
 
+              <p>
+                Ordered At: {}
+                {new Date(modalFormData.createdAt as Date).toLocaleString()}
+              </p>
+
               {/* Razorpay Info */}
               <div>
                 <label className="font-medium">Razorpay Order ID:</label>
@@ -510,19 +519,6 @@ export default function CustomerOrderList({
                 <label className="font-medium">Razorpay Signature:</label>
                 <p>{modalFormData.razorPaySignature || "—"}</p>
               </div>
-
-              {/* Created / Updated */}
-              {/* <div className="text-sm text-gray-600">
-                <p>
-                  Created At:{" "}
-                  {}
-                  {new Date(modalFormData.createdAt).toLocaleString()}
-                </p>
-                <p>
-                  Updated At:{" "}
-                  {new Date(modalFormData.updatedAt).toLocaleString()}
-                </p>
-              </div> */}
             </div>
 
             {/* Footer */}

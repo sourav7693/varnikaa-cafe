@@ -8,8 +8,8 @@ export async function generateCustomId<T extends Document>(
   try {
     // Determine pad length based on model name
     const modelName = Model.modelName;
-    let padLength = 4; // default
-    if (modelName === "MenuProducts" || modelName === "CustomerOrder") padLength = 5;
+    let padLength = 4;
+    if (modelName === "CustomerOrder") padLength = 5;
 
     // Fetch records sorted by idField
     const records = await Model.find({}, { [idField]: 1, _id: 0 }).sort({

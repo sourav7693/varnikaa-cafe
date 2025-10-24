@@ -1,7 +1,15 @@
+import { getAllItems } from '@/actions/menuItem';
 import AddMenuItems from '@/components/admin/AddMenuItems';
-import React from 'react'
+import MenuItemList from '@/components/admin/MenuItemList';
+import { MenuItemResponse } from '@/models/MenuItem';
 
-const page = () => {
+const page =async({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) => {
+    const { page } = await searchParams;
+    const pageData = await getMenuItemData(page);    
   return (
     <section className=" flex flex-col md:flex-row justify-between items-center gap-4 py-8 md:px-10 px-4">
       <div className="w-full h-full md:w-[30%] flex flex-col rounded-t-2xl gap-6 bg-[#F9FAFB] border border-[#ccc] p-4">
@@ -10,25 +18,30 @@ const page = () => {
         </h1>
         <AddMenuItems />
       </div>
-      <div className="w-full md:w-[70%] flex flex-col self-start">
-        <h1 className="text-3xl p-4 text-defined-darkbrown font-bold">
-          Product Management
-        </h1>
-        <table>
-          <thead className='bg-defined-darkbrown text-white'>
-            <tr>
-              <th className="p-4 text-left">Category</th>
-              <th className="p-4 text-left">Item Name</th>
-              <th className="p-4 text-left">Item MRP</th>
-              <th className="p-4 text-left">Item Discount</th>
-              <th className="p-4 text-left">Item Price</th>
-              <th className="p-4 text-left">Status</th>              
-            </tr>
-          </thead>          
-        </table>
-      </div>
+      <MenuItemList MenuItems={pageData.data} pagination={pageData.pagination} />
     </section>
   );
 }
 
 export default page
+
+async function getMenuItemData(
+  page: number | string = 1
+): Promise<MenuItemResponse> {
+  try {
+    const menuItem = await getAllItems(parseInt((page as string) ?? "1"));
+    return menuItem;
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      data: [],
+      pagination: {
+        totalCount: 0,
+        currentPage: 1,
+        limit: 10,
+        totalPages: 0,
+      },
+    };
+  }
+}
