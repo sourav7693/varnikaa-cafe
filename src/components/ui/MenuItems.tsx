@@ -61,7 +61,7 @@ export default function MenuItems({
               <div className="flex justify-between items-center">
                 <span>
                   <span className="font-bold text-defined-green">
-                    ₹{item.itemPrice}
+                    ₹{item.itemMRP}
                   </span>{" "}
                   | {item.itemDiscount}% Off
                 </span>
