@@ -58,6 +58,8 @@ export async function createMenuItem(formData: FormData) {
     const savedItem = await newMenuItem.save();
 
     revalidatePath("/admin-menu-products-management");
+    revalidatePath("/");
+    revalidatePath("/menu");
 
     return {
       success: true,
@@ -145,6 +147,8 @@ export async function deleteMenuItem(itemId: string) {
     if (!deleted) return { success: false, message: "Menu item not found" };
 
     revalidatePath("/admin-menu-products-management");
+    revalidatePath("/");
+    revalidatePath("/menu");
 
     return { success: true, message: "Menu item deleted successfully" };
   } catch (err: unknown) {
@@ -198,6 +202,8 @@ export async function updateMenuItem(formData: FormData) {
     if (!updatedItem) return { success: false, message: "Menu item not found" };
 
     revalidatePath("/admin-menu-products-management");
+    revalidatePath("/");
+    revalidatePath("/menu");
 
     return { success: true, data: JSON.parse(JSON.stringify(updatedItem)) };
   } catch (err) {
