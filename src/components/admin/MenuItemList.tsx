@@ -15,6 +15,7 @@ import { MdEditDocument } from "react-icons/md";
 import { IoMdEye, IoMdClose } from "react-icons/io";
 import { FiTrash2 } from "react-icons/fi";
 import Spinner from "../ui/Spinner";
+import Image from "next/image";
 
 const MenuItemList = ({
   MenuItems,
@@ -351,7 +352,9 @@ const MenuItemList = ({
               {isEditMode ? (
                 <div className="flex flex-col gap-3">
                   {modalFormData.itemImage?.secure_url && (
-                    <img
+                    <Image
+                      width={100}
+                      height={100}
                       src={modalFormData.itemImage.secure_url}
                       alt="Current"
                       className="size-44 object-cover rounded-md"
@@ -370,8 +373,10 @@ const MenuItemList = ({
                   />
                 </div>
               ) : (
-                <img
-                  src={modalFormData.itemImage?.secure_url}
+                <Image
+                 src={modalFormData.itemImage?.secure_url || ""}
+                  width={100}
+                  height={100}
                   alt="Item"
                   className="w-40 h-40 object-cover rounded-md border"
                 />
@@ -510,7 +515,7 @@ const MenuItemList = ({
             </div>
 
             {/* Actions */}
-            <div className="flex justify-end gap-3 mt-4">              
+            <div className="flex justify-end gap-3 mt-4">
               {isEditMode && (
                 <button
                   className="px-4 py-2 bg-green-600 text-white rounded"
@@ -522,6 +527,16 @@ const MenuItemList = ({
               )}
             </div>
           </div>
+        </div>
+      )}
+      {pagination.totalPages > page && (
+        <div className="flex justify-center items-center gap-4 mt-6" ref={ref}>
+          <span className="animate-pulse text-2xl font-bold">Loading...</span>
+          <div
+            className="size-9 inline-block rounded-full border-6 border-r-defined-purple border-solid animate-spin border-white"
+            role="status"
+            aria-label="Loading"
+          ></div>
         </div>
       )}
     </div>

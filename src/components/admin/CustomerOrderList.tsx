@@ -17,6 +17,8 @@ import { useInView } from "react-intersection-observer";
 import { IoMdEye } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { FaSearch } from "react-icons/fa";
+import * as XLSX from "xlsx";
+
 
 export default function CustomerOrderList({
   CustomerOrders,
@@ -138,17 +140,63 @@ export default function CustomerOrderList({
     setModalFormData(order);
   };
 
+  const handleExportExcel = () => {
+    if (!orders.length) {
+      toast.error("No orders to export");
+      return;
+    }
+
+    // Prepare data
+    const exportData = orders.map((order) => ({
+      "Order ID": order.orderId,
+      "Customer Name": order.customerName,
+      Phone: order.customerPhone,
+      Address: order.customerAddress,
+      Landmark: order.customerLandMark,
+      "Pin Code": order.customerPinCode,
+      "Order Value": order.orderValue,
+      "Payment Method": order.paymentMethod,
+      "Payment Status": order.paymentStatus,
+      "Order Status": order.status,
+      "Created At": new Date(order.createdAt).toLocaleString(),
+      Items: order.items
+        ?.map(
+          (item) =>
+            `${item.name} (x${item.quantity}) - ₹${item.price} | ${item.category}`
+        )
+        .join("; "),
+    }));
+
+    // Create a worksheet
+    const ws = XLSX.utils.json_to_sheet(exportData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Orders");
+
+    // Generate Excel file
+    XLSX.writeFile(wb, `CustomerOrders_${new Date().toISOString()}.xlsx`);
+    toast.success("Exported successfully!");
+  };
+
   return (
     <>
-      <div className="relative">
-        <FaSearch className="absolute left-5 top-3 text-lg text-defined-brown" />
-        <input
-          type="text"
-          placeholder="Search by name or phone number"
-          className="w-full text-lg text-defined-brown placeholder:text-defined-brown p-2 pl-12 border border-[#ccc] rounded-md outline-none"
-          value={searchQuery}
-          onChange={(e) => handleSearch(e.target.value)}
-        />
+      <div className="relative flex items-center justify-between gap-4">
+        <div className="relative flex-1">
+          <FaSearch className="absolute left-5 top-3 text-lg text-defined-brown" />
+          <input
+            type="text"
+            placeholder="Search by name or phone number"
+            className="w-full text-lg text-defined-brown placeholder:text-defined-brown p-2 pl-12 border border-[#ccc] rounded-md outline-none"
+            value={searchQuery}
+            onChange={(e) => handleSearch(e.target.value)}
+          />
+        </div>
+
+        <button
+          onClick={handleExportExcel}
+          className="px-4 py-2 bg-defined-green text-white font-medium rounded-md hover:bg-green-700 transition-all"
+        >
+          Export XLSX
+        </button>
       </div>
 
       <div className="overflow-x-auto">

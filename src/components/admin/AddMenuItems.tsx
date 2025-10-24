@@ -34,7 +34,7 @@ const AddMenuItems = () => {
     const categoryName = (formData.get("categoryName") as string)?.trim();
     const itemName = (formData.get("itemName") as string)?.trim();
     const itemMRP = Number(formData.get("itemMRP"));
-    const itemDiscount = Number(formData.get("itemDiscount"));
+    Number(formData.get("itemDiscount"));
     const itemPrice = Number(formData.get("itemPrice"));
     const itemImage = formData.get("itemImage") as File;
     const itemDescription = (formData.get("itemDescription") as string)?.trim();

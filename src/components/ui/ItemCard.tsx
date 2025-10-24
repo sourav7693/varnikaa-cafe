@@ -15,7 +15,7 @@ interface ItemCardProps {
 }
 
 const ItemCard = ({ id, name, price, quantity, image }: ItemCardProps) => {
-  const { deleteItem, removeItem, cartItems, addItem } = useCart();
+  const { deleteItem, removeItem, addItem } = useCart();
 
   const handleDelete = () => {
     // remove completely from cart (no matter what qty)
