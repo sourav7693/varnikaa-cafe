@@ -94,7 +94,7 @@ const customerOrderSchema = new Schema<CustomerOrderDocument>(
 );
 
 const CustomerOrder: Model<CustomerOrderDocument> =
-  mongoose.models.CustomerOrder ||
+  mongoose.models?.CustomerOrder ||
   mongoose.model<CustomerOrderDocument>("CustomerOrder", customerOrderSchema);
 
 export default CustomerOrder;
