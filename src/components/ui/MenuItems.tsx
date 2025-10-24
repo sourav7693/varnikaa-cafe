@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { CartItem, useCart } from "@/context/CartContext";
 import { FaMinusCircle, FaPlusCircle } from "react-icons/fa";
 import { useSearchParams } from "next/navigation";
-import { MenuItemDocument } from "@/models/MenuItem";
+import { ItemStatus, MenuItemDocument } from "@/models/MenuItem";
 
 export default function MenuItems({
   allCategories,
@@ -42,7 +42,8 @@ export default function MenuItems({
           const quantity = cartItem ? cartItem.quantity : "ADD";
 
           return (
-            <div
+            <>
+            {item.status === ItemStatus.ACTIVE &&  <div
               key={item.itemId}
               className="w-full p-4 flex flex-col justify-between gap-4 shadow-defined-light rounded-xl hover:scale-105 transition-all duration-300"
             >
@@ -99,7 +100,9 @@ export default function MenuItems({
               >
                 Order Now!
               </Link>
-            </div>
+            </div>}
+           
+            </>
           );
         })
       ) : (
