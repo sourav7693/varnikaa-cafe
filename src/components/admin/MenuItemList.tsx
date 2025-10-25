@@ -58,7 +58,7 @@ const MenuItemList = ({
       setTableLoading(true);
       const res = await getAllItems(
         1,
-        10,
+        0,
         "createdAt",
         "desc",
         undefined,
