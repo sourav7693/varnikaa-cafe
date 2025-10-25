@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "swiper/css";
 @import "swiper/css/bundle";
+@import "react-datepicker/dist/react-datepicker.css";
 
 @theme inline {
 
