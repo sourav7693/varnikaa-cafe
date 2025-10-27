@@ -17,6 +17,17 @@
 }
 
 @layer base {
+  .scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scroll-smooth {
+  scroll-behavior: smooth;
+}
 
   .admin-self-padding {
     @apply md:px-10 px-4 py-8 flex flex-col gap-8;

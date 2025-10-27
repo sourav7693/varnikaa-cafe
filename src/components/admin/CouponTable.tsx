@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { updateCoupon, deleteCoupon } from "@/actions/coupon";
 import { FaEdit, FaSave, FaTrash, FaTimes } from "react-icons/fa";
 import toast from "react-hot-toast";
@@ -15,7 +15,7 @@ export default function CouponTable({
   const [coupons, setCoupons] = useState(initialCoupons);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editData, setEditData] = useState<Partial<CouponDocument>>({});
-  const [deleteId, setDeleteId] = useState<string | null>(null); // modal state
+  const [deleteId, setDeleteId] = useState<string | null>(null);
 
   const handleEdit = (coupon: CouponDocument) => {
     setEditingId(coupon.couponId);
@@ -40,6 +40,11 @@ export default function CouponTable({
     setDeleteId(null);
   };
 
+  useEffect(() => {
+    setCoupons(initialCoupons);
+  }, [initialCoupons]);
+
+
   return (
     <div className="bg-white shadow-md rounded-lg p-6 overflow-x-auto relative">
       <h2 className="text-xl font-bold text-defined-green mb-4">
@@ -63,7 +68,7 @@ export default function CouponTable({
           </thead>
 
           <tbody>
-            {coupons.map((coupon) => (
+            {coupons.map((coupon : CouponDocument) => (
               <tr key={coupon.couponId} className="border-b">
                 <td className="p-3">{coupon.couponId}</td>
 

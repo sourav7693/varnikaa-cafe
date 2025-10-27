@@ -11,6 +11,7 @@ import {
 export interface CartItem {
   id: string;
   name: string;
+  mrp: number;
   price: number;
   discount: number;
   quantity: number;

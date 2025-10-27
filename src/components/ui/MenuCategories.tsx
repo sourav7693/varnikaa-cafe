@@ -15,8 +15,8 @@ export default function MenuCategories({
   return (
     <>
       {/* Category Buttons */}
-      <div className="w-full overflow-x-auto flex items-center justify-center">
-        <div className="flex whitespace-nowrap gap-3 px-4 py-2">
+      <div className="w-full md:flex md:flex-wrap md:justify-center md:items-center overflow-x-auto md:overflow-x-visible scrollbar-hide scroll-smooth">
+        <div className="flex gap-3 px-4 py-2 md:flex-wrap min-w-max md:min-w-0">
           {categories.map((category) => (
             <button
               key={category.name}
@@ -33,7 +33,6 @@ export default function MenuCategories({
         </div>
       </div>
 
-      {/* Render Menu Items for active category */}
       <MenuItems allCategories={categories} activeCategory={activeCategory} />
     </>
   );

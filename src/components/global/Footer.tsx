@@ -32,24 +32,16 @@ const Footer = () => {
               Our Location
             </p>
           </div>
-          <h1 className="text-3xl text-defined-darkbrown">
-            Visit Our Restaurant
-          </h1>
-          Varnikaa Cafe: Fresh flavors, cozy ambiance, and delightful meals.
-          Visit us for a memorable dining experience every day.
+          <h1 className="text-3xl text-defined-darkbrown">Visit Us</h1>
+          <Link href="/" className="flex items-center gap-2 hover:underline">
+            JAMUNA LAL BAJAJROAD, KHALPARA,SILIGURI-734005
+          </Link>
           <div className="flex flex-col gap-4 w-full">
             <h1 className="lg:text-xl text-2xl xlg:text-2xl font-semibold text-defined-darkbrown">
               Contact Information
             </h1>
 
             <div className="flex flex-col gap-2 lg:text-sm text-lg xlg:text-lg">
-              <Link
-                href="/"
-                target="_blank"
-                className="flex items-center gap-2 hover:underline"
-              >
-                Address: Premendra Mitra Street, Ward No 27, Siliguri WB 734005
-              </Link>
               <Link
                 href="tel:+919434320315"
                 className="flex items-center gap-2 hover:underline"
@@ -70,7 +62,7 @@ const Footer = () => {
                 className="hover:scale-105 transition-all duration-300 bg-defined-green text-white py-2 px-5 rounded-md"
               >
                 Get Directions
-              </Link>              
+              </Link>
               <Link
                 href="https://www.instagram.com/varnikaacafe/"
                 target="_blank"
@@ -82,7 +74,7 @@ const Footer = () => {
                   height={40}
                   className="size-8"
                 />
-              </Link>                      
+              </Link>
             </div>
           </div>
         </div>

@@ -24,15 +24,15 @@ const AdminHeader = ({ username, logout }: User) => {
   const navLinks = [
     { label: "Dashboard", href: "/admin-dashboard" },
     {
-      label: "Customer Order Management",
+      label: "Customer Orders",
       href: "/admin-customer-order-management",
     },
     {
-      label: "Menu Product Management",
+      label: "Product Menu",
       href: "/admin-menu-products-management",
     },
     {
-      label: "Coupon Management",
+      label: "Coupons",
       href: "/admin-coupon-management",
     }
   ];
@@ -85,7 +85,7 @@ const AdminHeader = ({ username, logout }: User) => {
           Varnikaa Cafe
         </h1>
       </Link>
-      <div className="flex justify-center items-center gap-8">
+      <div className="flex justify-center items-center gap-8 text-lg">
         {navLinks.map((links, index) => (
           <Link
           key={index}

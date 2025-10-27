@@ -82,6 +82,7 @@ export default function MenuItems({
                       addItem({
                         id: item.itemId,
                         name: item.itemName,
+                        mrp: item.itemMRP,
                         price: item.itemPrice,
                         discount: item.itemDiscount,
                         image: item.itemImage?.secure_url,

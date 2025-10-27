@@ -9,16 +9,17 @@ interface ItemCardProps {
   id: string;
   name: string;
   price: number;
+  mrp: number;
   quantity: number;
   image: string;
+  discount: number;
   category: string;
 }
 
-const ItemCard = ({ id, name, price, quantity, image }: ItemCardProps) => {
+const ItemCard = ({ id, name, price, quantity, image, discount, mrp }: ItemCardProps) => {
   const { deleteItem, removeItem, addItem } = useCart();
 
   const handleDelete = () => {
-    // remove completely from cart (no matter what qty)
     deleteItem(id);
   };
 
@@ -35,7 +36,10 @@ const ItemCard = ({ id, name, price, quantity, image }: ItemCardProps) => {
       <div className="flex flex-col gap-2 md:gap-4 justify-center w-full">
         <div className="flex justify-between items-center">
           <span className="text-defined-darkbrown font-bold text-lg md:text-xl">
-            {name}
+            {name}{" "}
+            <span className="text-defined-green">
+              (+{discount ? `${discount}% Discount` : ""})
+            </span>
           </span>
           <button
             onClick={handleDelete}
@@ -48,7 +52,7 @@ const ItemCard = ({ id, name, price, quantity, image }: ItemCardProps) => {
         <div className="flex flex-col md:flex-row justify-between md:items-center text-sm md:text-base gap-1">
           <div className="flex flex-wrap gap-2 items-center">
             <span className="text-defined-brown font-semibold">
-              Price: ₹{price}
+              Price: <span className={`${discount !==0 ? "line-through" : ""}`}>₹{mrp}</span> ₹{price}
             </span>
             <span className="text-defined-brown font-semibold">
               Quantity: {quantity}
@@ -60,6 +64,7 @@ const ItemCard = ({ id, name, price, quantity, image }: ItemCardProps) => {
                   id,
                   name,
                   price,
+                  mrp,
                   discount: 0,
                   image,
                   quantity: 1,

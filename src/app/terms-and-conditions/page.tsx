@@ -4,66 +4,53 @@ import MainTemplate from "@/templates/MainTemplate";
 const page = () => {
   const data = [
     {
-      heading: "1. General Terms",
+      heading: "1. Delivery Policy",
       details: `
-           ○ Varnikaa Cafe is an online takeaway and delivery service available only within
-Siliguri. <br />
-○ We reserve the right to modify or update these terms at any time. Any changes
-will be effective immediately upon posting on the website.<br />
-○ Customers must be at least 18 years old to place an order or have the consent of
-a parent or guardian.
+           ○ Delivery is subject to availability and distance.<br />
+○ Delivery charges are applicable as per location and distance.<br />
+○ Customers must provide accurate address and contact details to avoid delays.
         `,
     },
     {
-      heading: "2. Orders and Payment",
+      heading: "2. Payment & Cash on Delivery",
       details: `
-           ○ All orders placed through our website are subject to availability and confirmation.  <br />
-○ The payment for all orders must be completed using Razorpay, our integrated
-payment gateway. We accept credit cards, debit cards, and UPI payments.  <br />
-○ By placing an order, you authorize us to charge the applicable order amount to
-your chosen payment method.
+           ○ We accept Cash on Delivery (COD) for eligible orders.  <br />
+○ Digital/online payment options may be offered as per availability.
         `,
     },
     {
-      heading: "3. Delivery",
+      heading: "3. Pre-Booking & Advance Payment",
       details: `
-           ○ We offer delivery services within the Siliguri region. <br />
-○ Delivery times may vary based on location, order size, and time of day. Estimated
-delivery time will be displayed at checkout. <br />
-○ If the delivery address is incorrect or inaccessible, we may cancel the order or
-request a change in delivery instructions.
-
+           ○Certain items or categories (such as bulk orders, customized dishes, and special sweets) require advance booking. <br />
+○ Advance payment is mandatory for bulk bookings and high-value orders.<br />
         `,
     },
     {
-      heading: "4. Pricing and Charges",
+      heading: "4. Order Cancellation",
       details: `
-           ○ All prices listed on the website are final unless there is a system error or
-mispricing, in which case we may cancel or adjust the order.<br />
-○ Delivery charges may apply based on the order amount or delivery location.
+           ○ Once an order is confirmed, it cannot be canceled or modified.<br />
+○ Advance payments are non-refundable in case of cancellation.
         `,
     },
     {
-      heading: "5.  Privacy and Data Protection",
+      heading: "5.  Food Packaging & Responsibility",
       details: `
-           ○ Your privacy is important to us. Please refer to our Privacy Policy for details
-about how we collect and protect your data.
+           ○ Customers must check the food packaging at the time of delivery. <br />
+○ After delivery, the cafe is not responsible for damage, spillage, or spoilage.
         `,
     },
     {
-      heading: "6. Limitation of Liability",
+      heading: "6. Bulk & Special Orders",
       details: `
-           ○ Varnikaa Cafe is not liable for any indirect, incidental, or consequential damages
-arising from the use of our services. <br />
-○ We make no representations or warranties regarding the quality or safety of food
-items
+           ○ Some items require prior notice (e.g., halwas, thalis, large combos).<br />
+○ Orders for events, parties, or catering must be confirmed with advance payment.
         `,
     },
     {
-      heading: "7. Governing Law",
+      heading: "7. Liability",
       details: `
-           ○ These Terms & Conditions are governed by the laws of India. Any disputes will
-be resolved in the courts located in Siliguri.
+           ○ The cafe will not be responsible for delays due to unforeseen events (traffic, weather, or operational issues). <br />
+○ Food is prepared fresh and hygienically, but once delivered, storage and consumption are the customer’s responsibility.
         `,
     },
   ];

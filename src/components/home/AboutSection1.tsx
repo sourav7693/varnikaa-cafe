@@ -47,7 +47,7 @@ const AboutSection1 = () => {
         </h1>
 
         <p className="text-defined-brown text-justify">
-          At Varnikaa Cafe (Shri Vinayak Kitchen), we believe that every meal is
+          At Varnikaa Cafe, we believe that every meal is
           more than just food—it&apos;s an experience to savor, share, and
           remember. Located in the heart of Siliguri, we bring together the
           perfect blend of taste, freshness, and warmth in every dish we serve.
@@ -63,7 +63,10 @@ const AboutSection1 = () => {
           leisurely meal, we promise a delightful culinary journey that keeps
           you coming back for more. <br />
           <br />
+          <b className=" text-defined-darkbrown">
           We also accept Party Orders.
+          Party Packaging is also available!
+          </b>
         </p>
         <Link
           href="/menu"
