@@ -49,6 +49,7 @@ export async function getAllCoupons(
   order: "asc" | "desc" = "desc"
 ) {
   try {
+    await connectDb();
     const pageNumber = parseInt(page as string, 10);
     const pageSize = parseInt(limit as string, 10);
     const skip = (pageNumber - 1) * pageSize;
@@ -56,9 +57,8 @@ export async function getAllCoupons(
     const sortOrder = order === "asc" ? 1 : -1;
     const sortQuery: Record<string, 1 | -1> = { [sort]: sortOrder };
 
+    
     const totalCount = await Coupon.countDocuments();
-
-    await connectDb();
     const coupons = await Coupon.find()
       .sort(sortQuery)
       .skip(skip)
