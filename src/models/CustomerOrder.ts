@@ -27,6 +27,8 @@ export interface CustomerOrderDocument extends Document {
   customerName: string;
   customerPhone: string;
   orderValue: number;
+  couponCode: string;
+  couponDiscount: number;
   customerAddress: string;
   customerLandMark: string;
   customerPinCode: string;
@@ -61,6 +63,8 @@ const customerOrderSchema = new Schema<CustomerOrderDocument>(
     customerName: { type: String, required: true },
     customerPhone: { type: String, required: true },
     orderValue: { type: Number, required: true },
+    couponCode: { type: String },
+    couponDiscount: { type: Number, default: 0 },
     customerAddress: { type: String, required: true },
     customerLandMark: { type: String, required: true },
     customerPinCode: { type: String, required: true },

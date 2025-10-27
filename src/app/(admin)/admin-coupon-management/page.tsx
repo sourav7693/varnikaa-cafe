@@ -18,7 +18,7 @@ const page = async ({
       </div>
 
       <div className="w-full md:w-[70%]">
-        <CouponTable initialCoupons={pageData.data} />
+        <CouponTable initialCoupons={pageData.data} pagination={pageData.pagination}/>
       </div>
     </section>
   );

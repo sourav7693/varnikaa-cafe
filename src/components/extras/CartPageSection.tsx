@@ -6,6 +6,7 @@ import ItemCard from "@/components/ui/ItemCard";
 import { useCart } from "@/context/CartContext";
 import { createOrder, verifyPayment } from "@/actions/customerOrder";
 import toast from "react-hot-toast";
+import { validateCoupon } from "@/actions/coupon";
 
 // --- Razorpay Type Definitions ---
 
@@ -57,7 +58,47 @@ async function loadRazorpayScript(): Promise<void> {
 const CartPageSection = () => {
   const { cartItems } = useCart();
   const router = useRouter();
-  const total = cartItems.reduce((sum, i) => sum + i.price * i.quantity, 0);
+  const subtotal = cartItems.reduce((sum, i) => sum + i.price * i.quantity, 0);
+
+  const [couponCode, setCouponCode] = useState("");
+  const [discount, setDiscount] = useState(0);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const total = Math.max(subtotal - (subtotal * discount) / 100, 0);
+
+  // 🧠 Handle Coupon Apply
+  const handleApplyCoupon = async () => {
+    setError("");
+
+    if (subtotal === 0) {
+      setError("Add some items to your cart first!");
+      return;
+    }
+
+    if (!couponCode.trim()) {
+      setError("Please enter a coupon code");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await validateCoupon(couponCode);
+      if (!res.success) {
+        setDiscount(0);
+        setError(res.message);
+        toast.error(res.message);
+      } else {
+        setDiscount(Number(res.discount));
+        toast.success(`${res.discount}% discount applied!`);
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const [formData, setFormData] = useState({
     name: "",
@@ -70,6 +111,8 @@ const CartPageSection = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  
 
   const handlePayment = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -111,6 +154,8 @@ const CartPageSection = () => {
           formDataToSend.append("customerLandMark", formData.landmark);
           formDataToSend.append("customerPinCode", formData.pincode);
           formDataToSend.append("orderValue", String(total));
+          formDataToSend.append("couponCode", couponCode);
+          formDataToSend.append("couponDiscount", String(discount));
            const itemsToSend = cartItems.map((item) => ({
              id: item.id,
              name: item.name,
@@ -172,6 +217,34 @@ const CartPageSection = () => {
 
       {/* Order Summary */}
       <div className="flex flex-col gap-4 w-full md:w-[40%] self-start">
+        {/* 🏷 Coupon Section */}
+        <div className="p-4 flex flex-col gap-3 shadow-defined-light">
+          <h1 className="text-defined-darkbrown text-2xl font-semibold">
+            Coupon Code
+          </h1>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              placeholder="Enter coupon code"
+              value={couponCode}
+              onChange={(e) => setCouponCode(e.target.value)}
+              className="w-full border border-[#ccc] p-2 rounded-lg outline-none placeholder:text-defined-brown"
+            />
+            <button
+              onClick={handleApplyCoupon}
+              disabled={loading}
+              className="bg-defined-green text-white px-4 py-2 rounded-lg"
+            >
+              {loading ? "Checking..." : "Apply"}
+            </button>
+          </div>
+          {error && <p className="text-sm text-red-600 font-medium">{error}</p>}
+          {discount > 0 && (
+            <p className="text-green-600 text-sm font-semibold">
+              {discount}% Discount Applied!
+            </p>
+          )}
+        </div>
         <div className="p-4 flex flex-col gap-4 shadow-defined-light">
           <h1 className="text-defined-darkbrown text-2xl font-semibold">
             Order Summary

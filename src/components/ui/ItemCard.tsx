@@ -38,7 +38,7 @@ const ItemCard = ({ id, name, price, quantity, image, discount, mrp }: ItemCardP
           <span className="text-defined-darkbrown font-bold text-lg md:text-xl">
             {name}{" "}
             <span className="text-defined-green">
-              (+{discount ? `${discount}% Discount` : ""})
+              {discount ? `(+${discount}% Discount)` : ""}
             </span>
           </span>
           <button
@@ -52,7 +52,7 @@ const ItemCard = ({ id, name, price, quantity, image, discount, mrp }: ItemCardP
         <div className="flex flex-col md:flex-row justify-between md:items-center text-sm md:text-base gap-1">
           <div className="flex flex-wrap gap-2 items-center">
             <span className="text-defined-brown font-semibold">
-              Price: <span className={`${discount !==0 ? "line-through" : ""}`}>₹{mrp}</span> ₹{price}
+              Price: <span className={`${discount !==0 ? "line-through" : "hidden"}`}>₹{mrp}</span> ₹{price}
             </span>
             <span className="text-defined-brown font-semibold">
               Quantity: {quantity}

@@ -4,6 +4,38 @@ import { connectDb } from "@/lib/connection";
 import { generateCustomId } from "@/helper/generateCustomId";
 import { revalidatePath } from "next/cache";
 
+export async function validateCoupon(code: string) {
+  try {
+    await connectDb();
+    const coupon = await Coupon.findOne({ code: code.trim() }).lean();
+
+    if (!coupon) {
+      return { success: false, message: "Invalid Coupon" };
+    }
+
+    const now = new Date();
+    if (now < new Date(coupon.startDate)) {
+      return { success: false, message: "Coupon not active yet" };
+    }
+    if (now > new Date(coupon.expiryDate)) {
+      return { success: false, message: "Coupon Expired" };
+    }
+
+    if (!coupon.active) {
+      return { success: false, message: "Coupon Inactive" };
+    }
+
+    return {
+      success: true,
+      discount: coupon.discount,
+      message: "Coupon Applied Successfully",
+    };
+  } catch (err) {
+    console.error("validateCoupon error:", err);
+    return { success: false, message: "Internal server error" };
+  }
+}
+
 export async function createCoupon(formData: FormData) {
   try {
     await connectDb();

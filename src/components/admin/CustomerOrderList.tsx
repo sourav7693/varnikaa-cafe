@@ -158,7 +158,12 @@ export default function CustomerOrderList({
       "Payment Method": order.paymentMethod,
       "Payment Status": order.paymentStatus,
       "Order Status": order.status,
-      "Created At": new Date(order.createdAt).toLocaleString(),
+      "Ordered At": new Date(order.createdAt).toLocaleString(),
+      "Coupon Code": order.couponCode,
+      "Coupon Discount": order.couponDiscount,
+      "RazorPay Payment ID": order.razorPayPaymentId,
+      "RazorPay Order ID": order.razorPayOrderId,
+      "RazorPay Signature": order.razorPaySignature,
       Items: order.items
         ?.map(
           (item) =>
@@ -380,100 +385,31 @@ export default function CustomerOrderList({
               {/* Customer Name */}
               <div>
                 <label className="font-medium">Customer Name:</label>
-                {isEditMode ? (
-                  <input
-                    type="text"
-                    className="w-full border p-2 rounded"
-                    value={modalFormData.customerName}
-                    onChange={(e) =>
-                      setModalFormData({
-                        ...modalFormData,
-                        customerName: e.target.value,
-                      })
-                    }
-                  />
-                ) : (
-                  <p>{modalFormData.customerName}</p>
-                )}
+                <p>{modalFormData.customerName}</p>
               </div>
 
               {/* Phone */}
               <div>
                 <label className="font-medium">Phone:</label>
-                {isEditMode ? (
-                  <input
-                    type="text"
-                    className="w-full border p-2 rounded"
-                    value={modalFormData.customerPhone}
-                    onChange={(e) =>
-                      setModalFormData({
-                        ...modalFormData,
-                        customerPhone: e.target.value,
-                      })
-                    }
-                  />
-                ) : (
-                  <p>{modalFormData.customerPhone}</p>
-                )}
+                <p>{modalFormData.customerPhone}</p>
               </div>
 
               {/* Address */}
               <div>
                 <label className="font-medium">Address:</label>
-                {isEditMode ? (
-                  <textarea
-                    className="w-full border p-2 rounded"
-                    value={modalFormData.customerAddress}
-                    onChange={(e) =>
-                      setModalFormData({
-                        ...modalFormData,
-                        customerAddress: e.target.value,
-                      })
-                    }
-                  />
-                ) : (
-                  <p>{modalFormData.customerAddress}</p>
-                )}
+                <p>{modalFormData.customerAddress}</p>
               </div>
 
               {/* Landmark */}
               <div>
                 <label className="font-medium">Landmark:</label>
-                {isEditMode ? (
-                  <input
-                    type="text"
-                    className="w-full border p-2 rounded"
-                    value={modalFormData.customerLandMark}
-                    onChange={(e) =>
-                      setModalFormData({
-                        ...modalFormData,
-                        customerLandMark: e.target.value,
-                      })
-                    }
-                  />
-                ) : (
-                  <p>{modalFormData.customerLandMark}</p>
-                )}
+                <p>{modalFormData.customerLandMark}</p>
               </div>
 
               {/* Pincode */}
               <div>
                 <label className="font-medium">Pin Code:</label>
-                {isEditMode ? (
-                  <input
-                    type="text"
-                    className="w-full border p-2 rounded"
-                    value={modalFormData.customerPinCode}
-                    onChange={(e) =>
-                      setModalFormData({
-                        ...modalFormData,
-                        customerPinCode: e.target.value,
-                      })
-                    }
-                  />
-                ) : (
-                  <p>{modalFormData.customerPinCode}</p>
-                )}
+                <p>{modalFormData.customerPinCode}</p>
               </div>
 
               {/* Order Details */}
@@ -509,6 +445,17 @@ export default function CustomerOrderList({
                 </table>
               </div>
 
+              {/* Order Date */}
+              {Number(modalFormData.couponDiscount) > 0 && (
+                <div className=" flex gap-2">
+                  <label className="font-medium">Coupon:</label>
+                  <p>{modalFormData.couponCode}</p>
+                  <span className="text-defined-green font-semibold">
+                    (+{Number(modalFormData.couponDiscount)}% Discount applied)
+                  </span>
+                </div>
+              )}
+
               {/* Order Value */}
               <div>
                 <label className="font-medium">Order Value:</label>
@@ -540,9 +487,9 @@ export default function CustomerOrderList({
                       })
                     }
                   >
-                    <option value="Pending">Pending</option>
-                    <option value="Confirmed">Confirmed</option>
-                    <option value="Delivered">Delivered</option>
+                    <option value={OrderStatus.PENDING}>{OrderStatus.PENDING}</option>
+                    <option value={OrderStatus.CONFIRMED}>{OrderStatus.CONFIRMED}</option>
+                    <option value={OrderStatus.DELIVERED}>{OrderStatus.DELIVERED}</option>
                   </select>
                 ) : (
                   <p>{modalFormData.status}</p>

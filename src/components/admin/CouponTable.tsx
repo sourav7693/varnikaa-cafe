@@ -1,17 +1,28 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { updateCoupon, deleteCoupon } from "@/actions/coupon";
+import { updateCoupon, deleteCoupon, getAllCoupons } from "@/actions/coupon";
 import { FaEdit, FaSave, FaTrash, FaTimes } from "react-icons/fa";
 import toast from "react-hot-toast";
 import DatePicker from "react-datepicker";
 import { CouponDocument } from "@/models/Coupon";
+import { useInView } from "react-intersection-observer";
 
 export default function CouponTable({
   initialCoupons,
+  pagination,
 }: {
   initialCoupons: CouponDocument[];
+  pagination: {
+    totalCount: number;
+    currentPage: number;
+    limit: number;
+    totalPages: number;
+  };
 }) {
+  
+  const [page, setPage] = useState(1);
+  const { ref, inView } = useInView({ threshold: 0.1 });
   const [coupons, setCoupons] = useState(initialCoupons);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editData, setEditData] = useState<Partial<CouponDocument>>({});
@@ -40,10 +51,29 @@ export default function CouponTable({
     setDeleteId(null);
   };
 
+
+  const loadMore = async () => {
+    if (pagination.totalPages <= page) return;
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const nextPage = page + 1;
+      const newCoupons = await getAllCoupons(nextPage);
+      if (newCoupons?.success) {
+        setCoupons((prev) => [...prev, ...newCoupons.data]);
+        setPage(nextPage);
+      }
+    } catch (error) {
+      console.error("Failed to load more orders", error);
+    }
+  };
+
+  useEffect(() => {
+    if (inView) loadMore();
+  }, [inView]);
+
   useEffect(() => {
     setCoupons(initialCoupons);
   }, [initialCoupons]);
-
 
   return (
     <div className="bg-white shadow-md rounded-lg p-6 overflow-x-auto relative">
@@ -68,7 +98,7 @@ export default function CouponTable({
           </thead>
 
           <tbody>
-            {coupons.map((coupon : CouponDocument) => (
+            {coupons.map((coupon: CouponDocument) => (
               <tr key={coupon.couponId} className="border-b">
                 <td className="p-3">{coupon.couponId}</td>
 
@@ -230,6 +260,16 @@ export default function CouponTable({
               </button>
             </div>
           </div>
+        </div>
+      )}
+      {pagination.totalPages > page && (
+        <div className="flex justify-center items-center gap-4 mt-6" ref={ref}>
+          <span className="animate-pulse text-2xl font-bold">Loading...</span>
+          <div
+            className="size-9 inline-block rounded-full border-6 border-r-defined-purple border-solid animate-spin border-white"
+            role="status"
+            aria-label="Loading"
+          ></div>
         </div>
       )}
     </div>

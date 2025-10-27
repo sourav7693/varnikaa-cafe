@@ -27,6 +27,11 @@ const CouponForm = () => {
     formData.append("startDate", start);
     formData.append("expiryDate", expiry);
 
+    if (expiryDate && startDate >= expiryDate) {
+      toast.error("Expirydate can't be lesser than Startdate");
+      return null;
+    }
+
     try {
       const result = await createCoupon(formData);
       if (!result) return null;

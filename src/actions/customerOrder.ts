@@ -108,6 +108,8 @@ export async function verifyPayment({
       customerLandMark: formData.get("customerLandMark") as string,
       customerPinCode: formData.get("customerPinCode") as string,
       orderValue: Number(formData.get("orderValue")),
+      couponCode: formData.get("couponCode") as string,
+      couponDiscount: Number(formData.get("couponDiscount")),
     };
 
     // Parse items array (stringified JSON in formData)
