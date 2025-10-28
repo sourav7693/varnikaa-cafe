@@ -53,7 +53,7 @@ const CouponForm = () => {
 
   return (
     <div className="bg-white shadow-md rounded-lg p-6">
-      <h2 className="text-xl font-bold text-defined-green mb-4">
+      <h2 className="text-xl text-center font-bold text-defined-green mb-4">
         Add New Coupon
       </h2>
 

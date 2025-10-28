@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import ProgressBar from "@/components/global/ProgressBar";
 import { CartProvider } from "@/context/CartContext";
 import { Suspense } from "react";
+import ScrollPopup from "@/components/global/ScrollPopup";
 
 const jost = Jost({ subsets: ["latin"], display: "swap" });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${jost.className} antialiased`}>
+        <ScrollPopup />
         <ProgressBar />
         <Toaster />
         <CartProvider>

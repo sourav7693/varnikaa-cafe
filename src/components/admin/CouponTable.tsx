@@ -75,6 +75,16 @@ export default function CouponTable({
     setCoupons(initialCoupons);
   }, [initialCoupons]);
 
+  const thead = [
+    "ID",
+    "Code",
+    "Start Date",
+    "Expiry Date",
+    "Discount",
+    "Status",
+    "Actions",
+  ];
+
   return (
     <div className="bg-white shadow-md rounded-lg p-6 overflow-x-auto relative">
       <h2 className="text-xl font-bold text-defined-green mb-4">
@@ -87,22 +97,23 @@ export default function CouponTable({
         <table className="w-full border-collapse">
           <thead className="bg-defined-green text-white text-left">
             <tr>
-              <th className="p-3">ID</th>
-              <th className="p-3">Code</th>
-              <th className="p-3">Start Date</th>
-              <th className="p-3">Expiry Date</th>
-              <th className="p-3">Discount</th>
-              <th className="p-3">Active</th>
-              <th className="p-3 text-center">Actions</th>
+              {thead.map((th) => (
+                <th key={th} className="p-3 text-sm text-center font-semibold">
+                  {th}
+                </th>
+              ))}
             </tr>
           </thead>
 
           <tbody>
             {coupons.map((coupon: CouponDocument) => (
-              <tr key={coupon.couponId} className="border-b">
-                <td className="p-3">{coupon.couponId}</td>
+              <tr
+                key={coupon.couponId}
+                className="border-b border-[#ccc] last:border-b-0 text-defined-darkbrown"
+              >
+                <td className="p-3 text-sm font-medium">{coupon.couponId}</td>
 
-                <td className="p-3">
+                <td className="p-3 text-sm text-center">
                   {editingId === coupon.couponId ? (
                     <input
                       type="text"
@@ -117,7 +128,7 @@ export default function CouponTable({
                   )}
                 </td>
 
-                <td className="p-3">
+                <td className="p-3 text-sm text-center">
                   {editingId === coupon.couponId ? (
                     <DatePicker
                       selected={
@@ -141,7 +152,7 @@ export default function CouponTable({
                   )}
                 </td>
 
-                <td className="p-3">
+                <td className="p-3 text-sm text-center">
                   {editingId === coupon.couponId ? (
                     <DatePicker
                       selected={
@@ -165,9 +176,9 @@ export default function CouponTable({
                   )}
                 </td>
 
-                <td className="p-3">{coupon.discount}%</td>
+                <td className="p-3 text-sm text-center">{coupon.discount}%</td>
 
-                <td className="p-3">
+                <td className="p-3 text-sm text-center">
                   {editingId === coupon.couponId ? (
                     <select
                       value={String(editData.active)}

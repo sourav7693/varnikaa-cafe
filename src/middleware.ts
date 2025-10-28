@@ -33,5 +33,6 @@ export const config = {
     "/admin-dashboard/:path*",
     "/admin-customer-order-management/:path*",
     "/admin-menu-products-management/:path*",
+    "/admin-coupon-management/:path*",
   ],
 };
