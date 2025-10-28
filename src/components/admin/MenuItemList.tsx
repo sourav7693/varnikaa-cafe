@@ -30,6 +30,9 @@ const MenuItemList = ({
   };
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [categoryType, setCategoryType] = useState("");
+  const [paginationDisabled, setPaginationDisabled] = useState(false);
+
   const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout | null>(
     null
   );
@@ -44,21 +47,37 @@ const MenuItemList = ({
 
   const router = useRouter();
 
-  // 🔍 Search (debounced)
-  const handleSearch = (value: string) => {
+  // 🔍 Search or Filter by Category
+  const handleSearch = async (value: string) => {
     setSearchQuery(value);
     if (searchTimeout) clearTimeout(searchTimeout);
 
     const timeout = setTimeout(async () => {
-      if (value.trim() === "") {
-        setMenuItems(MenuItems);
+      setTableLoading(true);
+
+      // ✅ If category type is chosen, fetch all items of that type (stop pagination)
+      if (value === "Cloud Kitchen Menu" || value === "Cafe Menu") {
+        const res = await getAllItems(
+          1,
+          0,
+          "createdAt",
+          "desc",
+          undefined,
+          value
+        );
+        if (res.success) {
+          setMenuItems(res.data);
+          setPage(1); // reset page
+          setPaginationDisabled(true); // stop infinite scroll
+        } else toast.error("Failed to fetch filtered items");
+        setTableLoading(false);
         return;
       }
 
-      setTableLoading(true);
+      // ✅ Otherwise normal search
       const res = await getAllItems(
         1,
-        0,
+        10,
         "createdAt",
         "desc",
         undefined,
@@ -66,11 +85,11 @@ const MenuItemList = ({
       );
       if (res.success) {
         setMenuItems(res.data);
-      } else {
-        toast.error("Search failed");
-      }
+        setPaginationDisabled(false); // allow infinite scroll
+      } else toast.error("Search failed");
+
       setTableLoading(false);
-    }, 800);
+    }, 600);
 
     setSearchTimeout(timeout);
   };
@@ -109,11 +128,12 @@ const MenuItemList = ({
     }
   };
 
-  useEffect(() => {
-    if (inView) loadMore();
-  }, [inView]);
+ useEffect(() => {
+   if (paginationDisabled) return;
+   if (inView) loadMore();
+ }, [inView, paginationDisabled]);
 
-  // 👁 View/Edit
+
   const handleView = (item: MenuItemDocument, edit = false) => {
     setViewModalId(item.itemId);
     setIsEditMode(edit);
@@ -156,7 +176,6 @@ const MenuItemList = ({
     }
   };
 
-
   // Auto-calc Price when MRP or Discount changes
   useEffect(() => {
     if (
@@ -198,21 +217,31 @@ const MenuItemList = ({
 
       {/* Search Bar */}
       <div className="flex justify-between items-center gap-6">
+        {/* 🔍 Search Input */}
         <div className="relative w-full">
           <FaSearch className="absolute left-5 top-3 text-lg text-defined-brown" />
           <input
             type="text"
             placeholder="Search by Item name or Category"
-            className="w-full text-lg text-defined-brown placeholder:text-defined-brown p-2 pl-12 bitem bitem-[#ccc] rounded-md outline-none border border-[#ccc]"
+            className="w-full text-lg text-defined-brown placeholder:text-defined-brown p-2 pl-12 border border-[#ccc] rounded-md outline-none"
             value={searchQuery}
-            onChange={(e) => handleSearch(e.target.value)}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              handleSearch(e.target.value);
+            }}
           />
         </div>
+
+        {/* 🧭 Category Type Dropdown */}
         <select
           name="categoryType"
-          className="w-[30%] p-2 bitem bitem-[#ccc] rounded-md outline-none text-defined-brown border border-[#ccc]"
-          value={searchQuery}
-          onChange={(e) => handleSearch(e.target.value)}
+          className="w-[30%] p-2 border border-[#ccc] rounded-md outline-none text-defined-brown"
+          value={categoryType}
+          onChange={(e) => {
+            const selectedType = e.target.value;
+            setCategoryType(selectedType);
+            handleSearch(selectedType);
+          }}
         >
           <option value="">Choose Category Type</option>
           <option value="Cloud Kitchen Menu">Cloud Kitchen Menu</option>
@@ -374,7 +403,7 @@ const MenuItemList = ({
                 </div>
               ) : (
                 <Image
-                 src={modalFormData.itemImage?.secure_url || ""}
+                  src={modalFormData.itemImage?.secure_url || ""}
                   width={100}
                   height={100}
                   alt="Item"
@@ -529,7 +558,7 @@ const MenuItemList = ({
           </div>
         </div>
       )}
-      {pagination.totalPages > page && (
+      {pagination.totalPages > page && !paginationDisabled && (
         <div className="flex justify-center items-center gap-4 mt-6" ref={ref}>
           <span className="animate-pulse text-2xl font-bold">Loading...</span>
           <div

@@ -68,7 +68,7 @@ const TestimonialSection = () => {
     <div className="relative xl:p-16 lg:p-8 p-4 flex flex-col gap-6 justify-center items-center h-[300px] md:h-[400px]">
       <div className="absolute inset-0 h-[300px] md:h-[400px]">
         <Image
-          src="/images/testimonialbg.jpg"
+          src="/images/testimonialbg.avif"
           alt="testimonialbg"
           fill
           className="w-full h-full object-cover"

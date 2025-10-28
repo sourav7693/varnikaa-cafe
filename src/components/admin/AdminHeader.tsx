@@ -34,7 +34,11 @@ const AdminHeader = ({ username, logout }: User) => {
     {
       label: "Coupons",
       href: "/admin-coupon-management",
-    }
+    },
+    {
+      label: "Popups",
+      href: "/admin-popup-management",
+    },
   ];
 
   const isActive = (path: string | undefined) => {

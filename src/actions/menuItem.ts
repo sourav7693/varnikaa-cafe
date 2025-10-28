@@ -77,7 +77,7 @@ export async function getAllItems(
   limit: number | string = 10,
   sort: string = "createdAt",
   order: "asc" | "desc" = "desc",
-  status?: boolean,
+  categoryType?: string,
   searchQuery?: string
 ) {
   try {
@@ -85,42 +85,47 @@ export async function getAllItems(
 
     const filter: Record<string, unknown> = {};
 
-    // Search filter
+    if (categoryType && categoryType.trim() !== "") {
+      filter.categoryType = categoryType.trim();
+    }
+
     if (searchQuery && searchQuery.trim() !== "") {
+      const searchRegex = { $regex: searchQuery.trim(), $options: "i" };
       filter.$or = [
-        { categoryType: { $regex: searchQuery, $options: "i" } },
-        { itemName: { $regex: searchQuery, $options: "i" } },
-        { categoryName: { $regex: searchQuery, $options: "i" } },
+        { itemName: searchRegex },
+        { categoryName: searchRegex },
+        { categoryType: searchRegex },
       ];
     }
 
-    // Pagination
     const pageNumber = parseInt(page as string, 10);
     const pageSize = parseInt(limit as string, 10);
     const skip = (pageNumber - 1) * pageSize;
 
-    // Sorting
     const sortOrder = order === "asc" ? 1 : -1;
     const sortQuery: Record<string, 1 | -1> = { [sort]: sortOrder };
 
-    const allItems = await MenuItem.find(filter)
-      .sort(sortQuery)
-      .skip(skip)
-      .limit(pageSize)
-      .lean();
+    // ✅ Query execution
+   let query = MenuItem.find(filter).sort(sortQuery);
+   if (pageSize > 0) {
+     query = query.skip(skip).limit(pageSize);
+   }
 
-    const totalItems = await MenuItem.countDocuments(filter);
+   const [items, totalCount] = await Promise.all([
+     query.lean(),
+     MenuItem.countDocuments(filter),
+   ]);
 
-    return {
-      success: true,
-      data: JSON.parse(JSON.stringify(allItems)),
-      pagination: {
-        totalCount: totalItems,
-        currentPage: pageNumber,
-        limit: pageSize,
-        totalPages: Math.ceil(totalItems / pageSize),
-      },
-    };
+   return {
+     success: true,
+     data: JSON.parse(JSON.stringify(items)),
+     pagination: {
+       totalCount,
+       currentPage: pageNumber,
+       limit: pageSize,
+       totalPages: pageSize > 0 ? Math.ceil(totalCount / pageSize) : 1,
+     },
+   };
   } catch (error) {
     console.error("getAllItems error:", error);
     return {
@@ -135,6 +140,8 @@ export async function getAllItems(
     };
   }
 }
+
+
 
 export async function deleteMenuItem(itemId: string) {
   try {

@@ -1,8 +1,19 @@
+import { getDashboardStats } from "@/actions/dashboardStats";
+import DashboardLiveStats from "@/components/admin/DashboardLiveStats";
 
-const page = () => {
+const DashboardPage = async () => {
+  const { data } = await getDashboardStats();
+
   return (
-    <div className="flex items-center justify-center text-3xl">Under Development</div>
-  );
-}
+    <section className="admin-self-padding flex flex-col gap-8">
+      <h1 className="text-3xl font-semibold text-defined-darkbrown mb-6">
+        Dashboard Overview
+      </h1>
 
-export default page
+      {/* Client-side Auto Refresh Wrapper */}
+      <DashboardLiveStats initialData={data} />
+    </section>
+  );
+};
+
+export default DashboardPage;
