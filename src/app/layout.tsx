@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import ProgressBar from "@/components/global/ProgressBar";
 import { CartProvider } from "@/context/CartContext";
 import { Suspense } from "react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import ScrollPopup from "@/components/global/ScrollPopup";
 
 const jost = Jost({ subsets: ["latin"], display: "swap" });
@@ -29,6 +30,7 @@ export default function RootLayout({
         <CartProvider>
           <Suspense fallback={<div></div>}>{children}</Suspense>
         </CartProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
