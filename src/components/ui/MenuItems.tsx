@@ -35,15 +35,16 @@ export default function MenuItems({
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 w-full">
       {displayedItems.length > 0 ? (
-        displayedItems.map((item : MenuItemDocument) => {
+        displayedItems.map((item: MenuItemDocument) => {
           const cartItem = cartItems.find(
             (c: CartItem) => c.id === item.itemId
           );
           const quantity = cartItem ? cartItem.quantity : "ADD";
 
+          if (item.status !== ItemStatus.ACTIVE) return null;
+
           return (
-            <>
-            {item.status === ItemStatus.ACTIVE &&  <div
+            <div
               key={item.itemId}
               className="w-full p-4 flex flex-col justify-between gap-4 shadow-defined-light rounded-xl hover:scale-105 transition-all duration-300"
             >
@@ -68,7 +69,7 @@ export default function MenuItems({
                 </span>
 
                 <div className="rounded-xl border border-[#ccc] flex justify-between items-center gap-4 px-4">
-                  {(quantity as number) > 0 && (
+                  {quantity !== "ADD" && (
                     <FaMinusCircle
                       size={13}
                       onClick={() => removeItem(item.itemId)}
@@ -96,14 +97,12 @@ export default function MenuItems({
               </div>
 
               <Link
-                href={`${(quantity as number) >= 1 ? "/checkout" : "/"}`}
+                href={`${quantity !== "ADD" ? "/checkout" : "/"}`}
                 className="flex items-center justify-center rounded-2xl px-4 py-2 bg-[#D9FFD3] hover:bg-defined-green text-defined-darkbrown hover:text-white transition-colors duration-200"
               >
                 Order Now!
               </Link>
-            </div>}
-           
-            </>
+            </div>
           );
         })
       ) : (

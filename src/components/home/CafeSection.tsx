@@ -5,7 +5,7 @@ import { CategoryType, MenuItemDocument } from "@/models/MenuItem";
 export const dynamic = "force-dynamic";
 
 export default async function CafeSection() {
-  const res = await getAllItems(1, 10, "createdAt", "desc");
+  const res = await getAllItems(1, 0, "createdAt", "desc");
   const allItems: MenuItemDocument[] = res?.data || [];
 
   const filteredItems = allItems.filter(
