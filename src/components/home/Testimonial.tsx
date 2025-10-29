@@ -75,9 +75,8 @@ const TestimonialSection = () => {
         />
       </div>
       <div className="relative flex flex-col items-center gap-2 w-full text-center ">
-        {/* <div className=" flex flex-col gap-1 text-center items-center"></div> */}
       </div>
-      <div className="w-full md:w-1/4 absolute top-0 left-1/2 -translate-x-1/2">
+      <div className="w-full md:w-1/3 absolute top-0 left-1/2 -translate-x-1/2">
         <Swiper
           spaceBetween={20}
           slidesPerView={slidesToShow}

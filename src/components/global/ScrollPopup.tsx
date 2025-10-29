@@ -2,9 +2,28 @@
 import { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import Image from "next/image";
+import { getAllPopups } from "@/actions/popup"; 
+import { PopupDocument } from "@/models/Popup";
 
 const ScrollPopup = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [popupData, setPopupData] = useState<PopupDocument | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchPopup() {
+      try {
+        const res = await getAllPopups();
+        if (res.success && res.data) setPopupData(res.data[0]);
+      } catch (err) {
+        console.error("Failed to load popup", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchPopup();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,35 +37,34 @@ const ScrollPopup = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleClose = () => {
-    setIsVisible(false);
-  };
+  const handleClose = () => setIsVisible(false);
 
-  if (!isVisible) return null;
+  if (loading || !popupData || !isVisible) return null;
 
   return (
     <div
-      className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-[1000]"
+      className="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm z-[1000]"
       onClick={handleClose}
     >
       <div
-        className="relative bg-white rounded-2xl shadow-2xl p-4 max-w-md w-[90%] transform transition-all duration-300 scale-100"
+        className="relative bg-white rounded-2xl shadow-2xl overflow-hidden transform transition-all duration-500 scale-100 w-[90%] max-w-[1440px] h-[500px] flex justify-center items-center"
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Close Button */}
         <button
           onClick={handleClose}
-          className="absolute top-2 right-2 bg-gray-200 text-gray-700 p-2 rounded-full hover:bg-gray-300 transition"
+          className="absolute top-4 right-4 bg-gray-200 text-gray-700 p-2 rounded-full hover:bg-gray-300 transition"
         >
-          <IoClose size={22} />
+          <IoClose size={24} />
         </button>
-        <p>popup content</p>
 
+        {/* Image */}
         <Image
-          src="/images/testimonialbg.jpg"
-          alt="Promotional Popup"
-          width={400}
-          height={400}
-          className="rounded-xl object-cover w-full h-auto"
+          src={popupData.image?.secure_url || "/fallback.jpg"}
+          alt={popupData.name || "Popup Image"}
+          width={1440}
+          height={720}
+          className="object-cover w-full h-full rounded-2xl"
           priority
         />
       </div>

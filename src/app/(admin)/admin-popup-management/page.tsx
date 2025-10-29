@@ -1,37 +1,23 @@
 import { getAllPopups } from "@/actions/popup";
-import PopupSection from "@/components/admin/PopupSection";
-import {  PopupResponse } from "@/models/Popup";
+import PopupForm from "@/components/admin/PopupForm";
+import PopupTable from "@/components/admin/PopupTable";
+import { PopupResponse } from "@/models/Popup";
 
-export default async function PopupManagementPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ [key: string]: string | undefined }>;
-}) {
-  const { page } = await searchParams;
-  const pageData = await getPopupData(page);
+export default async function PopupManagementPage() {
+  const pageData: PopupResponse = await getAllPopups();
 
   return (
-    <section className="admin-self-padding flex flex-col md:flex-row gap-6">
-      <PopupSection initialPopups={pageData.data} />
+    <section className="flex flex-col md:flex-row justify-between items-start gap-6 py-8 md:px-10 px-4">
+      <div className="w-full md:w-[30%] bg-[#F9FAFB] border border-[#ccc] p-4 rounded-xl">
+        <h1 className="text-2xl text-center text-defined-darkbrown font-bold mb-4">
+          Create New Popup
+        </h1>
+        {/* ✅ Client form triggers refresh in the table */}
+        <PopupForm />
+      </div>
+
+      {/* ✅ Client table manages its own refresh state */}
+      <PopupTable initialPopups={pageData.data} />
     </section>
   );
-}
-
-async function getPopupData(page: number | string = 1): Promise<PopupResponse> {
-  try {
-    const popups = await getAllPopups(parseInt((page as string) ?? "1"));
-    return popups;
-  } catch (error) {
-    console.log(error);
-    return {
-      success: false,
-      data: [],
-      pagination: {
-        totalCount: 0,
-        currentPage: 1,
-        limit: 10,
-        totalPages: 0,
-      },
-    };
-  }
 }

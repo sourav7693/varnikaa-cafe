@@ -1,63 +1,68 @@
 "use client";
-
-import { useState } from "react";
-import toast from "react-hot-toast";
 import { createPopup } from "@/actions/popup";
+import { useActionState, useState } from "react";
+import toast from "react-hot-toast";
 
-export default function PopupForm({ onSuccess }: { onSuccess: () => void }) {
-  const [loading, setLoading] = useState(false);
+export default function PopupForm() {
+  const [file, setFile] = useState<File | null>(null);
 
-  async function handleCreate(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+  async function addItem(prevState: unknown, formData: FormData) {
+    const name = (formData.get("name") as string)?.trim();
+    const image = formData.get("image") as File;
 
-    setLoading(true);
-    const res = await createPopup(formData);
-    setLoading(false);
+    if (!name || !image) {
+      toast.error("All fields are required");
+      return null;
+    }
 
-    if (res.success) {
-      toast.success(res.message);
-      e.currentTarget.reset();
-      onSuccess(); // 🔄 Live refresh
-    } else toast.error(res.message);
+    try {
+      const res = await createPopup(formData);
+      if (res.success) {
+        toast.success(res.message);
+        setFile(null);
+        // tell PopupTable to refresh instantly
+        window.dispatchEvent(new Event("popup-updated"));
+      } else toast.error(res.message);
+      return res;
+    } catch (err) {
+      toast.error("Something went wrong");
+      return null;
+    }
   }
 
+  const [, formActions, isPending] = useActionState(addItem, null);
+
   return (
-    <div className="w-full md:w-[30%] bg-white p-6 rounded-xl shadow">
-      <h2 className="text-xl font-semibold text-defined-green mb-4">
-        Create New Popup
-      </h2>
-
-      <form
-        id="popupForm"
-        onSubmit={handleCreate}
-        className="space-y-4"
-        encType="multipart/form-data"
-      >
+    <form action={formActions} className="flex flex-col gap-4">
+      <input
+        type="text"
+        name="name"
+        placeholder="Popup Name"
+        className="w-full p-2 border border-[#ccc] rounded-md outline-none"
+      />
+      <div className="relative w-full p-6 border border-[#ccc] rounded-md truncate">
+        <label
+          htmlFor="file-input"
+          className="absolute capitalize top-1/2 left-2 transform -translate-y-1/2 text-defined-brown cursor-pointer truncate"
+        >
+          {file ? file.name : "Choose Picture"}
+        </label>
         <input
-          type="text"
-          name="name"
-          placeholder="Popup Name"
-          required
-          className="w-full border border-gray-300 p-2 rounded outline-none"
-        />
-
-        <input
+          id="file-input"
           type="file"
           name="image"
           accept="image/*"
-          required
-          className="w-full border border-gray-300 p-2 rounded"
+          onChange={(e) => setFile(e.target?.files?.[0] ?? null)}
+          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer truncate"
         />
-
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full py-2 bg-defined-green text-white rounded hover:bg-green-700 transition"
-        >
-          {loading ? "Uploading..." : "Upload Popup"}
-        </button>
-      </form>
-    </div>
+      </div>
+      <button
+        type="submit"
+        disabled={isPending}
+        className="w-full bg-defined-darkbrown text-white p-2 rounded-md"
+      >
+        {isPending ? "Adding..." : "Add Popup"}
+      </button>
+    </form>
   );
 }

@@ -1,5 +1,7 @@
 import Image from "next/image";
 import React from "react";
+import { Berkshire_Swash } from "next/font/google";
+const bekhireSwash = Berkshire_Swash({ weight: "400", subsets: ["latin"], display: "swap" });
 
 const SubBanner = ({ heading }: { heading: string }) => {
   return (
@@ -15,7 +17,7 @@ const SubBanner = ({ heading }: { heading: string }) => {
       </div>
 
       <div className="absolute top-0 left-10 md:left-40 z-10 bg-defined-purple opacity-80 flex flex-col items-center justify-center h-full">
-        <h1 className="text-lg  md:text-xl font-semibold lg:text-3xl text-defined-green opacity-100 text-center text-shadow">
+        <h1 className={`${bekhireSwash.className} text-lg  md:text-xl font-semibold lg:text-3xl text-defined-green opacity-100 text-center text-shadow`}>
           {heading}
         </h1>
       </div>

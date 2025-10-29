@@ -22,8 +22,8 @@ const AboutSection1 = () => {
      }, []);
 
   return (
-    <section className="flex flex-col md:flex-row w-full h-auto justify-between gap-8">
-      <div className="w-full md:w-[35%]" ref={leftSideRef}>
+    <section className="flex flex-col lg:flex-row w-full h-auto justify-between">
+      <div className="w-full lg:w-[35%]" ref={leftSideRef}>
         <Image
           src="/images/about.jpg"
           alt="about-1"
@@ -34,7 +34,7 @@ const AboutSection1 = () => {
       </div>
 
       <div
-        className="w-full md:w-[60%] h-full flex flex-col gap-4"
+        className="w-full lg:w-[60%] h-full flex flex-col gap-4"
         style={{ height: isSmallScreen ? "auto" : `${rightSideHeight}px` }}
       >
         <span className="text-defined-darkbrown text-center md:text-left">

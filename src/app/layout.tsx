@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${jost.className} antialiased`}>
-        {/* <ScrollPopup /> */}
+        <ScrollPopup />
         <ProgressBar />
         <Toaster />
         <CartProvider>

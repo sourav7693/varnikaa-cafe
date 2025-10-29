@@ -103,7 +103,7 @@ const Header = () => {
           {NavLinksData.map((item, index) => (
             <li
               key={index}
-              className="font-medium text-lg hover:scale-110 transition-all duration-500"
+              className="font-medium xlg:text-lg hover:scale-110 transition-all duration-500"
             >
               {item.href ? (
                 <div className="relative group">
