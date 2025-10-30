@@ -26,7 +26,7 @@ export default async function MenuSection() {
   return (
     <section className="flex flex-col items-center justify-center gap-4 md:px-8 xl:px-16 w-full">
       <h1 className="text-defined-green text-center text-xl md:text-4xl font-bold">
-        Our Kitchen Menu
+        Cloud Kitchen (Home Delivery)
       </h1>
 
       <MenuCategories categories={categories} />
