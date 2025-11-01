@@ -82,15 +82,7 @@ export default function LoginForm() {
         >
           {pending ? "Logging in..." : "Login"}
         </button>
-      </form>
-      <div className="text-right">
-        <Link
-          href="/reset-password"
-          className="text-white text-sm hover:underline hover:text-amber-200"
-        >
-          Forgot Password?
-        </Link>
-      </div>
+      </form>     
     </div>
   );
 }

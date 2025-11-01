@@ -29,7 +29,7 @@ export default function DashboardLiveStats({
       const res = await getDashboardStats();
       if (res.success) setData(res.data);
       setIsRefreshing(false);
-    }, 60000);
+    }, 60*60000);
     return () => clearInterval(interval);
   }, []);
 

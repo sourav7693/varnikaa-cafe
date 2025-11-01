@@ -29,7 +29,7 @@ export default function ResetPasswordForm() {
   );
 
   return (
-    <div className="flex flex-col items-center justify-center gap-6 bg-white rounded-xl shadow-lg p-8 w-full max-w-md">
+    <div className="flex flex-col items-center justify-center gap-6  p-8 w-full ">
       <h1 className="text-2xl font-semibold text-defined-green">
         {step === "email" ? "Forgot Password?" : "Reset Your Password"}
       </h1>
