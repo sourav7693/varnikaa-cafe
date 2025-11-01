@@ -5,6 +5,7 @@ import { useActionState } from "react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 
 type LoginState = {
   success?: boolean;
@@ -82,6 +83,14 @@ export default function LoginForm() {
           {pending ? "Logging in..." : "Login"}
         </button>
       </form>
+      <div className="text-right">
+        <Link
+          href="/reset-password"
+          className="text-white text-sm hover:underline hover:text-amber-200"
+        >
+          Forgot Password?
+        </Link>
+      </div>
     </div>
   );
 }

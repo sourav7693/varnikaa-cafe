@@ -1,8 +1,12 @@
 "use server";
 import Razorpay from "razorpay";
 import crypto from "crypto";
-import CustomerOrder, { CustomerOrderDocument, OrderStatus, PaymentStatus } from "@/models/CustomerOrder";
-import { generateCustomId } from "@/helper/generateCustomId"; 
+import CustomerOrder, {
+  CustomerOrderDocument,
+  OrderStatus,
+  PaymentStatus,
+} from "@/models/CustomerOrder";
+import { generateCustomId } from "@/helper/generateCustomId";
 import { revalidatePath } from "next/cache";
 import { connectDb } from "@/lib/connection";
 
@@ -44,14 +48,17 @@ export interface VerifyPaymentResponse {
 }
 
 // ----------- RAZORPAY ORDER CREATION -----------
-export async function createOrder(amount: number, currency = "INR") : Promise<CreateOrderResponse>{
+export async function createOrder(
+  amount: number,
+  currency = "INR"
+): Promise<CreateOrderResponse> {
   try {
-     const order = (await razor.orders.create({
-          amount: Math.round(amount * 100),
-          currency,
-          receipt: `rcpt_${Date.now()}`,
-          payment_capture: true,
-        })) as unknown as RazorpayOrder;    
+    const order = (await razor.orders.create({
+      amount: Math.round(amount * 100),
+      currency,
+      receipt: `rcpt_${Date.now()}`,
+      payment_capture: true,
+    })) as unknown as RazorpayOrder;
 
     return {
       success: true,
@@ -121,7 +128,7 @@ export async function verifyPayment({
       } catch {
         console.warn("Failed to parse items JSON, skipping items field");
       }
-    }    
+    }
     await connectDb();
 
     const orderId = await generateCustomId(CustomerOrder, "orderId", "#VC-");
@@ -134,7 +141,7 @@ export async function verifyPayment({
       razorPayPaymentId: razorpay_payment_id,
       razorPaySignature: razorpay_signature,
       paymentMethod,
-      paymentStatus: PaymentStatus.PAID,
+      paymentStatus: razorpay_signature ? PaymentStatus.PAID : PaymentStatus.UNPAID,
       status: OrderStatus.PENDING,
     });
 
@@ -158,7 +165,6 @@ export async function verifyPayment({
   }
 }
 
-
 export async function getAllCustomerOrder(
   page: number | string = 1,
   limit: number | string = 10,
@@ -168,7 +174,7 @@ export async function getAllCustomerOrder(
   search?: string
 ) {
   try {
-    const filter : Record<string, unknown> = {};
+    const filter: Record<string, unknown> = {};
 
     if (status !== undefined) filter.status = status;
 
@@ -219,7 +225,7 @@ export async function getAllCustomerOrder(
 export async function updateCustomerOrder(
   orderId: string,
   updateData: Partial<
-    Omit<CustomerOrderDocument, "_id" | "createdAt" | "updatedAt"> & {      
+    Omit<CustomerOrderDocument, "_id" | "createdAt" | "updatedAt"> & {
       status?: OrderStatus;
     }
   >
@@ -239,7 +245,10 @@ export async function updateCustomerOrder(
 
     return { success: true, order: JSON.parse(JSON.stringify(order)) };
   } catch (err: unknown) {
-    console.error("updateCustomerOrder error:", err instanceof Error ? err.message : err);
+    console.error(
+      "updateCustomerOrder error:",
+      err instanceof Error ? err.message : err
+    );
     return { success: false, message: "Failed to update order" };
   }
 }
@@ -255,7 +264,10 @@ export async function deleteExistingCustomerOrder(orderId: string) {
 
     return { success: true, message: "Order deleted successfully" };
   } catch (err: unknown) {
-    console.error("deleteExistingCustomerOrder error:", err instanceof Error ? err.message : err);
+    console.error(
+      "deleteExistingCustomerOrder error:",
+      err instanceof Error ? err.message : err
+    );
     return { success: false, message: "Failed to delete order" };
   }
 }

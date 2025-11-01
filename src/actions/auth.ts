@@ -5,6 +5,8 @@ import { cookies } from "next/headers";
 import { connectDb } from "@/lib/connection";
 import { redirect } from "next/navigation";
 import { generateCustomId } from "@/helper/generateCustomId";
+import nodemailer from "nodemailer";
+import { randomInt } from "crypto";
 
 export async function signup(formData: FormData) {
   await connectDb();
@@ -137,4 +139,78 @@ export async function getUser() {
   } catch (err) {
     return null;
   }
+}
+
+// Temporary store
+const otpStore = new Map<string, { code: string; expires: number }>();
+
+export async function requestReset(formData: FormData) {
+  await connectDb();
+  const email = (formData.get("email") as string)?.trim();
+
+  if (!email) return { success: false, message: "Email is required" };
+  const user = await User.findOne({ email });
+  if (!user)
+    return { success: false, message: "No user found with this email" };
+
+  const code = randomInt(100000, 999999).toString();
+  otpStore.set(email, { code, expires: Date.now() + 5 * 60 * 1000 }); // 5 min expiry
+
+  // --- Configure Mailer ---
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true, // use SSL
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
+});
+
+
+  await transporter.sendMail({
+    from: `"Varnikaa Café" <${process.env.SMTP_USER}>`,
+    to: email,
+    subject: "Password Reset Verification Code",
+    html: `<p>Your verification code is: <b>${code}</b></p><p>It will expire in 5 minutes.</p>`,
+  });
+
+  return { success: true, message: "Verification code sent to your email." };
+}
+
+export async function verifyResetCode(formData: FormData) {
+  await connectDb();
+  const email = (formData.get("email") as string)?.trim();
+  const code = (formData.get("code") as string)?.trim();
+  const newPassword = (formData.get("newPassword") as string)?.trim();
+  const confirmPassword = (formData.get("confirmPassword") as string)?.trim();
+
+  if (!email || !code || !newPassword || !confirmPassword)
+    return { success: false, message: "All fields are required." };
+
+  if (newPassword !== confirmPassword)
+    return { success: false, message: "Passwords do not match." };
+
+  const otpData = otpStore.get(email);
+  if (!otpData)
+    return { success: false, message: "No OTP request found or expired." };
+
+  if (Date.now() > otpData.expires)
+    return { success: false, message: "OTP expired. Please request again." };
+
+  if (otpData.code !== code)
+    return { success: false, message: "Invalid verification code." };
+
+  const user = await User.findOne({ email });
+  if (!user) return { success: false, message: "User not found." };
+
+  user.password = newPassword;
+  await user.save();
+
+  otpStore.delete(email); // clear OTP
+
+  return {
+    success: true,
+    message: "Password reset successful. You can now log in.",
+  };
 }
